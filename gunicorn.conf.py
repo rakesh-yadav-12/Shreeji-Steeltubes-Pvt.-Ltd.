@@ -1,11 +1,12 @@
 # Run:  gunicorn -c gunicorn.conf.py app:app
+# On Render: Start Command =  gunicorn -c gunicorn.conf.py app:app   (Render sets $PORT itself)
 import multiprocessing, os
-# Render (and most free hosts) give you a PORT env var and want the app on 0.0.0.0.
-# Locally (behind your own nginx) it still falls back to 127.0.0.1:8000 like before.
-bind = "0.0.0.0:" + os.getenv("PORT", "8000") if os.getenv("PORT") else "127.0.0.1:8000"
-# Render's free instance has only ~512MB RAM / 0.1 CPU - fewer workers/threads avoid out-of-memory restarts.
-workers = int(os.getenv("WEB_WORKERS", 1 if os.getenv("PORT") else multiprocessing.cpu_count() * 2 + 1))
-threads = int(os.getenv("WEB_THREADS", 4 if os.getenv("PORT") else 8))
+bind = "0.0.0.0:" + os.getenv("PORT", "8000")             # Render (and most hosts) need 0.0.0.0 + their $PORT, not 127.0.0.1
+# Render free/starter plans have very little RAM (512MB-ish) and often report the HOST's full CPU count,
+# which made this spawn way too many workers (e.g. 2*16+1=33) and starve the app for memory -> everything felt slow.
+# Default is now a small, safe number. Override with the WEB_WORKERS env var if you upgrade your Render plan.
+workers = int(os.getenv("WEB_WORKERS", "2"))
+threads = int(os.getenv("WEB_THREADS", 4))
 worker_class = "gthread"                                  # threads = good for Mongo / network waits
 worker_connections = 1000
 backlog = 4096

@@ -1,6 +1,6 @@
 from urllib.parse import quote
 import re
-import os, io, csv, uuid, time, logging
+import os, io, csv, uuid, time, logging, gzip
 from collections import defaultdict, deque
 from functools import wraps
 from dotenv import load_dotenv
@@ -17,6 +17,9 @@ from db import database, norm, ser, fmt_phone
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "dev-secret")
 app.config["MAX_CONTENT_LENGTH"] = 60 * 1024 * 1024      # was 25 MB - several photos uploaded together need more room
+# Let browsers cache /static/* files (css/js/images/video) instead of re-downloading them on every click.
+# Safe because filenames rarely change; if you replace a file's *content* without renaming it, do a hard refresh once.
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 60 * 60 * 24 * 7   # 7 days
 app.config.update(SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE="Lax",
                   SESSION_COOKIE_SECURE=os.getenv("PUBLIC_URL", "").lower().startswith("https"), PERMANENT_SESSION_LIFETIME=60 * 60 * 24 * 30)
 app.jinja_env.filters["fmt_phone"] = fmt_phone          # shows stored phone as "+91 9930988307" wherever used in templates
@@ -41,6 +44,31 @@ def qr_target():
     return os.getenv("QR_URL") or site_url() + "/"
 
 # ---------- public: chatbot home (opened by QR scan) ----------
+_COMPRESSIBLE = ("text/html", "text/css", "application/javascript", "text/javascript",
+                  "application/json", "image/svg+xml")
+
+@app.after_request
+def _gzip_response(r):
+    """Gzip text/HTML/JSON responses (home.html alone is ~300KB) - cuts transfer size a lot on slow mobile data."""
+    try:
+        if (r.direct_passthrough or r.status_code < 200 or r.status_code >= 300
+                or "Content-Encoding" in r.headers or r.calculate_content_length() is None
+                or r.calculate_content_length() < 500):
+            return r
+        ctype = (r.mimetype or "").lower()
+        if not any(ctype.startswith(c) for c in _COMPRESSIBLE):
+            return r
+        accept_enc = request.headers.get("Accept-Encoding", "")
+        if "gzip" not in accept_enc.lower():
+            return r
+        r.set_data(gzip.compress(r.get_data(), compresslevel=6))
+        r.headers["Content-Encoding"] = "gzip"
+        r.headers["Content-Length"] = len(r.get_data())
+        r.headers.setdefault("Vary", "Accept-Encoding")
+    except Exception as ex:
+        print("gzip compress skipped:", ex)
+    return r
+
 @app.after_request
 def _no_cache(r):          # phones must always get the latest chat page / replies (no stale cached copy)
     if request.path in ("/", "/vendor-registration", "/chat/send", "/chat/lang", "/chat/reset", "/vendor/form", "/job/form"): r.headers["Cache-Control"] = "no-store, max-age=0"
@@ -412,11 +440,16 @@ def qr_png():
 
 @app.route("/catalog-files/<cat>/<path:name>")   # public: files kept in the project's catalog/<category>/ folders
 def catalog_files(cat, name):
-    return send_from_directory(os.path.join(os.path.dirname(__file__), "catalog", secure_filename(cat)), name,
+    r = send_from_directory(os.path.join(os.path.dirname(__file__), "catalog", secure_filename(cat)), name,
                                as_attachment=bool(request.args.get("dl")))
+    r.headers["Cache-Control"] = "public, max-age=86400"   # 1 day - admin uploads rarely change same filename
+    return r
 
 @app.route("/files/<path:name>")   # public: chat / WhatsApp download catalog files from here
-def files(name): return send_from_directory(UPLOADS, name, as_attachment=bool(request.args.get("dl")))
+def files(name):
+    r = send_from_directory(UPLOADS, name, as_attachment=bool(request.args.get("dl")))
+    r.headers["Cache-Control"] = "public, max-age=86400"
+    return r
 
 # ---------- WhatsApp webhook (optional) ----------
 @app.get("/webhook")
