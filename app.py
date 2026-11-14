@@ -17,9 +17,11 @@ from db import database, norm, ser, fmt_phone
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "dev-secret")
 app.config["MAX_CONTENT_LENGTH"] = 60 * 1024 * 1024      # was 25 MB - several photos uploaded together need more room
+IS_DEV = os.getenv("FLASK_DEBUG", "0") == "1"   # set FLASK_DEBUG=1 in .env for local development (auto-reload + no caching, see below)
 # Let browsers cache /static/* files (css/js/images/video) instead of re-downloading them on every click.
 # Safe because filenames rarely change; if you replace a file's *content* without renaming it, do a hard refresh once.
-app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 60 * 60 * 24 * 7   # 7 days
+# Turned OFF automatically in local dev (FLASK_DEBUG=1) so you always see your latest edits without hard-refreshing.
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0 if IS_DEV else 60 * 60 * 24 * 7   # 7 days in production, no caching in dev
 app.config.update(SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE="Lax",
                   SESSION_COOKIE_SECURE=os.getenv("PUBLIC_URL", "").lower().startswith("https"), PERMANENT_SESSION_LIFETIME=60 * 60 * 24 * 30)
 app.jinja_env.filters["fmt_phone"] = fmt_phone          # shows stored phone as "+91 9930988307" wherever used in templates
@@ -442,13 +444,13 @@ def qr_png():
 def catalog_files(cat, name):
     r = send_from_directory(os.path.join(os.path.dirname(__file__), "catalog", secure_filename(cat)), name,
                                as_attachment=bool(request.args.get("dl")))
-    r.headers["Cache-Control"] = "public, max-age=86400"   # 1 day - admin uploads rarely change same filename
+    r.headers["Cache-Control"] = "no-store" if IS_DEV else "public, max-age=86400"   # 1 day - admin uploads rarely change same filename
     return r
 
 @app.route("/files/<path:name>")   # public: chat / WhatsApp download catalog files from here
 def files(name):
     r = send_from_directory(UPLOADS, name, as_attachment=bool(request.args.get("dl")))
-    r.headers["Cache-Control"] = "public, max-age=86400"
+    r.headers["Cache-Control"] = "no-store" if IS_DEV else "public, max-age=86400"
     return r
 
 # ---------- WhatsApp webhook (optional) ----------
@@ -602,6 +604,27 @@ def resend_wa(no):         # send the WhatsApp confirmation again (e.g. after th
     ok, err = confirm.send(e)
     database().enquiries.update_one({"no": no}, {"$set": {"wa_confirm": "sent" if ok else "failed", "wa_confirm_note": err[:400], "wa_confirm_at": db.now_ist()}})
     flash(f"WhatsApp confirmation for enquiry #{no}: " + ("sent ✅" if ok else "failed ❌ – " + err))
+    return redirect(request.referrer or url_for("admin_enquiries"))
+
+@app.post("/admin/enquiries/<int:no>/resend-mail")
+@admin_required
+def resend_mail(no):       # email the enquiry PDF to the admins again (e.g. after an admin's email was added/fixed)
+    e = database().enquiries.find_one({"no": no}) or abort(404)
+    ok, note = mailer.send(e)
+    database().enquiries.update_one({"no": no}, {"$set": {"admin_mail": "sent" if ok else "failed", "admin_mail_note": note[:400], "admin_mail_at": db.now_ist()}})
+    flash(f"Enquiry PDF mail for #{no}: " + ("sent ✅" if ok else "failed ❌ – " + note))
+    return redirect(request.referrer or url_for("admin_enquiries"))
+
+@app.post("/admin/enquiries/<int:no>/resend-sheet-quote")
+@admin_required
+def resend_sheet_quote(no):   # email the customer the Google Sheet price/stock again (e.g. after fixing the sheet / product match)
+    e = database().enquiries.find_one({"no": no}) or abort(404)
+    matches = sheet_quote.find_matches(e.get("product"), e.get("size"), e.get("thickness"))
+    ok, note = sheet_quote.send(e, matches)
+    st = "sent" if ok else "failed"
+    note = (note + (" (0 rows matched in sheet)" if not matches else f" ({len(matches)} row(s) matched)")) if ok else note
+    database().enquiries.update_one({"no": no}, {"$set": {"sheet_quote": st, "sheet_quote_note": note[:400], "sheet_quote_at": db.now_ist()}})
+    flash(f"Price/stock mail for #{no}: " + ("sent ✅ " + note if ok else "failed ❌ – " + note))
     return redirect(request.referrer or url_for("admin_enquiries"))
 
 # ---------- SALES person: write the price -> customer gets it by mail at once (link comes in the sales person's mail; token = HMAC, no login) ----------

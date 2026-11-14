@@ -100,24 +100,9 @@ def _body(doc, matches):
 
 
 def send(doc, matches):
-    to = (doc.get("email") or "").strip()
-    if not to: return False, "customer has no email saved"
-    m = EmailMessage()
-    m["Subject"] = f"Price & Stock - Enquiry #{doc['no']} - {doc.get('product', '')}"
-    m["From"] = os.getenv("SMTP_FROM") or os.getenv("SMTP_USER")
-    m["To"] = to
-    m.set_content(_body(doc, matches))
-    host, port = os.getenv("SMTP_HOST"), int(os.getenv("SMTP_PORT", "587"))
-    try:
-        if port == 465:
-            with smtplib.SMTP_SSL(host, port, timeout=20) as s:
-                s.login(os.getenv("SMTP_USER"), os.getenv("SMTP_PASS")); s.send_message(m)
-        else:
-            with smtplib.SMTP(host, port, timeout=20) as s:
-                s.starttls(); s.login(os.getenv("SMTP_USER"), os.getenv("SMTP_PASS")); s.send_message(m)
-        return True, f"sent to {to}"
-    except Exception as e:
-        return False, str(e)
+    # DISABLED by owner's request: the customer must never get an automatic price/stock mail.
+    # Only the sales-designated admin mail (see sales_quote.sales_emails()) should receive the enquiry.
+    return False, "price mail to customer is turned off (admin setting)"
 
 
 def _job(doc):

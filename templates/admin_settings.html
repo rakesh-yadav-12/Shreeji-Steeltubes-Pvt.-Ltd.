@@ -17,6 +17,8 @@
 <h4>2. Sales person kaun hai</h4>
 {% if sales %}<div class="good">Abhi sales mail in admins ko jata hai: {% for a in sales %}<b>{{a.name}}</b> ({{a.email}}){{', ' if not loop.last}}{% endfor %}</div>
 {% else %}<div class="warn">⚠ Abhi koi admin sales person nahi hai. <a href="/admin/admins">Admins</a> page par email save karke us admin ka <b>Sales mails</b> switch On kijiye.</div>{% endif %}
+<label>Extra email(s) (optional)</label><input type="text" name="SALES_MAIL" value="{{v.SALES_MAIL}}" placeholder="sales2@company.com, sales3@company.com">
+<div class="hint">Jin logon ka admin login nahi hai unko bhi sales mail dena ho to yahan likhiye (comma se alag).</div>
 
 <h4>3. Website address (mail ke button ke liye)</h4>
 <label>Public URL</label><input type="text" name="PUBLIC_URL" value="{{v.PUBLIC_URL}}" placeholder="https://chat.yourcompany.com">

@@ -83,6 +83,3 @@ Files for Catalogue / Certificates / Gallery / Documents: Admin -> Catalog files
 - **Voice input:** web chat → 🎤 button next to Send (browser speech recognition, Chrome/Edge/Safari, needs https). WhatsApp voice notes → transcribed with OpenAI (`OPENAI_API_KEY`, see `voice.py`).
 - **WhatsApp confirmation:** after every web enquiry the customer gets a WhatsApp message (`confirm.py`). Needs `WA_TOKEN`, `WA_PHONE_NUMBER_ID` and – for customers who never messaged you – an **approved template** (`WA_CONFIRM_TEMPLATE`). Admin → Enquiries shows Sent / Failed and a ↻ Send button.
 - **Admin panel:** new sidebar layout, Dashboard (stats, 7-day chart, top products), colour status badges, mobile friendly.
-  ## 🚀 Live Demo
-
-🔗 **Live Project:** [Click Here to Visit](https://shreeji-steeltubes-pvt-ltd-jws6.onrender.com)

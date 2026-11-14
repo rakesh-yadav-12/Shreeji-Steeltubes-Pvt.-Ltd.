@@ -57,7 +57,7 @@ def enabled():
 
 def sales_emails():
     """Active admins (Admin -> Admins) whose 'Sales mails' switch is On and who have an email saved.
-    Nobody else gets the enquiry mail."""
+    SALES_MAIL in .env is only an optional extra (not needed)."""
     out = []
     def add(e):
         e = (e or "").strip()
@@ -65,6 +65,7 @@ def sales_emails():
     try:
         for a in database().admins.find({"active": True, "sales_notify": True}): add(a.get("email"))
     except Exception as ex: print("sales_quote admins:", ex)
+    for e in cfg("SALES_MAIL", "").split(","): add(e)
     return out
 
 
@@ -217,19 +218,11 @@ def _cust_text(doc, price_text, sender_name):
 
 
 def send_to_customer(doc, price_text, reply_to=None, sender_name=""):
-    to = (doc.get("email") or "").strip()
-    if not to: return False, "customer has no email saved - call " + str(doc.get("phone", ""))
-    if not (price_text or "").strip(): return False, "price text is empty"
-    m = EmailMessage()
-    m["Subject"] = f"Price Quotation - Enquiry #{doc['no']} - {doc.get('product', '')}"
-    m["From"] = _from(); m["To"] = to
-    if reply_to: m["Reply-To"] = reply_to
-    m.set_content(_cust_text(doc, price_text, sender_name))
-    try:
-        _smtp_send(m)
-        return True, f"sent to {to}"
-    except Exception as e:
-        return False, str(e)
+    # DISABLED by owner's request: the customer must never get an automatic price-quotation mail.
+    # Only the sales-designated admin mail (sales_emails(), via send_to_sales above) should receive
+    # the enquiry. The price the sales person types is still saved on the enquiry (see deliver() below)
+    # so it's visible in Admin -> Enquiries - it is simply not emailed out to the customer.
+    return False, "price mail to customer is turned off (admin setting) - price saved on the enquiry only"
 
 
 def deliver(no, price_text, via, reply_to=None, sender_name=""):
