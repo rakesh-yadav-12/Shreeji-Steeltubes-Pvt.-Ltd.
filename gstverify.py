@@ -190,7 +190,8 @@ def find_by_gst(gst):
 def is_customer(gst):
     """True when a customer record with this GST already exists (a submitted enquiry saved it). A New User may register a GST number only once."""
     g = clean(gst)
-    return bool(g) and database().customers.find_one({"gst": g, "via_exist": {"$ne": True}}) is not None
+    # only a record that really has a UC code counts (a record saved while the GST API was down, without a code, must not block getting one)
+    return bool(g) and database().customers.find_one({"gst": g, "via_exist": {"$ne": True}, "uc_code": {"$nin": ["", None, "-"]}}) is not None
 
 
 def mask_mobile(m):
@@ -226,7 +227,8 @@ def resolve(gstin):
         logging.warning("GST verification failed: %s", e)
         if strict:
             return {"ok": False, "temp": True, "error": "GST verification is temporarily unavailable. Please try again in a few minutes."}
-        return {"ok": True, "gst": g, "uc_code": "", "existing": False, "name": "", "status": "Not verified (service down)", "source": "none"}
+        # GST_STRICT=0 and the GST API is down: accept the GST (format + checksum already passed) AND still give the new customer a UC code
+        return {"ok": True, "gst": g, "uc_code": _new_uc(), "existing": False, "name": "", "status": "Not verified (service down)", "source": "none"}
     if not res["found"]:
         return {"ok": False, "temp": False, "error": "This GST number was not found on the GST portal. Please check and try again."}
     if not res["active"]:

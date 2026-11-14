@@ -164,7 +164,7 @@
  {% for e in enq %}{% set ph = (e.phone or '')|replace('+','')|replace(' ','') %}
  <article class="eq-card s-{{e.status}}" tabindex="-1">
   <input type="checkbox" class="eq-ck" name="nos" value="{{e.no}}" form="bulkf" aria-label="Select enquiry {{e.no}}">
-  {% set w = e.wa_confirm %}{% set m = e.admin_mail %}{% set sq = e.sheet_quote %}
+  {% set w = e.wa_confirm %}
   {% set dl = (e.delivery_date or '')|string %}
   <div class="eq-row">
    <span class="eq-no">#{{e.no}}</span>
@@ -218,13 +218,9 @@
     {% if w=='sent' %}<span class="badge b-ok">✓ Sent</span>{% elif w=='failed' %}<span class="badge b-bad" title="{{e.wa_confirm_note}}">✗ Failed</span>{% elif w=='queued' %}<span class="badge b-off">… Sending</span>{% elif w=='in-chat' %}<span class="badge b-new">In chat</span>{% elif w=='no-number' %}<span class="badge b-off">No number</span>{% else %}<span class="badge b-off">Off</span>{% endif %}
     {% if w in ('failed','off') or not w %}{% if ph and ph!='-' %}<form method="post" action="/admin/enquiries/{{e.no}}/resend-wa"><button class="rs" title="Send the WhatsApp confirmation to the customer now">↻ Send</button></form>{% endif %}{% endif %}
    </div>
-   <div class="eq-nt"><span>Admin email</span>
-    {% if m=='sent' %}<span class="badge b-ok">✓ Sent</span>{% elif m=='failed' %}<span class="badge b-bad" title="{{e.admin_mail_note}}">✗ Failed</span>{% elif m=='queued' %}<span class="badge b-off">… Sending</span>{% elif m=='no-recipient' %}<span class="badge b-off" title="No admin has an email saved - Admin -> Admins">No email set</span>{% else %}<span class="badge b-off">Off</span>{% endif %}
-    {% if m in ('failed','no-recipient','off') or not m %}<form method="post" action="/admin/enquiries/{{e.no}}/resend-mail"><button class="rs" title="Email the enquiry PDF to the admin(s) now">↻ Send</button></form>{% endif %}
-   </div>
-   <div class="eq-nt"><span>Customer price/stock mail</span>
-    {% if sq=='sent' %}<span class="badge b-ok" title="{{e.sheet_quote_note}}">✓ Sent</span>{% elif sq=='failed' or sq=='error' %}<span class="badge b-bad" title="{{e.sheet_quote_note}}">✗ Failed</span>{% elif sq=='queued' %}<span class="badge b-off">… Sending</span>{% elif sq=='no-email' %}<span class="badge b-off" title="Customer did not give an email">No email given</span>{% else %}<span class="badge b-off" title="GOOGLE_SHEET_ID / SMTP not set in .env">Off</span>{% endif %}
-    <form method="post" action="/admin/enquiries/{{e.no}}/resend-sheet-quote"><button class="rs" title="Re-check the Google Sheet and email the customer now">↻ Send</button></form>
+   <div class="eq-nt"><span>Sales person mail</span>
+    {% set sm = e.sq_sales_mail %}{% if sm=='sent' %}<span class="badge b-ok" title="{{e.sq_sales_note}}">✓ Sent</span>{% elif sm=='failed' %}<span class="badge b-bad" title="{{e.sq_sales_note}}">✗ Failed</span>{% elif sm=='queued' %}<span class="badge b-off">… Sending</span>{% elif sm=='no-recipient' %}<span class="badge b-off" title="No admin has the Sales mails switch On - Admin -> Admins">No sales person</span>{% else %}<span class="badge b-off">Off</span>{% endif %}
+    {% if sm in ('failed','no-recipient','off') or not sm %}<form method="post" action="/admin/enquiries/{{e.no}}/resend-sales-mail"><button class="rs" title="Mail this enquiry to the sales person(s) now">↻ Send</button></form>{% endif %}
    </div>
   </footer>
   </div></div></div>

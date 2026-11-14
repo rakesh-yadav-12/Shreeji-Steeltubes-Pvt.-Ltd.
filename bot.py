@@ -457,9 +457,7 @@ def submit(key, to, phone, fid, vals, cust, items=None):
     set_state(key, "DONE", {})
     cf = confirm.start(doc)          # WhatsApp confirmation to the customer (runs in background; 'queued' = will be sent)
     wa_note = (f"\n📲 A confirmation will also be sent on WhatsApp to *{fmt_phone(norm(doc['phone']))}*." if cf == "queued" else "")
-    mailer.start(doc)                # emails the enquiry PDF to every admin with an email saved (runs in background)
-    if sales_quote.enabled(): sales_quote.start(doc)      # mail to the SALES person: product available / not available + a box to write the price; the price then goes to the customer automatically
-    else: sheet_quote.start(doc)     # (SALES_QUOTE=0) old behaviour: emails the customer the matching price/stock straight from the Google Sheet
+    if sales_quote.enabled(): sales_quote.start(doc)      # enquiry mail goes ONLY to the sales person(s) whose 'Sales mails' switch is On (Admin -> Admins); price they write is then mailed to the customer
     n = os.getenv("NOTIFY_NUMBER")
     if n: send_text(n, f"New enquiry #{no}: {doc['name']} ({doc['company']}) {doc['phone']} – {doc['product']}, {doc['size']}, qty {doc['qty']}" + (f" (+{len(more)} more product{'s' if len(more) > 1 else ''})" if more else ""))
     if phone is None:    # web chat: no summary card / call note - the app shows the 'Thank you' popup, and the chat keeps ONLY the Contact option

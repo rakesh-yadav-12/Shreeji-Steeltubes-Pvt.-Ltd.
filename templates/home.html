@@ -1687,7 +1687,7 @@ if(d.need_cust){window.__ucNeed=false;window.__ucOk=false;gclCss();const mode=d.
       const co=(j.trade||j.name||j.legal||'').trim(),nm=(j.legal||j.name||j.trade||'').trim();   // company = trade name, name = registered (legal) name - both stay editable
       const af=(n,v)=>{const e=E(n);if(!e||!v)return;if(!e.value.trim()||e.dataset.auto===e.value){e.value=v;e.dataset.auto=v;e.dispatchEvent(new Event('input',{bubbles:true}));const w=W(n);if(w)w.classList.remove('err')}};
       af('c_name',nm);af('c_company',co);
-      note('c_gst',(j.existing?'\u2714 This GST is already registered. ':'\u2714 GST verified. ')+(j.uc_code?'Your UC code: '+j.uc_code:''));
+      note('c_gst',(j.existing?'\u2714 This GST is already registered. ':((j.status||'').indexOf('Not verified')===0?'\u2714 GST accepted (online check is temporarily unavailable). ':'\u2714 GST verified. '))+(j.uc_code?'Your UC code: '+j.uc_code:''));
       gstCelebrate({name:nm,company:co,uc:j.uc_code||'',existing:!!j.existing,gst:g,status:j.status||''})}
      else{last='';if(u)u.value='';note('c_gst',j.error||'Invalid GST number.',1)}}
     catch(e){last='';if(u)u.value='';note('c_gst','Connection problem. Please try again.',1)}

@@ -57,7 +57,7 @@ def enabled():
 
 def sales_emails():
     """Active admins (Admin -> Admins) whose 'Sales mails' switch is On and who have an email saved.
-    SALES_MAIL in .env is only an optional extra (not needed)."""
+    Nobody else gets the enquiry mail."""
     out = []
     def add(e):
         e = (e or "").strip()
@@ -65,7 +65,6 @@ def sales_emails():
     try:
         for a in database().admins.find({"active": True, "sales_notify": True}): add(a.get("email"))
     except Exception as ex: print("sales_quote admins:", ex)
-    for e in cfg("SALES_MAIL", "").split(","): add(e)
     return out
 
 

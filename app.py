@@ -604,27 +604,6 @@ def resend_wa(no):         # send the WhatsApp confirmation again (e.g. after th
     flash(f"WhatsApp confirmation for enquiry #{no}: " + ("sent ✅" if ok else "failed ❌ – " + err))
     return redirect(request.referrer or url_for("admin_enquiries"))
 
-@app.post("/admin/enquiries/<int:no>/resend-mail")
-@admin_required
-def resend_mail(no):       # email the enquiry PDF to the admins again (e.g. after an admin's email was added/fixed)
-    e = database().enquiries.find_one({"no": no}) or abort(404)
-    ok, note = mailer.send(e)
-    database().enquiries.update_one({"no": no}, {"$set": {"admin_mail": "sent" if ok else "failed", "admin_mail_note": note[:400], "admin_mail_at": db.now_ist()}})
-    flash(f"Enquiry PDF mail for #{no}: " + ("sent ✅" if ok else "failed ❌ – " + note))
-    return redirect(request.referrer or url_for("admin_enquiries"))
-
-@app.post("/admin/enquiries/<int:no>/resend-sheet-quote")
-@admin_required
-def resend_sheet_quote(no):   # email the customer the Google Sheet price/stock again (e.g. after fixing the sheet / product match)
-    e = database().enquiries.find_one({"no": no}) or abort(404)
-    matches = sheet_quote.find_matches(e.get("product"), e.get("size"), e.get("thickness"))
-    ok, note = sheet_quote.send(e, matches)
-    st = "sent" if ok else "failed"
-    note = (note + (" (0 rows matched in sheet)" if not matches else f" ({len(matches)} row(s) matched)")) if ok else note
-    database().enquiries.update_one({"no": no}, {"$set": {"sheet_quote": st, "sheet_quote_note": note[:400], "sheet_quote_at": db.now_ist()}})
-    flash(f"Price/stock mail for #{no}: " + ("sent ✅ " + note if ok else "failed ❌ – " + note))
-    return redirect(request.referrer or url_for("admin_enquiries"))
-
 # ---------- SALES person: write the price -> customer gets it by mail at once (link comes in the sales person's mail; token = HMAC, no login) ----------
 @app.route("/quote/<int:no>/<token>", methods=["GET", "POST"])
 def sales_quote_page(no, token):
