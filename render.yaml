@@ -1,0 +1,61 @@
+# Render Blueprint: GitHub 'main' branch par push hote hi live site auto-deploy hoti hai.
+services:
+  - type: web
+    name: srj-whatsapp-bot
+    runtime: python
+    plan: free                      # paid plan lena ho to 'starter' kar do
+    branch: main
+    autoDeploy: true                # <-- push karte hi naya version live
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -c gunicorn.conf.py app:app
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
+      - key: FLASK_DEBUG
+        value: "0"                  # live par hamesha 0
+      # Neeche wale secrets Render dashboard me ek baar bharne hain (value yahan nahi likhni):
+      - key: SECRET_KEY
+        generateValue: true
+      - key: MONGO_URI
+        sync: false
+      - key: MONGO_DB
+        value: srj_bot
+      - key: PUBLIC_URL
+        sync: false                 # e.g. https://srj-whatsapp-bot.onrender.com
+      - key: ADMIN_PHONE
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_NAME
+        value: Admin
+      - key: GST_PROVIDER
+        value: gstincheck
+      - key: GST_API_KEY
+        sync: false
+      - key: GST_STRICT
+        value: "1"
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: SMTP_FROM
+        sync: false
+      - key: MAIL_NOTIFY
+        value: "1"
+      - key: MAIL_NOTIFY_EXTRA
+        sync: false
+      - key: SALES_MAIL
+        sync: false
+      - key: SALES_QUOTE
+        value: "1"
+      - key: SHEET_QUOTE
+        value: "1"
+      - key: GOOGLE_SHEET_ID
+        sync: false
+      - key: GOOGLE_SERVICE_ACCOUNT_FILE
+        value: /etc/secrets/service_account.json   # Render > Environment > Secret Files me ye file upload karo

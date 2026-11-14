@@ -3,11 +3,16 @@
 service_account.json
 service_account.json.json
 
+# personal / runtime data (live server par ephemeral hai, git me nahi jaana chahiye)
+job_resumes/
+uploads/
+
 # local junk
 __pycache__/
 *.pyc
 venv/
 .venv/
+.vscode/settings.json
 bot.db
 *.log
 

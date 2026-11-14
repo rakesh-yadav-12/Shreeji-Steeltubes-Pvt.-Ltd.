@@ -1,0 +1,16 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Deploy (git push -> live)",
+      "type": "shell",
+      "command": "${workspaceFolder}\\push.bat",
+      "args": ["${input:msg}"],
+      "problemMatcher": [],
+      "group": "build"
+    }
+  ],
+  "inputs": [
+    { "id": "msg", "type": "promptString", "description": "Commit message", "default": "update" }
+  ]
+}

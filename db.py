@@ -34,12 +34,6 @@ def database():
         uri = os.getenv("MONGO_URI")
         name = os.getenv("MONGO_DB", "srj_bot")
 
-        # --- DEBUG (remove once it works) ---
-        print("DEBUG .env path :", _ENV_PATH, "| exists:", _ENV_PATH.exists())
-        print("DEBUG MONGO_URI :", (uri[:60] + "...") if uri else None)
-        print("DEBUG MONGO_DB  :", name)
-        # -------------------------------------
-
         if not uri:
             raise SystemExit(
                 f"\n❌ MONGO_URI is not set.\n"
