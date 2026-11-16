@@ -23,9 +23,11 @@ def enabled():
 
 
 def admin_emails():
-    """Every ACTIVE admin's email (Admin -> Admins) + MAIL_NOTIFY_EXTRA, de-duplicated, in order."""
+    """Only the ACTIVE admin(s) whose 'Sales mails' switch is On (Admin -> Admins) + MAIL_NOTIFY_EXTRA, de-duplicated,
+    in order. Earlier this sent the enquiry mail to EVERY active admin with an email saved - changed on request so
+    that the enquiry mail goes ONLY to the admin(s) the admin has explicitly switched on, not to everyone."""
     out = []
-    for a in database().admins.find({"active": True}):
+    for a in database().admins.find({"active": True, "sales_notify": True}):
         e = (a.get("email") or "").strip()
         if e and e.lower() not in [x.lower() for x in out]: out.append(e)
     for e in (os.getenv("MAIL_NOTIFY_EXTRA", "")).split(","):

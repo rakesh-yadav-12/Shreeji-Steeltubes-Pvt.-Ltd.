@@ -59,9 +59,9 @@ table.am tr:hover td:last-child{background:#fafbff}
   <input class="am-search" id="q" type="search" placeholder="Search name, username, mobile, email" oninput="amFilter()">
   <button class="btn add" type="button" onclick="amOpen('mAdd')">＋ Add admin</button>
  </div>
- <p class="note">Admins log in with their <b>username</b> or <b>mobile number</b> and password. Each admin's password is shown in the table — use <b>Reset</b> to set a new one. Every new <b>enquiry PDF</b> is emailed to each <b>active</b> admin who has an email saved.</p>
+ <p class="note">Admins log in with their <b>username</b> or <b>mobile number</b> and password. Each admin's password is shown in the table — use <b>Reset</b> to set a new one.</p>
  <p class="note" style="margin-bottom:12px"><b>Job applications</b> are emailed <u>only</u> to admins whose <b>Job mails</b> switch is On — so they don't go to everyone.</p>
- <p class="note" style="margin-bottom:12px"><b>Sales person:</b> switch <b>Sales mails</b> On — that admin gets a mail for every new enquiry saying whether the product is <u>available / not available</u>; when they write the price (button in the mail, or by replying to it) it is sent to the customer automatically.</p>
+ <p class="note" style="margin-bottom:12px"><b>New enquiry mail:</b> switch <b>Sales mails</b> On for the admin(s) who should get the new-enquiry email — it goes <u>only</u> to the admin(s) with this switch On, not to every admin.</p>
 
  <table class="am">
   <thead><tr><th>Admin</th><th>Username</th><th>Password</th><th>Contact</th><th>Email</th><th>Job mails</th><th>Sales mails</th><th>Status</th><th>Actions</th></tr></thead>
@@ -78,7 +78,7 @@ table.am tr:hover td:last-child{background:#fafbff}
     {% else %}<span class="hint">Add an email first</span>{% endif %}
    </td>
    <td data-l="Sales mails">
-    {% if a.email %}<form method="post" action="/admin/admins/{{a.id}}/toggle-sales"><button class="sw {{'on' if a.sales_notify}}" title="Gets every new enquiry: product available or not + a box to write the price (the price is mailed to the customer)"><i></i>{{'On' if a.sales_notify else 'Off'}}</button></form>
+    {% if a.email %}<form method="post" action="/admin/admins/{{a.id}}/toggle-sales"><button class="sw {{'on' if a.sales_notify}}" title="Receive the new-enquiry email"><i></i>{{'On' if a.sales_notify else 'Off'}}</button></form>
     {% else %}<span class="hint">Add an email first</span>{% endif %}
    </td>
    <td data-l="Status">
