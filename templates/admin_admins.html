@@ -1,9 +1,5 @@
 {% extends "base.html" %}{% block body %}
-<div class="card"><h3>Add admin</h3><form method="post" class="row"><input name="name" placeholder="Name" required><input name="phone" placeholder="Contact number" required><input name="email" type="email" placeholder="Email (enquiry alerts)"><input name="password" type="password" placeholder="Password" required><button>Add admin</button></form></div>
-<div class="card"><h3>Admins (stored in MongoDB)</h3><p style="font-size:13px;opacity:.8">New enquiry / job / vendor emails go to every <b>Active</b> admin that has an email saved.</p>
-<table><tr><th>Name</th><th>Contact</th><th>Email (alerts)</th><th>Status</th><th></th></tr>
-{% for a in admins %}<tr><td>{{a.name}}</td><td>{{a.phone}}</td>
-<td><form method="post" class="row" style="margin:0"><input type="hidden" name="action" value="email"><input type="hidden" name="id" value="{{a.id}}"><input name="email" type="email" value="{{a.email or ''}}" placeholder="email"><button class="s">Save</button></form></td>
-<td>{{'Active' if a.active else 'Disabled'}}</td><td>{% if a.id!=me %}<form method="post" action="/admin/admins/{{a.id}}/toggle"><button class="s">{{'Disable' if a.active else 'Enable'}}</button></form>{% else %}(you){% endif %}</td></tr>{% endfor %}</table></div>
-<div class="card"><h3>Email alerts</h3><form method="post" class="row"><input type="hidden" name="action" value="testmail"><button>Send test email</button></form></div>
+<div class="card"><h3>Add admin</h3><form method="post" class="row"><input name="name" placeholder="Name" required><input name="phone" placeholder="Contact number" required><input name="password" type="password" placeholder="Password" required><button>Add admin</button></form></div>
+<div class="card"><h3>Admins (stored in MongoDB)</h3><table><tr><th>Name</th><th>Contact</th><th>Status</th><th></th></tr>
+{% for a in admins %}<tr><td>{{a.name}}</td><td>{{a.phone}}</td><td>{{'Active' if a.active else 'Disabled'}}</td><td>{% if a.id!=me %}<form method="post" action="/admin/admins/{{a.id}}/toggle"><button class="s">{{'Disable' if a.active else 'Enable'}}</button></form>{% else %}(you){% endif %}</td></tr>{% endfor %}</table></div>
 <div class="card"><h3>Change my password</h3><form method="post" class="row"><input type="hidden" name="action" value="password"><input name="password" type="password" required><button>Update</button></form></div>{% endblock %}

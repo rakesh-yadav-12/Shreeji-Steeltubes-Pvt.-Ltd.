@@ -8,7 +8,7 @@ from flask import (Flask, request, session, redirect, url_for, render_template, 
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import qrcode
-import db, bot, whatsapp, pdfgen, about_fetch, mailer
+import db, bot, whatsapp, pdfgen, about_fetch
 from db import database, norm, ser
 
 app = Flask(__name__)
@@ -238,23 +238,13 @@ def admin_qr():
 def admin_admins():
     a = database().admins
     if request.method == "POST":
-        act = request.form.get("action")
-        if act == "password":
+        if request.form.get("action") == "password":
             a.update_one({"_id": ObjectId(session["admin_id"])},
                          {"$set": {"password_hash": generate_password_hash(request.form["password"])}})
             flash("Your password was changed")
-        elif act == "email":
-            a.update_one({"_id": ObjectId(request.form["id"])},
-                         {"$set": {"email": request.form.get("email", "").strip()}})
-            flash("Email saved")
-        elif act == "testmail":
-            ok, msg = mailer.send_now("Test email - SRJ enquiry alerts",
-                                      "If you can read this, enquiry email alerts are working.")
-            flash(("Test email: " if ok else "Test email FAILED: ") + msg)
         else:
             try:
                 a.insert_one({"name": request.form["name"], "phone": norm(request.form["phone"]),
-                              "email": request.form.get("email", "").strip(),
                               "password_hash": generate_password_hash(request.form["password"]),
                               "active": True, "created": db.now_ist()})
                 flash("Admin added")

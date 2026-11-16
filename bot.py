@@ -9,7 +9,6 @@ import options as OPT
 import about_fetch
 from db import database, get_state, set_state, next_no, now_ist, norm
 from whatsapp import send_text, send_document, send_image, send_video
-import mailer
 
 PRODUCTS = ["MS ERW Pipe", "GI ERW Pipe", "Square Hollow Section", "Rectangular Hollow Section",
             "Large Dia ERW Pipes", "Spiral Welded Pipes", "Seamless Pipe", "GP Pipe (Pre-Galvanized)"]
@@ -234,12 +233,6 @@ def simple_submit(key, to, phone, fid, vals):
     database()["jobs" if fid == "job" else "vendors"].insert_one(c)
     n = os.getenv("NOTIFY_NUMBER")
     if n: send_text(n, f"New {'job application' if fid == 'job' else 'vendor registration'} #{no}: {c['name']} {c['phone']}")
-    _kind = 'Job application' if fid == 'job' else 'Vendor registration'
-    _rows = [f"{f['label']}: {c.get(f['name']) or '-'}" for f in flat(get_form(fid))]
-    mailer.notify(f"New {_kind} #{no} - {c['name']}",
-                  f"New {_kind} #{no} received on {c['created']:%d-%m-%Y %H:%M} IST\n"
-                  f"Source: {c['source']}\n\n" + "\n".join(_rows),
-                  reply_to=c.get("email"))
     set_state(key, "DONE", {})
     msg = "✅ *Application submitted!* Our HR team will contact you if your profile matches." if fid == "job" else "✅ *Vendor registration received!* Our team will get in touch with you."
     items = [("📋 Enquiry Form", "s:enquiry"), ("📞 Contact Us", "s:contact")] if fid == "job" else [("📋 Request For Quote", "s:enquiry"), ("⬅ Supply Chain", "s:supply")]
@@ -365,10 +358,6 @@ def submit(key, to, phone, fid, vals, cust):
     set_state(key, "DONE", {})
     n = os.getenv("NOTIFY_NUMBER")
     if n: send_text(n, f"New enquiry #{no}: {doc['name']} ({doc['company']}) {doc['phone']} – {doc['product']}, {doc['size']}, qty {doc['qty']}")
-    _lines = [f"{k}: {doc.get(k, '-')}" for k in ("name", "company", "phone", "gst", "uc_code", "reps", "product", "size",
-              "thickness", "length", "qty", "grade", "standard", "brand", "delivery_date", "remarks", "source")]
-    mailer.notify(f"New enquiry #{no} - {doc['name']} ({doc['company']})",
-                  f"New enquiry #{no} received on {doc['created']:%d-%m-%Y %H:%M} IST\n\n" + "\n".join(_lines))
     chips = [("📞 Contact Us", "s:contact"), ("📝 New Enquiry", "enquiry"), HOME]
     if phone is None:
         send_text(to, f"✅ *Enquiry #{no} submitted!*\nThanks, *{doc['name']}*.",
