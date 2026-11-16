@@ -42,7 +42,7 @@ PRODUCT_INFO = {
                               "Steel structures, trusses, gates & grills, machine frames"),
     "Rectangular Hollow Section": ("Rectangular tubular sections giving high strength-to-weight ratio "
                                    "in load-bearing members.", "Roof trusses, columns, frames, body building"),
-    "Large Dia ERW Pipes": ("Large-diameter ERW pipes for heavy-duty conveyance and structural applications.",
+    "Large Dia Pipes": ("Large-diameter ERW pipes for heavy-duty conveyance and structural applications.",
                             "Water transmission, piling, industrial piping"),
     "Spiral Welded Pipes": ("Large-diameter pipes formed from helically wound steel coil for long, high-volume lines.",
                             "Water & sewage pipelines, piling, structural"),

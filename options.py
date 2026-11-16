@@ -9,26 +9,111 @@ The customer can always pick "Other" and type their own value. Restart the app a
 GRADES = {
     "default":                    ["YST 210", "YST 240", "YST 310", "Fe 410"],
     "MS ERW Pipe":                ["YST 210", "YST 240", "YST 310", "Fe 410", "API 5L Gr.B"],
+    "MS Round Pipe":              ["YST 210", "YST 240", "YST 310", "Fe 410", "API 5L Gr.B"],
+    "MS Square Hollow Section":   ["YST 210", "YST 240", "YST 310", "YST 355"],
+    "MS Rectangle Hollow Section": ["YST 210", "YST 240", "YST 310", "YST 355"],
+    "GI Round Pipe":              ["Light (A Class)", "Medium (B Class)", "Heavy (C Class)"],
+    "GI Square Hollow Section":   ["YST 210"],
+    "GI Rectangle Hollow Section": ["YST 210"],
+    "GP Round Pipe":              ["YST 210", "YST 240"],
+    "GP Square Hollow Section":   ["YST 210"],
+    "GP Rectangle Hollow Section": ["YST 210"],
+    "Large Diameter Round Pipe":  ["FE 330", "FE 410"],
     "GI ERW Pipe":                ["Light (A Class)", "Medium (B Class)", "Heavy (C Class)"],
     "Square Hollow Section":      ["YST 210", "YST 240", "YST 310", "YST 355"],
     "Rectangular Hollow Section": ["YST 210", "YST 240", "YST 310", "YST 355"],
-    "Large Dia ERW Pipes":        ["Fe 330", "Fe 410", "Fe 450", "API 5L Gr.B", "API 5L X52"],
-    "Spiral Welded Pipes":        ["Fe 330", "Fe 410", "Fe 450", "API 5L Gr.B", "API 5L X52"],
+    "Large Dia Pipes":        ["Fe 330", "Fe 410", "Fe 450", "API 5L Gr.B", "API 5L X52"],
+    "Spiral Welded Pipes":        ["Gr.B"],
+    "Seamless Pipe":              ["Gr.B"],
 }
 
 # ---- Standard (per product) ----
 STANDARDS = {
     "default":                    ["IS 1239 (Part 1)", "IS 3589", "IS 1161", "API 5L"],
     "MS ERW Pipe":                ["IS 1239 (Part 1)", "IS 3589", "IS 1161", "API 5L", "ASTM A53"],
+    "MS Round Pipe":              ["IS 1239 (Part 1)", "IS 3589", "IS 1161", "API 5L", "ASTM A53"],
+    "MS Square Hollow Section":   ["IS 4923"],
+    "MS Rectangle Hollow Section": ["IS 4923"],
+    "GI Round Pipe":              ["IS 1239"],
+    "GI Square Hollow Section":   ["IS 4923"],
+    "GI Rectangle Hollow Section": ["IS 4923"],
+    "GP Round Pipe":              ["IS 3601", "IS 1161", "IS 9295"],
+    "GP Square Hollow Section":   ["IS 4923"],
+    "GP Rectangle Hollow Section": ["IS 4923"],
+    "Large Diameter Round Pipe":  ["IS 3589"],
     "GI ERW Pipe":                ["IS 1239 (Part 1)", "IS 4736 (Galvanizing)", "ASTM A53"],
     "Square Hollow Section":      ["IS 4923", "IS 1161", "EN 10219", "ASTM A500"],
     "Rectangular Hollow Section": ["IS 4923", "IS 1161", "EN 10219", "ASTM A500"],
-    "Large Dia ERW Pipes":        ["IS 3589", "API 5L", "ASTM A53"],
-    "Spiral Welded Pipes":        ["IS 3589", "IS 5504", "API 5L", "AWWA C200"],
+    "Large Dia Pipes":        ["IS 3589", "API 5L", "ASTM A53"],
+    "Spiral Welded Pipes":        ["ASTM A53", "API 5L"],
+    "Seamless Pipe":              ["ASTM A53", "API 5L"],
 }
+
+# ---- Standard & Grade together (ONE dropdown in the Enquiry form) ----
+# Each entry is (Standard, Grade).  Shown to the customer as  "IS 1161 - YST 240".  Use None for a standard that has no grade.
+# EDIT these pairs to match what Shreeji actually supplies.  Restart the app after editing.
+_MS  = [("IS 1239 (Part 1)", "YST 240"), ("IS 1161", "YST 210"), ("IS 1161", "YST 240"), ("IS 1161", "YST 310"),
+        ("IS 3589", "Fe 330"), ("IS 3589", "Fe 410"), ("API 5L", "Gr.B"), ("ASTM A53", "Gr.B")]
+_HOL = [("IS 4923", "YST 210"), ("IS 4923", "YST 240"), ("IS 4923", "YST 310"), ("IS 4923", "YST 355"),
+        ("IS 1161", "YST 240"), ("IS 1161", "YST 310"), ("EN 10219", None), ("ASTM A500", None)]
+_LRG = [("IS 3589", "Fe 330"), ("IS 3589", "Fe 410"), ("IS 3589", "Fe 450"), ("API 5L", "Gr.B"), ("API 5L", "X52"), ("ASTM A53", None)]
+STD_GRADE = {
+    "default":                    _MS,
+    "MS ERW Pipe":                _MS,
+    "MS Round Pipe":              [("IS 1239", None)],      # MS ERW Pipe > MS Round Pipe: standard shown to the customer
+    "MS Square Hollow Section":   [("IS 4923", "YST 210"), ("IS 4923", "YST 240"), ("IS 4923", "YST 310"), ("IS 4923", "YST 355")],      # MS ERW Pipe > MS Square Hollow Section
+    "MS Rectangle Hollow Section": [("IS 4923", "YST 210"), ("IS 4923", "YST 240"), ("IS 4923", "YST 310"), ("IS 4923", "YST 355")],      # MS ERW Pipe > MS Rectangle Hollow Section
+    "GI Round Pipe":              [("IS 1239", None)],      # GI ERW Pipe > GI Round Pipe
+    "GI Square Hollow Section":   [("IS 4923", "YST 210")],      # GI ERW Pipe > GI Square Hollow Section
+    "GI Rectangle Hollow Section": [("IS 4923", "YST 210")],      # GI ERW Pipe > GI Rectangle Hollow Section
+    "GP Round Pipe":              [("IS 3601", "YST 210"), ("IS 3601", "YST 240"), ("IS 1161", "YST 210"), ("IS 1161", "YST 240"), ("IS 9295", None)],
+    "GP Square Hollow Section":   [("IS 4923", "YST 210")],      # GP Pipe > GP Square Hollow Section
+    "GP Rectangle Hollow Section": [("IS 4923", "YST 210")],      # GP Pipe > GP Rectangle Hollow Section
+    "Large Diameter Round Pipe":  [("IS 3589", "FE 330"), ("IS 3589", "FE 410")],      # Large Dia Pipes > Large Diameter Round Pipe
+    "GI ERW Pipe":                [("IS 1239 (Part 1)", "Light (A Class)"), ("IS 1239 (Part 1)", "Medium (B Class)"),
+                                   ("IS 1239 (Part 1)", "Heavy (C Class)"), ("IS 4736 (Galvanizing)", None), ("ASTM A53", None)],
+    "Square Hollow Section":      _HOL,
+    "Rectangular Hollow Section": _HOL,
+    "Large Dia Pipes":        _LRG,
+    "Spiral Welded Pipes":        [("IS 3589", None)],      # Spiral Welded Pipes: only IS 3589
+    "Seamless Pipe":              [("ASTM A53", None), ("API 5L", "Gr.B")],      # Seamless Pipe: standard & grade shown to the customer
+}
+
+def std_grade_text(std, grade):
+    """('IS 1161', 'YST 240') -> 'IS 1161 - YST 240'"""
+    return f"{std} - {grade}" if grade else std
+
+# text lists used by the web form + WhatsApp flow (product -> ["IS 1161 - YST 240", ...])
+STD_GRADE_LISTS = {k: [std_grade_text(s, g) for s, g in v] for k, v in STD_GRADE.items()}
+
+def split_std_grade(text):
+    """'IS 1161 - YST 240' -> ('IS 1161', 'YST 240').  Anything the customer typed themselves -> (text, '-')."""
+    t = (text or "").strip()
+    for v in STD_GRADE.values():
+        for s, g in v:
+            if t == std_grade_text(s, g): return s, (g or "-")
+    return (t or "-"), "-"
 
 # ---- Brand preference (same for all products) ----
 BRANDS = ["Shreeji", "No preference (any brand)"]
+
+# ---- Brand preference per product (product -> brands).  When the customer picks one of these products, ONLY these brands are offered;
+#      every other product uses the BRANDS list above.  "Other" is added automatically by the enquiry form. ----
+_MS_BRANDS = ["Tata Pipe", "Jindal Star", "Maharashtra Seamless", "Hitech", "JTL", "Asian", "SRJ", "Semicoil"]
+_MS_HOLLOW_BRANDS = ["Tata Structura", "Jindal Panther", "Hitech", "SRJ", "Semicoil"]
+BRANDS_BY_PRODUCT = {
+    "MS Round Pipe":            _MS_BRANDS,      # MS ERW Pipe > MS Round Pipe
+    "MS Square Hollow Section":      _MS_HOLLOW_BRANDS,      # MS ERW Pipe > MS Square Hollow Section
+    "MS Rectangle Hollow Section": _MS_HOLLOW_BRANDS,      # MS ERW Pipe > MS Rectangle Hollow Section
+    "GI Round Pipe":                ["Jindal Star", "Hitech"],      # GI ERW Pipe > GI Round Pipe
+    "GI Square Hollow Section":     ["Hitech"],      # GI ERW Pipe > GI Square Hollow Section
+    "GI Rectangle Hollow Section":  ["Hitech"],      # GI ERW Pipe > GI Rectangle Hollow Section
+    "GP Square Hollow Section":     ["Hitech"],      # GP Pipe > GP Square Hollow Section
+    "GP Rectangle Hollow Section":  ["Hitech"],      # GP Pipe > GP Rectangle Hollow Section
+    "Large Diameter Round Pipe":    ["Jindal Star", "MSL", "Tata Pipes", "Asian", "JTL", "Hitech"],      # Large Dia Pipes > Large Diameter Round Pipe
+    "Spiral Welded Pipes":          ["Narmada", "Hitech"],      # Spiral Welded Pipes
+    "Seamless Pipe":                ["Maharashtra Seamless Limited"],      # Seamless Pipe
+}
 
 # ---- Delivery location: "Same as my location" is added automatically from the customer's profile ----
 LOCATION_EXTRA = ["Self pickup (Godown)"]
@@ -43,8 +128,13 @@ DATE_CHOICES = [("Urgent - within 3 days", 3, "Urgent"),
 EXAMPLES = {
     "size": {"default": "e.g. 50 NB  or  60.3 mm OD",
              "Square Hollow Section": "e.g. 40 x 40 mm",
+             "MS Square Hollow Section": "e.g. 40 x 40 mm",
+             "MS Rectangle Hollow Section": "e.g. 60 x 40 mm",
+             "GI Square Hollow Section": "e.g. 40 x 40 mm", "GP Square Hollow Section": "e.g. 40 x 40 mm",
+             "GI Rectangle Hollow Section": "e.g. 60 x 40 mm", "GP Rectangle Hollow Section": "e.g. 60 x 40 mm",
+             "Large Diameter Round Pipe": "e.g. 400 NB  or  508 mm OD",
              "Rectangular Hollow Section": "e.g. 60 x 40 mm",
-             "Large Dia ERW Pipes": "e.g. 400 NB  or  508 mm OD",
+             "Large Dia Pipes": "e.g. 400 NB  or  508 mm OD",
              "Spiral Welded Pipes": "e.g. 1000 mm OD"},
     "thickness": {"default": "e.g. 3.2 mm  or  Sch 40"},
     "length":    {"default": "e.g. 6 m  /  12 m  /  Random  /  Cut length"},
@@ -141,29 +231,29 @@ PRODUCT_INFO = {
  "gi": ("GI Pipe", "gi.jpg", "GI Pipe - Hot Dipped Galvanized",
    [("Size", "15 NB - 500 NB (21.70 - 508.00 mm OD)"), ("Thickness", "2.00 - 12.70 mm (Light / Medium / Heavy)"), ("Length", "4.00 - 12.00 m"),
     ("Standards", "IS 1239 (Part 1) / IS 3589 Fe330-Fe410, IS 1161 / IS 3601, ASTM A53, BS 1387")],
-   "Steel pipes zinc-coated by hot-dip process. Used for water supply, agriculture & irrigation, construction, fencing, firefighting lines, oil, gas & electrical conduits.", "GI ERW Pipe"),
+   "Steel pipes zinc-coated by hot-dip process. Used for water supply, agriculture & irrigation, construction, fencing, firefighting lines, oil, gas & electrical conduits.", "GI Round Pipe"),
  "ms": ("MS Pipe", "ms.jpg", "MS Pipe - Black / ERW",
    [("Size", "15 NB - 600 NB (21.70 - 610.00 mm OD)"), ("Thickness", "1.00 - 16.00 mm"), ("Length", "4.00 - 12.00 m"),
     ("Grade", "IS1239, IS3589 Fe330-Fe410, IS1161 YST210-YST355, IS3601, IS9295")],
-   "Strong, durable mild steel pipes for water, gas & fuel transport, structural, fire protection, conveyors, fencing, electric poles and fabrication.", "MS ERW Pipe"),
+   "Strong, durable mild steel pipes for water, gas & fuel transport, structural, fire protection, conveyors, fencing, electric poles and fabrication.", "MS Round Pipe"),
  "msblack": ("MS Black Pipe", "ms.jpg", "MS Black Pipe (ERW)",
    [("Size", "21.70 - 610.00 mm OD"), ("Class", "Light / Medium / Heavy"), ("Thickness", "1.00 - 16.00 mm"), ("Length", "4.00 - 12.00 m")],
-   "Uncoated black ERW pipe - superior strength, uniform design, usable indoors and outdoors; economical in operation.", "MS ERW Pipe"),
+   "Uncoated black ERW pipe - superior strength, uniform design, usable indoors and outdoors; economical in operation.", "MS Round Pipe"),
  "ldp": ("Large Diameter Pipe", "ldp.jpg", "Large Diameter Pipes (ERW / H-SAW / L-SAW)",
    [("ERW", "168.30 - 610.00 mm OD, 4 - 16 mm, 4 - 12 m"), ("H-SAW / L-SAW", "457 - 3048 mm OD, 5 - 16 mm, 6 - 12 m"),
     ("Standards", "IS3589 Fe330/Fe410, API 5L up to X80, ASTM A252 / A139, IS 5504"), ("Coatings", "3LPE, Fusion Bond Epoxy, Coal Tar, Cement Mortar Lining")],
-   "Used for water mains, industrial water lines, agriculture & irrigation, oil & gas pipelines, refinery piping and cross-country pipelines.", "Large Dia ERW Pipes"),
+   "Used for water mains, industrial water lines, agriculture & irrigation, oil & gas pipelines, refinery piping and cross-country pipelines.", "Large Diameter Round Pipe"),
  "hollow": ("Structural Hollow Sections", "hollow.jpg", "Hollow Sections - SHS / RHS / CHS",
    [("CHS", "21.70 - 610.00 mm OD, 1.20 - 16.00 mm (IS1161 / IS3589)"), ("SHS", "12x12 - 600x600 mm, 1.20 - 25.00 mm (IS4923)"),
     ("RHS", "26x13 - 600x550 mm, 1.20 - 25.00 mm (IS4923)"), ("Grade", "YST210 / YST240 / YST310 / YST355  (high grade in ready stock)"), ("Length", "4.00 - 12.00 m")],
-   "For machinery, transmission towers, automotive, construction, furniture, solar structures & electric poles. YST310 / YST355: yield 355 MPa, up to 40% steel saving. Hot-dip galvanized also available.", "Square Hollow Section"),
+   "For machinery, transmission towers, automotive, construction, furniture, solar structures & electric poles. YST310 / YST355: yield 355 MPa, up to 40% steel saving. Hot-dip galvanized also available.", "MS Square Hollow Section"),
  "seamless": ("Seamless Pipe", "seamless.jpg", "Carbon Seamless Pipes",
    [("Size", "21.70 - 610 mm OD"), ("Thickness", "SCH 20 / 30 / STD / 40 / XS / 60 / 80 / 100 / 120 / 140 / 160 / XXS"), ("Grade", "ASTM A106 Gr.B / ASTM A53 (others on request)"), ("Length", "5.00 - 7.00 m")],
    "No weld seam - uniform strength & better pressure capacity. For oil & gas, petrochemical, boilers & heat exchangers, fertilizer, automotive and bearings.", "Seamless Pipe"),
  "gp": ("GP Pipe", "gp.jpg", "Pre-Galvanized Tube (GP Pipe)",
    [("Round (CHS)", "21.30 - 76.30 mm OD, IS 3601"), ("SHS", "15x15 - 100x100 mm, IS 4923"), ("RHS", "40x20 - 100x50 mm, IS 4923"),
     ("Thickness / Length", "0.80 - 3.00 mm, 4 - 6 m"), ("Zinc coating", "60 / 90 / 120 GSM")],
-   "Made from zinc pre-coated sheets. For gates & grills, electrical conduits, hoardings, scaffolding, fence framework, cabling & ducting, bus bodies, greenhouses.", "GP Pipe (Pre-Galvanized)"),
+   "Made from zinc pre-coated sheets. For gates & grills, electrical conduits, hoardings, scaffolding, fence framework, cabling & ducting, bus bodies, greenhouses.", "GP Square Hollow Section"),
 }
 QA_TEXT = ("*Quality Assurance*\nWe continuously update and train ourselves to give the best solutions. Every product is thoroughly checked & inspected before dispatch.\n\n"
            "- Test certificate for all products\n- Third-party inspection & lab testing facility\n- We regularly monitor statutory, regulatory, health, safety & environmental requirements\n"
@@ -171,7 +261,8 @@ QA_TEXT = ("*Quality Assurance*\nWe continuously update and train ourselves to g
 GALLERY_IMAGES = [(H + "services.jpg", "Services - cutting, bevelling, coating, testing"), (H + "awards.jpg", "Awards & Certifications"),
                   (H + "industries.jpg", "Industries we serve"), (H + "ldp.jpg", "Large diameter pipes in stock"), (H + "hollow.jpg", "Hollow sections")]
 DEALERS_TEXT = ("*Authorised Dealers & Distributors*\nAuthorised distributor of:\n- Tata Structura & Tata Pipes\n- Maharashtra Seamless Limited\n- Jindal Star & Jindal Panther (Hollow Section)\n"
-                "- Hi-Tech Pipes (Hi-Tech SAW)\n- Narmada, Rama, Khanna, Asian, SRJ")
+                "- Hi-Tech Pipes (Hi-Tech SAW)\n- Narmada, Rama Steel Tubes, KP, Asian, Asian Mills, Asian Tubes & Pipes, Uttam\n"
+                "Also associated with: JCO Gas Pipe, Tata Structura, Prakash Surya")
 CLIENTS_TEXT = ("*Our Clients*\n1,500+ satisfied clients and 1,200+ active customers across India in:\n- Infrastructure & Oil & Gas\n- Prefabricated Engineered Buildings\n- Fire Fighting & HVAC\n"
                 "- Automotive, Solar / Renewable & Power Plants\n- Heavy Engineering, Agriculture & General Fabrication\n\n_(Add client names / logos here in options.py -> CLIENTS_TEXT)_")
 SERVICES_TEXT = ("*Services - A to Z, 365 days*\n- Cut to length, angle cut, cold saw & gas cutting\n- Bevelling, deburring, threading / socket\n- Profiling & nesting of pipe, lathe tube cutting\n"

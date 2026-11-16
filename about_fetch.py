@@ -196,6 +196,7 @@ def get_about(force=False):
     now = time.time()
     with _lock:
         c = _cache
+        if force and c["data"] and now - c["t"] < 60: return c["data"]            # a refresh re-reads the website, but at most once a minute
         if not force and c["data"] and now - c["t"] < TTL: return c["data"]
         if not force and c["data"] is None and now - c["tried"] < 60: return _merge(None)   # do not hammer the site while it is down
         c["tried"] = now
