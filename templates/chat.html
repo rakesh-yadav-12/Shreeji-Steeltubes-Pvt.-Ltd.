@@ -1,14 +1,12 @@
 {% extends "base.html" %}{% block body %}
 <style>
-#box{height:60vh;overflow-y:auto;background:#f2f4fc;border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px}
+#box{height:60vh;overflow-y:auto;background:#efeae2;border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px}
 .m{max-width:80%;padding:8px 12px;border-radius:8px;font-size:14px;line-height:1.45;white-space:pre-wrap;word-wrap:break-word;box-shadow:0 1px 1px #0002}
-.bot{background:#fff;align-self:flex-start;border:1px solid #e5e7f5}.me{background:#26399e;color:#fff;align-self:flex-end}
-#f{display:flex;gap:8px;margin-top:10px}#t{flex:1;padding:12px;border:1px solid #d3d7e0;border-radius:20px}
-.q button{margin:4px 4px 0 0;background:#fff;color:#26399e;border:1.5px solid #26399e;border-radius:16px}
-.q button:hover{background:#26399e;color:#fff}
-#f button{background:#f15307}
+.bot{background:#fff;align-self:flex-start}.me{background:#d9fdd3;align-self:flex-end}
+#f{display:flex;gap:8px;margin-top:10px}#t{flex:1;padding:12px;border:1px solid #ccc;border-radius:20px}
+.q button{margin:4px 4px 0 0;background:#fff;color:#14304f;border:1px solid #14304f}
 </style>
-<div class="card"><h3>🟠 Shreeji SteelTubes Pvt. Ltd. – Chatbot</h3>
+<div class="card"><h3>🟢 Shreeji Steeltubes – Chatbot</h3>
 <div id="box"></div>
 <div class="q"><button onclick="go('hi')">Hi</button><button onclick="go('1')">1</button><button onclick="go('2')">2</button><button onclick="go('3')">3</button><button onclick="go('menu')">Menu</button><button onclick="go('skip')">Skip</button></div>
 <form id="f" onsubmit="return send()"><input id="t" placeholder="Type a message…" autocomplete="off" autofocus><button>Send</button></form></div>

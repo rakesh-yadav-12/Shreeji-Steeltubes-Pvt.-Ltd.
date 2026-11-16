@@ -1,7 +1,7 @@
 /* ===== Home tab : Ashoka Buildcon style (logo + menu, banner, about, product cards, contact) ===== */
-:root{--navy:#0c164a;--hb:#26399e;--ho:#f15307;--hl:#f2f4fc;--hink:#1a1e35;--hmut:#5a5f7f}
-#tabs{display:flex;background:#fff;border-bottom:1px solid #dcdfef;z-index:4}
-#tabs button{flex:1;border:0;background:transparent;padding:11px 8px 10px;font-size:15px;font-weight:700;color:#5a5f7f;cursor:pointer;border-bottom:3px solid transparent;font-family:inherit}
+:root{--navy:#101a46;--hb:#2E3F96;--ho:#EE6A24;--hl:#f3f5fb;--hink:#1c2333;--hmut:#5c667d}
+#tabs{display:flex;background:#fff;border-bottom:1px solid #dde2ee;z-index:4}
+#tabs button{flex:1;border:0;background:transparent;padding:11px 8px 10px;font-size:15px;font-weight:700;color:#5c667d;cursor:pointer;border-bottom:3px solid transparent;font-family:inherit}
 #tabs button.on{color:var(--hb);border-bottom-color:var(--ho)}
 /* once the customer says "Hi" the Home / Chat tab bar is removed */
 #app.started #tabs{display:none}
@@ -10,7 +10,7 @@
 #app:not(.m-home) #home{display:none}
 #app.m-home header{background:#fff;border-bottom:3px solid var(--ho);color:var(--hb);box-shadow:0 1px 6px #0001}
 #app.m-home .ti b{color:var(--hb)}#app.m-home .ti span{color:var(--hmut)}
-#app.m-home header button,#app.m-home header a{background:#edeffc;color:var(--hb)}
+#app.m-home header button,#app.m-home header a{background:#eef1fb;color:var(--hb)}
 #app.m-home header button:hover,#app.m-home header a:hover{background:var(--hb);color:#fff}
 
 #home{flex:1;overflow-y:auto;overflow-x:hidden;background:#fff;color:var(--hink);position:relative;overscroll-behavior:contain}
@@ -22,7 +22,7 @@
 .h-title:after{content:'';display:block;width:56px;height:4px;background:var(--ho);margin-top:12px}
 .h-title.c{text-align:center}.h-title.c:after{margin-left:auto;margin-right:auto}
 .h-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:3px;padding:12px 22px;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;text-decoration:none;cursor:pointer;font-family:inherit}
-.h-btn.o{background:var(--ho);color:#fff}.h-btn.o:hover{background:#ca490c}
+.h-btn.o{background:var(--ho);color:#fff}.h-btn.o:hover{background:#d85a17}
 .h-btn.w{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px #fff}.h-btn.w:hover{background:#fff;color:var(--navy)}
 .h-btn.b{background:var(--hb);color:#fff}.h-btn.b:hover{background:#fff;color:var(--navy)}
 .h-btn.l{background:#fff;color:var(--hb);box-shadow:inset 0 0 0 2px var(--hb)}.h-btn.l:hover{background:var(--hb);color:#fff}
@@ -49,19 +49,19 @@
 .h-about .ph img{position:relative;z-index:1;display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
 .h-about .ph:before{content:'';position:absolute;left:-12px;bottom:-12px;width:55%;height:55%;border-left:5px solid var(--ho);border-bottom:5px solid var(--ho)}
 .h-about .lb{font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ho);margin-bottom:8px}
-.h-about p.t{font-size:16px;line-height:1.7;color:#393f61;margin-top:14px}.h-about p.t:first-of-type{margin-top:22px}
+.h-about p.t{font-size:16px;line-height:1.7;color:#3c465e;margin-top:14px}.h-about p.t:first-of-type{margin-top:22px}
 .h-tag{margin-top:22px;font-family:Georgia,serif;font-style:italic;color:var(--hb);font-size:18px}
 
 /* stats strip */
 .h-stats{background:var(--navy);color:#fff}
 .h-stats .g{display:grid;grid-template-columns:repeat(4,1fr)}
 .h-stats .s{padding:26px 14px;text-align:center;border-left:1px solid #ffffff22}.h-stats .s:first-child{border-left:0}
-.h-stats b{display:block;font-family:Georgia,serif;font-size:clamp(24px,3.4vw,36px);color:#ffa87f;line-height:1.1}
-.h-stats span{display:block;font-size:13px;color:#ccd3f6;margin-top:6px}
+.h-stats b{display:block;font-family:Georgia,serif;font-size:clamp(24px,3.4vw,36px);color:#ffb27f;line-height:1.1}
+.h-stats span{display:block;font-size:13px;color:#cfd6f3;margin-top:6px}
 
 /* "OUR PRODUCTS" cards: image, title, MORE INFO */
 .h-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:34px}
-.pc{background:#fff;text-align:center;box-shadow:0 3px 16px #0c164a14;padding-bottom:20px}
+.pc{background:#fff;text-align:center;box-shadow:0 3px 16px #101a4614;padding-bottom:20px}
 .pc img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
 #home .pc h3{font-size:16px;text-transform:uppercase;letter-spacing:.6px;margin:16px 10px 14px;min-height:2.6em;display:flex;align-items:center;justify-content:center}
 
@@ -71,31 +71,31 @@
 .pmb{position:relative;max-width:980px;margin:0 auto;background:#fff}
 .pmx{position:absolute;top:6px;right:8px;z-index:3;width:38px;height:38px;border:0;border-radius:50%;background:var(--ho);color:#fff;font-size:24px;line-height:1;cursor:pointer}
 .h-pp{display:grid;grid-template-columns:5fr 6fr}
-.h-pp .im{position:relative;min-height:300px;background:#0a1133}
+.h-pp .im{position:relative;min-height:300px;background:#0d1330}
 .h-pp .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .h-pp .im span{position:absolute;left:0;bottom:0;background:var(--ho);color:#fff;font-weight:700;font-size:13px;padding:8px 14px}
 .h-pp .bd{padding:26px 28px}
 #home .h-pp h3{font-size:26px}.h-pp .sb{color:var(--ho);font-weight:700;font-size:14px;margin:4px 0 12px}
-.h-pp .ds{font-size:15px;line-height:1.65;color:#393f61}
+.h-pp .ds{font-size:15px;line-height:1.65;color:#3c465e}
 #home .h-pp h4{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:15px;margin:20px 0 8px;color:var(--hb)}
 .h-pp table{width:100%;border-collapse:collapse;font-size:14px}
-.h-pp td{padding:8px 10px;border-top:1px solid #e2e5f4;vertical-align:top;line-height:1.4}.h-pp tr:first-child td{border-top:2px solid var(--hb)}
+.h-pp td{padding:8px 10px;border-top:1px solid #e3e7f3;vertical-align:top;line-height:1.4}.h-pp tr:first-child td{border-top:2px solid var(--hb)}
 .h-pp td:first-child{width:36%;background:var(--hl);color:var(--hb);font-weight:700}
-.h-chips{display:flex;flex-wrap:wrap;gap:7px}.h-chips span{background:#edeffc;color:var(--navy);font-size:13px;padding:5px 11px;border-radius:14px}
-.h-pp ul{margin:0;padding-left:18px;font-size:14.5px;line-height:1.6;color:#393f61}
+.h-chips{display:flex;flex-wrap:wrap;gap:7px}.h-chips span{background:#eef1fb;color:var(--navy);font-size:13px;padding:5px 11px;border-radius:14px}
+.h-pp ul{margin:0;padding-left:18px;font-size:14.5px;line-height:1.6;color:#3c465e}
 .h-pp .ac{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
 
 /* brands */
 .h-brands{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:34px}
-.h-brands div{display:flex;align-items:center;justify-content:center;height:96px;padding:14px;background:#fff;border:1px solid #dcdfef}
+.h-brands div{display:flex;align-items:center;justify-content:center;height:96px;padding:14px;background:#fff;border:1px solid #dde2ee}
 .h-brands img{max-width:100%;max-height:100%;object-fit:contain}
 
 /* contact + footer */
 .h-ct{background:var(--navy);color:#fff}#home .h-ct .h-title{color:#fff}
 .h-cg{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:34px}
-#home .h-cg h3{color:#ffa87f;font-size:18px;margin-bottom:8px}.h-cg p{font-size:14.5px;line-height:1.65;color:#dde1f9}.h-cg a{color:#fff}
+#home .h-cg h3{color:#ffb27f;font-size:18px;margin-bottom:8px}.h-cg p{font-size:14.5px;line-height:1.65;color:#dfe4f7}.h-cg a{color:#fff}
 .h-cb{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
-.h-foot{background:#070e33;color:#969fd3;text-align:center;font-size:13px;padding:16px}
+.h-foot{background:#0a1130;color:#9aa5cf;text-align:center;font-size:13px;padding:16px}
 
 @media(max-width:900px){
  .h-about,.h-pp{grid-template-columns:1fr}.h-pp .im{min-height:220px;aspect-ratio:16/9}

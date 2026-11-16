@@ -88,7 +88,7 @@ GALLERY = [
     ("s5", "Authorised Distributor", ["Jindal Pipes  •  Hitech Pipes  •  Rama Pipes", "Khanna Industrial Pipes  •  Uttam  •  Narmada  •  Asian"]),
     ("s6", "Industries We Serve", ["Construction & Heavy Equipment", "Infrastructure  •  Oil & Gas  •  Agriculture", "Machinery  •  Automotive & Transportation", "Renewable, Hydro & Nuclear Power Plants"]),
     ("s7", "Our Journey", ["1970 - Business journey begins as MODI BROTHERS", "2011 - Shreeji Steel Tubes starts as Stockist & Supplier of steel tubes", "Today - ISO 9001:2015 certified \"House of Quality Steel Tubes\""]),
-    ("s8", "Explore Our Website", ["Product Catalogue  •  Certificates  •  Quality Assurance", "Photo Gallery  •  Documents  •  Our Clients", "Request for Quote  •  Vendor Registration  •  Career", "www.shreejisteeltubes.com"]),
+    ("s8", "Explore Our Website", ["Product Catalogue  •  Certificates  •  Quality Assurance", "Photo Gallery  •  Downloads  •  Our Clients", "Request for Quote  •  Vendor Registration  •  Career", "www.shreejisteeltubes.com"]),
     ("s9", "Visit Us", ["Head Office: 314/315, Hive 67, 3rd Floor, Poisar Gymkhana Road, Near Raghuleela Mall, Kandivali West, Mumbai 400067", "Kalamboli Stock Yard: Khedupada, Near New Taloja Bridge, Near Steel Chamber Kanta 2, Kalamboli, Raigad 410218"], 33),
     ("s10", "Connect With Us", SOCIAL, "connect"),
 ]

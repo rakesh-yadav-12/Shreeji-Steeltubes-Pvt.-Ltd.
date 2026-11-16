@@ -48,13 +48,6 @@ Edit `tools/make_intro_media.py` (`VIDEO` = video slides, `GALLERY` = chat slide
 
 **Screen:** the web chat uses the whole device screen and is styled like WhatsApp (green header, beige wallpaper with logo watermark, green outgoing bubbles, quick-reply buttons, round send button).
 
-## Smart replies, security & polish (latest update)
-- **Free-text understanding (English + Hinglish):** customers can type `price of GI pipe`, `catalogue bhejo`, `address kya hai`, `jobs`, `documents`, `thanks` ... and the bot opens the right page. Rules are in `bot.py` -> `INTENTS` (add your own words there). Unknown text gets a friendly "I did not understand" hint + the menu, and `help` lists what can be typed.
-- **Product cards:** "New here?" hint, animated *View details* on hover (laptop) / finger-touch (phone).
-- **Documents:** the old "Downloads" section is now **Documents** (card grid with PDF previews from `static/home/documents/`).
-- **Security:** chat limited to 40 messages/min per visitor, admin login to 8 tries / 10 min per IP, secure cookies, safe headers, debug mode OFF by default (set `FLASK_DEBUG=1` only on your own PC). **Set a long random `SECRET_KEY` and change `ADMIN_PASSWORD` in `.env` before going live.**
-- **Extras:** `/healthz` (uptime check), `/manifest.webmanifest` (Add to Home screen), theme colour, screen-reader labels.
-
 ## Optional: WhatsApp Cloud API
 Webhook `https://YOUR-DOMAIN/webhook` (verify token = `WA_VERIFY_TOKEN`); fill `WA_TOKEN`, `WA_PHONE_NUMBER_ID`. WhatsApp users are not asked for their number (it is known). To make the QR open WhatsApp instead, set `QR_URL=https://wa.me/91XXXXXXXXXX`.
 
@@ -64,22 +57,15 @@ app.py · bot.py · options.py · db.py (MongoDB) · pdfgen.py · whatsapp.py ·
 ## Chat flow (follows the hand-drawn flowchart)
 Start -> **Hi** (welcome + logo) -> **Home tab** (hero slider like ashokabuildcon.com) -> *Existing user?*
 - **Existing user** -> Enquiry Form (Customer Details first if we do not know them yet)
-- **New customer** -> About Us -> Products -> Resource -> Supply Chain -> Services -> Enquiry Form -> Contact Us
+- **New user** -> About Us -> Products -> Resource -> Supply Chain -> Services -> Job Application Form -> Enquiry Form -> Contact Us
   (each page has a *Next* button; *All sections* in the menu opens any page directly)
-- **Join our Team** (3rd option in the *Select user type* popup) -> Job Application form (the form is no longer in any other menu)
 
 | Page | Sub options |
 |---|---|
 | Products | GI Pipe · MS Pipe (-> MS Black Pipe, Large Diameter Pipe) · Structural Hollow Sections · Seamless Pipe · GP Pipe |
-| Resource | Product Catalogue · Certificates · Quality Assurance · Gallery · Documents |
+| Resource | Product Catalogue · Certificates · Quality Assurance · Gallery · Downloads |
 | Supply Chain | Authorised Dealers & Distributors · Request For Quote · Vendor Registration · Clients |
 
 Edit all texts / product tables in `options.py` (PRODUCT_INFO, ABOUT_TEXT, CLIENTS_TEXT ...). Home slider slides: `templates/home.html` (array `HS`), images in `static/home/`.
 Job applications / vendor registrations are saved in MongoDB (`jobs`, `vendors`) and shown in Admin -> Jobs / Vendors.
-Files for Catalogue / Certificates / Gallery / Documents: Admin -> Catalog files, or the `catalog/<catalogue|certificate|awards|datasheet|documents>/` folders.
-
-## New: Hindi/English, Voice, WhatsApp confirmation, new Admin panel
-- **Language switch (Hindi / English):** web chat → 🌐 button in the header. WhatsApp → customer types `hindi` / `english`. Choice is remembered per customer. All menus, buttons, forms, enquiry summary and confirmation switch language. Texts live in `i18n.py` (`EXACT`, `PHRASES`, `PATTERNS`) – anything not listed simply stays English. Hindi words (Devanagari) like `कीमत`, `संपर्क`, `उत्पाद` are understood (`INTENTS_HI` in `bot.py`).
-- **Voice input:** web chat → 🎤 button next to Send (browser speech recognition, Chrome/Edge/Safari, needs https). WhatsApp voice notes → transcribed with OpenAI (`OPENAI_API_KEY`, see `voice.py`).
-- **WhatsApp confirmation:** after every web enquiry the customer gets a WhatsApp message (`confirm.py`). Needs `WA_TOKEN`, `WA_PHONE_NUMBER_ID` and – for customers who never messaged you – an **approved template** (`WA_CONFIRM_TEMPLATE`). Admin → Enquiries shows Sent / Failed and a ↻ Send button.
-- **Admin panel:** new sidebar layout, Dashboard (stats, 7-day chart, top products), colour status badges, mobile friendly.
+Files for Catalogue / Certificates / Gallery / Downloads: Admin -> Catalog files, or the `catalog/<catalogue|certificate|awards|datasheet|documents>/` folders.
