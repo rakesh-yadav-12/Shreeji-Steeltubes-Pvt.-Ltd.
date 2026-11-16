@@ -463,11 +463,6 @@ def submit(key, to, phone, fid, vals, cust, items=None):
     # It mails only the admins with sales_notify=True (and an email saved); nothing changes for everyone else.
     # The old Google-Sheet price mail stays off (separate, unrelated feature).
     database().enquiries.update_one({"no": doc["no"]}, {"$set": {"sheet_quote": "off"}})
-    mailer.start(doc)                # emails the plain enquiry mail ONLY to the admin(s) whose "Sales mails" switch is On
-    # (Admin -> Admins) - see mailer.admin_emails(). This is now the ONLY automatic mail for a new enquiry.
-    # The "stock check & price needed" mail and the old Google-Sheet price mail stay OFF (owner's request) - the
-    # Manual buttons in Admin -> Enquiries (resend-sales-mail, resend-sheet-quote) still work if used by hand.
-    database().enquiries.update_one({"no": doc["no"]}, {"$set": {"sq_sales_mail": "off", "sheet_quote": "off"}})
     n = os.getenv("NOTIFY_NUMBER")
     if n: send_text(n, f"New enquiry #{no}: {doc['name']} ({doc['company']}) {doc['phone']} – {doc['product']}, {doc['size']}, qty {doc['qty']}" + (f" (+{len(more)} more product{'s' if len(more) > 1 else ''})" if more else ""))
     if phone is None:    # web chat: no summary card / call note - the app shows the 'Thank you' popup, and the chat keeps ONLY the Contact option
