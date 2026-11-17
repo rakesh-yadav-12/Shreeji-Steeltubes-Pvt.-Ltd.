@@ -15,6 +15,7 @@ from bs4 import BeautifulSoup
 
 URL = os.getenv("ABOUT_URL", "https://www.shreejisteeltubes.com/about-us/")
 TTL = int(os.getenv("ABOUT_TTL", str(6 * 3600)))
+LIVE = os.getenv("ABOUT_LIVE", "0") == "1"   # 0 (default): the text in this file / home.html is shown as-is; 1: overwrite it with the official website text
 IMG = "https://www.shreejisteeltubes.com/wp-content/uploads/"
 
 # ---- built-in copy of the website text (used only if the live fetch fails) ----
@@ -41,9 +42,7 @@ DEFAULT = {
             ["⚖️ Core Values", 'Not to do business of ethics but to do business with ethics. We are accountable by measuring ourselves against the highest standard of business ethics, integrity and fiscal responsibility.']],
     "mgmt": [
         ["Mr. Ronak Rohit Modi", "Managing Partner", IMG + "2021/07/Ronak-Rohit-Modi.jpg",
-         "A young & dynamic entrepreneur who plays a role similar to the CEO of Shreeji Steel Tubes. Strategic planning & policies of purchase and sales, communication, financial & tax management, office management and employee management are key areas of his function."],
-        ["Mr. Rohit Prabhudas Modi", "Managing Partner", IMG + "2021/07/Rohit-P-Modi.jpg",
-         "With his knowledge and experience of the market for 40 years, he helps in all crucial functions of the organization. Stock & employee management of warehouses, customer grievances, pricing policies and employee welfare are vital areas of his function."]],
+         "A young & dynamic entrepreneur who plays a role similar to the CEO of Shreeji Steel Tubes. Strategic planning & policies of purchase and sales, communication, financial & tax management, office management and employee management are key areas of his function."]],
     "aboutImg": IMG + "2021/08/about-img-1.jpg",
 }
 
@@ -177,10 +176,14 @@ def parse(html):
 
 
 # ----------------------------------------------------------------------------- public API
+HIDE_MGMT = ("rohit prabhudas",)   # management cards to hide (lower-case name fragments)
+
 def _merge(live):
     d = {k: (list(v) if isinstance(v, list) else v) for k, v in DEFAULT.items()}
     for k, v in (live or {}).items():
         if v: d[k] = v
+    d["mgmt"] = [p for p in d["mgmt"] if not any(h in p[0].lower() for h in HIDE_MGMT)]   # cards removed on request (also from live site data)
+    if not d["mgmt"]: d["mgmt"] = [list(x) for x in DEFAULT["mgmt"]]
     for p, dp in zip(d["mgmt"], DEFAULT["mgmt"]):           # keep default photo when none was found live
         if not p[2]: p[2] = dp[2]
     d["source"] = "live" if live and len(live) >= 4 else "default"
@@ -193,6 +196,7 @@ def fetch_live():
     return parse(r.text)
 
 def get_about(force=False):
+    if not LIVE: return _merge(None)          # no website sync -> your edits in DEFAULT show up immediately after deploy
     now = time.time()
     with _lock:
         c = _cache
