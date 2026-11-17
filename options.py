@@ -221,7 +221,7 @@ ABOUT_VISION = ("*Vision*\nBuild for durability - we want to deliver something w
                 "*Core Values*\nNot to do business of ethics but to do business *with* ethics. We hold ourselves to the highest standard of business ethics, integrity and fiscal responsibility.")
 ABOUT_MGMT = ("*Management*\n\n*Mr. Ronak Rohit Modi* - Managing Partner\nA young & dynamic entrepreneur who plays a role similar to CEO. Strategic planning, purchase & sales policies, "
               "communication, financial & tax management, office and employee management are his key areas.\n\n"
-              "*Mr. Rohit Prabhudas Modi* - Managing Partner\nWith 40 years of market knowledge and experience, he helps in all crucial functions: stock & employee management of warehouses, "
+               
               "customer grievances, pricing policies and employee welfare.")
 ABOUT_IMAGES = [(H + "cover.jpg", "House of Quality Steel Tubes"), (H + "about.jpg", "Serving Oil & Gas, Infrastructure, Power & Fabrication"),
                 (H + "chrono.jpg", "Since 1970 - 80,000 sq. ft. stock yard at Kalamboli")]
