@@ -263,7 +263,7 @@ GALLERY_IMAGES = [(H + "services.jpg", "Services - cutting, bevelling, coating, 
 DEALERS_TEXT = ("*Authorised Dealers & Distributors*\nAuthorised distributor of:\n- Tata Structura & Tata Pipes\n- Maharashtra Seamless Limited\n- Jindal Star & Jindal Panther (Hollow Section)\n"
                 "- Hi-Tech Pipes (Hi-Tech SAW)\n- Narmada, Rama Steel Tubes, KP, Asian, Asian Mills, Asian Tubes & Pipes, Uttam\n"
                 "Also associated with: JCO Gas Pipe, Tata Structura, Prakash Surya")
-CLIENTS_TEXT = ("*Our Clients*\n1,500+ satisfied clients and 1,200+ active customers across India in:\n- Infrastructure & Oil & Gas\n- Prefabricated Engineered Buildings\n- Fire Fighting & HVAC\n"
+CLIENTS_TEXT = ("*Our Clients*\n2500+ satisfied clients and 2500+ active customers across India in:\n- Infrastructure & Oil & Gas\n- Prefabricated Engineered Buildings\n- Fire Fighting & HVAC\n"
                 "- Automotive, Solar / Renewable & Power Plants\n- Heavy Engineering, Agriculture & General Fabrication\n\n_(Add client names / logos here in options.py -> CLIENTS_TEXT)_")
 SERVICES_TEXT = ("*Services - A to Z, 365 days*\n- Cut to length, angle cut, cold saw & gas cutting\n- Bevelling, deburring, threading / socket\n- Profiling & nesting of pipe, lathe tube cutting\n"
                  "- Protective coating, special packing\n- Test certificate, lab testing & third-party inspection\n- Transportation & logistics, same-day pickup / delivery on demand\n"
