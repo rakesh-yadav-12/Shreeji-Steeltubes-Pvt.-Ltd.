@@ -233,7 +233,7 @@ PRODUCT_INFO = {
     ("Standards", "IS 1239 (Part 1 2004) / IS 3589 Fe330-Fe410, IS 1161- YST210, YST240 , YST310, YST355 / IS 3601, ASTM A53/ 1993, BS 1387/ 1985")],
    "Steel pipes zinc-coated by hot-dip process. Used for water supply, agriculture & irrigation, construction, fencing, firefighting lines, oil, gas & electrical conduits.", "GI Round Pipe"),
  "ms": ("MS Pipe", "ms.jpg", "MS Pipe - Black / ERW",
-   [("Size", "15 NB - 600 NB (21.70 - 610.00 mm OD)"), ("Thickness", "1.00 - 16.00 mm"), ("Length", "4.00 - 12.00 m , Class: Light / Medium / Heavy"),
+   [("Size", "15 NB - 600 NB (21.70 - 610.00 mm OD)"), ("Thickness", "1.00 - 16.00 mm Class: Light / Medium / Heavy "), ("Length", "4.00 - 12.00 m ,"),
     ("Grade", "IS1239, IS3589 Fe330-Fe410, IS1161-YST210/YST240/YST310/YST355, IS3601, IS9295")],
    "Strong, durable mild steel pipes for water, gas & fuel transport, structural, fire protection, conveyors, fencing, electric poles and fabrication.", "MS Round Pipe"),
  "msblack": ("MS Black Pipe", "ms.jpg", "MS Black Pipe (ERW)",
