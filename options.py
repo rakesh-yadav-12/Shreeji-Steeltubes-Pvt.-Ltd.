@@ -248,7 +248,7 @@ PRODUCT_INFO = {
     ("RHS", "26mm x13mm - 600 mm x 550 mm, 1.20mm - 25.00 mm (IS4923)"), ("Grade", "YST210 / YST240 / YST310 / YST355  (high grade in ready stock)"), ("Length", "4.00mtr  - 12.00 mtr")],
    "For machinery, transmission towers, automotive, construction, furniture, solar structures & electric poles. YST310 / YST355: yield 355 MPa, up to 40% steel saving. Hot-dip galvanized also available.", "MS Square Hollow Section"),
  "seamless": ("Seamless Pipe", "seamless.jpg", "Carbon Seamless Pipes",
-   [("Size", "21.70 - 610 mm OD"), ("Thickness", "SCH 20 / 30 / STD / 40 / XS / 60 / 80 / 100 / 120 / 140 / 160 / XXS"), ("Grade", "ASTM A106 Gr.B / ASTM A53 (others on request)"), ("Length", "5.00 - 7.00 m")],
+   [("Size", "21.70mm - 610 mm OD"), ("Thickness", "SCH 20 /SCH 30 /SCH STD /SCH 40 /SCH XS /SCH 60 /SCH 80 /SCH 100 /SCH 120 /SCH 140 /SCH 160 / SCH XXS"), ("Grade", "ASTM A106 GR B / ASTM A53 (others on request)"), ("Length", "5.00 mtr - 7.00 mtr")],
    "No weld seam - uniform strength & better pressure capacity. For oil & gas, petrochemical, boilers & heat exchangers, fertilizer, automotive and bearings.", "Seamless Pipe"),
  "gp": ("GP Pipe", "gp.jpg", "Pre-Galvanized Tube (GP Pipe)",
    [("Round (CHS)", "21.30 - 76.30 mm OD, IS 3601"), ("SHS", "15x15 - 100x100 mm, IS 4923"), ("RHS", "40x20 - 100x50 mm, IS 4923"),
