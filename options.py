@@ -241,7 +241,7 @@ PRODUCT_INFO = {
    "Uncoated black ERW pipe - superior strength, uniform design, usable indoors and outdoors; economical in operation.", "MS Round Pipe"),
  "ldp": ("Large Diameter Pipe", "ldp.jpg", "Large Diameter Pipes (ERW PIPE )",
    [("ERW", "168.30 - 610.00 mm OD, 4.0mm - 16.00mm, 4.00 - 12.00 Mtr"), (" H-SAW PIPE / SPIRAL WELDED PIPE / L-SAW", "457.00mm OD - 3048 mm OD(18 NB -120 NB), 5.00mm - 25.00 mm, 6 Mtr - 12 Mtr"),
-    ("Standards", "IS3589 Fe330/Fe410, API 5L up to X80, ASTM A252 / A139, IS 5504"), ],
+    ("Standards", "IS3589 Fe330/Fe410, API 5L up to X80, ASTM A252 / A139, IS 5504")],
    "Used for water mains, industrial water lines, agriculture & irrigation, oil & gas pipelines, refinery piping and cross-country pipelines.", "Large Diameter Round Pipe"),
  "hollow": ("Structural Hollow Sections", "hollow.jpg", "Hollow Sections - SHS / RHS / CHS",
    [("CHS", "21.70 - 610.00 mm OD, 1.20 - 16.00 mm (IS1161 / IS3589)"), ("SHS", "12x12 - 600x600 mm, 1.20 - 25.00 mm (IS4923)"),
