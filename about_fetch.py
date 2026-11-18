@@ -42,7 +42,7 @@ DEFAULT = {
             ["⚖️ Core Values", 'Not to do business of ethics but to do business with ethics. We are accountable by measuring ourselves against the highest standard of business ethics, integrity and fiscal responsibility.']],
     "mgmt": [
         ["Mr. Ronak Rohit Modi", "Managing Partner", IMG + "2021/07/Ronak-Rohit-Modi.jpg",
-         "A young & dynamic entrepreneur who plays a role similar to the CEO of Shreeji Steel Tubes. Strategic planning & policies of purchase and sales, communication, financial & tax management, office management and employee management are key areas of his function."]],
+         "A young & dynamic entrepreneur who plays a role similar to the CEO of Shreeji SteelTubes Pvt. Ltd . Strategic planning & policies of purchase and sales, communication, financial & tax management, office management and employee management are key areas of his function."]],
     "aboutImg": IMG + "2021/08/about-img-1.jpg",
 }
 
