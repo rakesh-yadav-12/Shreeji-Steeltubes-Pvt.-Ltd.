@@ -229,7 +229,7 @@ ABOUT_IMAGES = [(H + "cover.jpg", "House of Quality Steel Tubes"), (H + "about.j
 # key: (menu label, image, table title, [rows], description, enquiry product)
 PRODUCT_INFO = {
  "gi": ("GI Pipe", "gi.jpg", "GI Pipe - Hot Dipped Galvanized",
-   [("Size", "15 NB - 500 NB (21.70 - 508.00 mm OD)"), ("Thickness", "2.00 - 12.70 mm (Light / Medium / Heavy)"), ("Length", "4.00 - 12.00 m"),
+   [("Size", "15 NB - 600 NB (21.70 - 610.00 mm OD)"), ("Thickness", "2.00 - 12.70 mm (Light / Medium / Heavy)"), ("Length", "4.00 Mtr - 12.00 Mtr"),
     ("Standards", "IS 1239 (Part 1) / IS 3589 Fe330-Fe410, IS 1161 / IS 3601, ASTM A53, BS 1387")],
    "Steel pipes zinc-coated by hot-dip process. Used for water supply, agriculture & irrigation, construction, fencing, firefighting lines, oil, gas & electrical conduits.", "GI Round Pipe"),
  "ms": ("MS Pipe", "ms.jpg", "MS Pipe - Black / ERW",
