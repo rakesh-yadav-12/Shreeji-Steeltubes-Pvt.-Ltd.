@@ -251,8 +251,8 @@ PRODUCT_INFO = {
    [("Size", "21.70mm - 610 mm OD"), ("Thickness", "SCH 20 /SCH 30 /SCH STD /SCH 40 /SCH XS /SCH 60 /SCH 80 /SCH 100 /SCH 120 /SCH 140 /SCH 160 / SCH XXS"), ("Grade", "ASTM A106 GR B / ASTM A53 (others on request)"), ("Length", "5.00 mtr - 7.00 mtr")],
    "No weld seam - uniform strength & better pressure capacity. For oil & gas, petrochemical, boilers & heat exchangers, fertilizer, automotive and bearings.", "Seamless Pipe"),
  "gp": ("GP Pipe", "gp.jpg", "Pre-Galvanized Tube (GP Pipe)",
-   [("Round (CHS)", "21.30 - 76.30 mm OD, IS 3601"), ("SHS", "15x15 - 100x100 mm, IS 4923"), ("RHS", "40x20 - 100x50 mm, IS 4923"),
-    ("Thickness / Length", "0.80 - 3.00 mm, 4 - 6 m"), ("Zinc coating", "60 / 90 / 120 GSM")],
+   [("Round (CHS)", "21.30 - 76.30 mm OD, IS 3601"), ("SHS", "15mm x 15mm - 100mm x 100mm, IS 4923"), ("RHS", "40mm x 20mm - 100mm x 50mm, IS 4923"),
+    ("Thickness / Length", "0.80 mtr - 3.00 mtr, 4 mtr - 6 mtr"), ("Zinc coating", "60 / 90 / 120 GSM")],
    "Made from zinc pre-coated sheets. For gates & grills, electrical conduits, hoardings, scaffolding, fence framework, cabling & ducting, bus bodies, greenhouses.", "GP Square Hollow Section"),
 }
 QA_TEXT = ("*Quality Assurance*\nWe continuously update and train ourselves to give the best solutions. Every product is thoroughly checked & inspected before dispatch.\n\n"
