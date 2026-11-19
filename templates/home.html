@@ -793,6 +793,7 @@ input.imm-on{background:#edeffb!important;color:#26399e;font-weight:600;border-c
 <button id="mic" type="button" aria-label="Speak your message" title="Speak / बोलकर लिखें" hidden><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V22h2v-3.08A7 7 0 0 0 19 12h-2z"/></svg></button>
 <button id="s" aria-label="Send"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></button></form></footer>
 <div id="splash" onclick="endSplash()"><img src="/static/logo.png" alt="Shreeji SteelTubes Pvt Ltd."><p>Welcome 🙏</p><div class="bar"><b></b></div></div></div>
+<script>window.addEventListener("error",function(e){try{var s=document.getElementById("splash");if(!s)return;var d=document.getElementById("srjerr");if(!d){d=document.createElement("pre");d.id="srjerr";d.style.cssText="max-width:92%;white-space:pre-wrap;word-break:break-all;font:11px monospace;color:#b00;margin:0;text-align:left";s.appendChild(d)}d.textContent+=(e.message||"error")+" ("+String(e.filename||"").split("/").pop()+" line "+(e.lineno||"?")+")\n"}catch(_){}});setTimeout(function(){var s=document.getElementById("splash");if(s&&typeof endSplash==="function")endSplash()},8000)</script>
 <script>
 (function(){const f=window.fetch;window.fetch=function(u,o){try{if(typeof u==='string'&&u.charAt(0)==='/'&&u.charAt(1)!=='/'){o=o||{};if(!o.cache&&(o.method||'GET').toUpperCase()==='GET')o=Object.assign({cache:'no-store'},o)}}catch(e){}return f.call(this,u,o)}})();   // refresh = fresh data, never a stale cached copy
 
@@ -2060,7 +2061,7 @@ function restore(){seedResume();let L=[];try{L=JSON.parse(sessionStorage.getItem
   else{render(e.b);if(e.b.form){const fs=msgs.querySelectorAll('form.fm');lf=fs[fs.length-1]}}});
  RST=false;msgs.querySelectorAll('.opts').forEach((o,i,a)=>{if(i<a.length-1)o.classList.add('old')});
  const lb=[...L].reverse().find(e=>e.b);if(lb)ui([lb.b]);const le=L[L.length-1];if(le&&le.me!==undefined&&le.k){NEEDH=true;setTimeout(homeHint,400)}down();return true}
-function endSplash(){if(started)return;started=true;const s=document.getElementById('splash');s.style.opacity=0;setTimeout(()=>{s.remove();
+function endSplash(){const s=document.getElementById('splash');if(started){if(s)s.remove();return}started=true;if(!s)return;s.style.opacity=0;setTimeout(()=>{s.remove();
  const d=document.createElement('div');d.className='day';d.textContent='Today';msgs.appendChild(d);
  const m={type:'text',text:'👋 Welcome to *Shreeji SteelTubes Pvt. Ltd.*\nType *Hi* to get started.',chips:[['Hi','hi']],ph:'Type a message…'};render(m);LOG.push({b:m});saveLog();ui([m])},450)}
 /* page REFRESH (F5 / reload / pull-down) = fresh conversation: the old chat is wiped here and on the server, while the screen you are on stays open.
@@ -2069,7 +2070,7 @@ let _RL=false;
 (function(){let rl=false;try{rl=((performance.getEntriesByType('navigation')[0]||{}).type==='reload')}catch(e){}
  _RL=rl;if(!rl)return;try{['srjlog','srjenqs','srjeqd'].forEach(k=>sessionStorage.removeItem(k));localStorage.removeItem('srjmirror')}catch(e){}
  try{fetch('/chat/reset',{method:'POST',credentials:'same-origin',keepalive:true}).catch(()=>{})}catch(e){}})();
-let _rs=false;try{_rs=restore()}catch(e){try{sessionStorage.removeItem('srjlog')}catch(_){}}   // same tab, chat already running -> continue exactly where it was (no splash)
+let _rs=false;try{_rs=restore()}catch(e){started=false;LOG=[];try{sessionStorage.removeItem('srjlog')}catch(_){}}   // same tab, chat already running -> continue exactly where it was (no splash)
 {% if open_page %}try{sessionStorage.setItem('srjtab','{{ open_page }}')}catch(e){}
 {% else %}/* refresh keeps the screen you are on (chat / about / products / ...): the page is rebuilt and ALL its data is fetched again from the server */
 {% endif %}let _T=null;try{_T=sessionStorage.getItem('srjtab')}catch(e){}
