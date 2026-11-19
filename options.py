@@ -260,9 +260,8 @@ QA_TEXT = ("*Quality Assurance*\nWe continuously update and train ourselves to g
            "- We are against mixing Patra / semi-coil pipe with coil pipe")
 GALLERY_IMAGES = [(H + "services.jpg", "Services - cutting, bevelling, coating, testing"), (H + "awards.jpg", "Awards & Certifications"),
                   (H + "industries.jpg", "Industries we serve"), (H + "ldp.jpg", "Large diameter pipes in stock"), (H + "hollow.jpg", "Hollow sections")]
-DEALERS_TEXT = ("*Authorised Dealers & Distributors*\nAuthorised distributor of:\n- Tata Structura & Tata Pipes\n- Maharashtra Seamless Limited\n- Jindal Star & Jindal Panther (Hollow Section)\n"
-                "- Hi-Tech Pipes (Hi-Tech SAW)\n- Narmada, Rama Steel Tubes, KP, Asian, Asian Mills, Asian Tubes & Pipes, Uttam\n"
-                "Also associated with: JCO Gas Pipe, Tata Structura, Prakash Surya")
+DEALERS_TEXT = ("*Authorised Dealers & Distributors*\nAuthorised distributor of:\n- Tata Structura & Tata Pipes\n- Maharashtra Seamless Limited\n- Jindal Star & Jindal Steel\n"
+                "- Hi-Tech Saw & Hi-Tech Steel Pipes\n- Narmada, Rama, Khanna (KP), Asian")
 CLIENTS_TEXT = ("*Our Clients*\n2500+ satisfied clients and 2500+ active customers across India in:\n- Infrastructure & Oil & Gas\n- Prefabricated Engineered Buildings\n- Fire Fighting & HVAC\n"
                 "- Automotive, Solar / Renewable & Power Plants\n- Heavy Engineering, Agriculture & General Fabrication\n\n_(Add client names / logos here in options.py -> CLIENTS_TEXT)_")
 SERVICES_TEXT = ("*Services - A to Z, 365 days*\n- Cut to length, angle cut, cold saw & gas cutting\n- Bevelling, deburring, threading / socket\n- Profiling & nesting of pipe, lathe tube cutting\n"

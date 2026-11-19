@@ -222,8 +222,8 @@ def page_customer_fields(mode="new"):
     mode 'new'   : name, company, GST (verified on the GST portal) - the UC code is generated automatically."""
     if mode == "exist":
         return [F("c_uc", "UC Code / GST Number", ph="Enter your UC code or GST number", upper=True, maxlen=15),
-                F("c_name", "Your Name", ph="Filled automatically", readonly=True),
-                F("c_company", "Company / Firm Name", ph="Filled automatically", readonly=True),
+                F("c_name", "Your Name", ph="Filled automatically"),
+                F("c_company", "Company / Firm Name", ph="Filled automatically"),
                 F("c_mobile", "Mobile No.", "tel", ph="Filled automatically", maxlen=14),
                 F("c_email", "Email", ph="Filled automatically")]
     return [F("c_name", "Your Name", req=True, ph="Full name"),
@@ -672,7 +672,7 @@ def route(key, to, phone, cust, tk):
         back = [("⬅ Supply Chain", "s:supply")] + nxt("supply")
         if v == "dealers":
             if phone is None: quiet(back)   # web chat: full-screen page (like About Us)
-            else: nav(to, phone, OPT.DEALERS_TEXT, back, imgs=[(OPT.H + "ldp.jpg", "Authorised distributor of leading brands")])
+            else: nav(to, phone, OPT.DEALERS_TEXT, back, imgs=[(OPT.H + "dealers.png", "Authorised distributor of leading brands")])
         elif v == "clients": nav(to, phone, OPT.CLIENTS_TEXT, back, imgs=[(OPT.H + "industries.jpg", "Industries we serve")])
         elif v == "rfq":
             if phone is None: quiet(back)   # web chat: full-screen page (like About Us)
