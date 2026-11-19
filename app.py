@@ -711,22 +711,35 @@ def bulk_delete_enquiries():       # delete the ticked enquiries, or ALL enquiri
     flash(f"{n} enquir{'y' if n == 1 else 'ies'} deleted" if n else "Nothing selected - no enquiry deleted")
     return redirect(url_for("admin_enquiries", status=request.form.get("status", ""), q=request.form.get("q", "")))
 
+ENQ_CSV_COLS = ["no", "created", "name", "company", "gst", "uc_code", "portal_access", "reps", "phone", "product", "size", "thickness", "length", "grade", "standard",
+                "brand", "qty", "delivery_date", "remarks", "status", "source", "lang", "wa_confirm"]
+
+def enquiry_csv_rows(e):          # one CSV line per product (extra products repeat the enquiry details) - shared by the bulk and per-row CSV export
+    def rowvals(e, it=None):
+        d = {**e, **(it or {})}
+        if it is not None: d["remarks"] = d["wa_confirm"] = ""
+        return [d["created"].strftime("%Y-%m-%d %H:%M") if c == "created" and d.get("created") else d.get(c, "") for c in ENQ_CSV_COLS]
+    rows = [rowvals(e)]
+    for it in e.get("more_items") or []: rows.append(rowvals(e, it))
+    return rows
+
 @app.route("/admin/enquiries/export.csv")
 @admin_required
 def export_csv():
-    rows = find_enquiries()
-    cols = ["no", "created", "name", "company", "gst", "uc_code", "portal_access", "reps", "phone", "product", "size", "thickness", "length", "grade", "standard",
-            "brand", "qty", "delivery_date", "remarks", "status", "source", "lang", "wa_confirm"]
-    out = io.StringIO(); w = csv.writer(out); w.writerow(cols)
-    def rowvals(e, it=None):          # one CSV line per product (extra products repeat the enquiry details)
-        d = {**e, **(it or {})}
-        if it is not None: d["remarks"] = d["wa_confirm"] = ""
-        return [d["created"].strftime("%Y-%m-%d %H:%M") if c == "created" and d.get("created") else d.get(c, "") for c in cols]
-    for e in rows:
-        w.writerow(rowvals(e))
-        for it in e.get("more_items") or []: w.writerow(rowvals(e, it))
+    out = io.StringIO(); w = csv.writer(out); w.writerow(ENQ_CSV_COLS)
+    for e in find_enquiries():
+        for r in enquiry_csv_rows(e): w.writerow(r)
     return Response("\ufeff" + out.getvalue(), mimetype="text/csv",
                     headers={"Content-Disposition": "attachment; filename=enquiries.csv"})
+
+@app.route("/admin/enquiries/<int:no>.csv")
+@admin_required
+def enquiry_csv(no):
+    e = database().enquiries.find_one({"no": no}) or abort(404)
+    out = io.StringIO(); w = csv.writer(out); w.writerow(ENQ_CSV_COLS)
+    for r in enquiry_csv_rows(e): w.writerow(r)
+    return Response("\ufeff" + out.getvalue(), mimetype="text/csv",
+                    headers={"Content-Disposition": f"attachment; filename=enquiry_{no}.csv"})
 
 @app.route("/admin/enquiries/export.pdf")
 @admin_required
