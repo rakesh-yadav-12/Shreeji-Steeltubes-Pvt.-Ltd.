@@ -1490,7 +1490,7 @@ function wcOpen(btn,solo,opt){
   +'<div class="wc-res"><div class="wc-eo wc-h wc-hide"><span>OD = (A + B) &times; 0.6363</span><b id="wc-eq">-</b></div>'
   +'<div class="wc-c" id="wc-k1"><small>KG / MTR</small><b id="wc-v1">\u2013</b><em>kg per metre</em></div>'
   +'<div class="wc-c pp" id="wc-k2"><small>WEIGHT / PIPE</small><b id="wc-v2">\u2013</b><em>kg &times; 6.00 m</em></div></div>'
-  +'<div class="wc-fx" id="wc-fx"></div><div class="wc-er" id="wc-er"></div>'
+  +'<div class="wc-er" id="wc-er"></div>'
   +'<div class="wc-ac"><button type="button" class="wc-use" id="wc-use" disabled title="Use in my enquiry">Save</button><button type="button" class="wc-clr" id="wc-clr" title="Clear all fields and start again"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>Clear / Reset</button></div></div></div>';
  document.body.appendChild(wrap);
  const pn=wrap.querySelector('.wcp'),g=id=>wrap.querySelector('#'+id),f=n=>String(Math.round(n*1000)/1000);
@@ -1502,9 +1502,6 @@ function wcOpen(btn,solo,opt){
   g('wc-v1').textContent=r.ok?wcFmt(r.kgm,3):'\u2013';g('wc-v2').textContent=r.ok?wcFmt(r.per,2):'\u2013';
   g('wc-eq').textContent=mode==='hollow'&&r.eq?wcFmt(r.eq,2)+' mm':'\u2013';
   const sig=r.ok?r.kgm.toFixed(5):'';if(sig&&sig!==last){pop('wc-k1');pop('wc-k2')}last=sig;
-  const fx=g('wc-fx');
-  if(r.ok)fx.innerHTML=(mode==='round'?'':'<b>OD</b> = ('+f(p.a)+' + '+f(p.b)+') &times; 0.6363 = <b>'+wcFmt(r.eq,2)+'</b><br>')+'<b>Kg/MTR</b> = ('+wcFmt(r.eq,2)+' &minus; '+f(p.t)+') &times; '+f(p.t)+' &times; 0.0246615 = <b>'+wcFmt(r.kgm,3)+'</b><br><b>Weight/Pipe</b> = '+wcFmt(r.kgm,3)+' &times; 6.00 = <b>'+wcFmt(r.per,2)+' kg</b>';
-  else fx.innerHTML=mode==='round'?'<b>Round Pipe:</b> (OD &minus; thk) &times; thk &times; 0.0246615 = Kg/MTR<br>Weight/Pipe = Kg/MTR &times; 6.00':'<b>Hollow Section:</b> (mm + mm) &times; 0.6363 &rArr; OD<br>[{(mm + mm) &times; 0.6363} &minus; thk] &times; thk &times; 0.0246615 = Kg/MTR<br>Weight/Pipe = Kg/MTR &times; 6.00';
   const er=g('wc-er');er.className='wc-er'+(r.err?'':'');er.textContent=r.err?r.msg:'';g('wc-use').disabled=!r.ok;
   window.__WCV=Object.assign({},V);window.__WCM=mode};
  const setMode=m=>{mode=m;pn.querySelectorAll('.wc-tabs button').forEach(x=>x.classList.toggle('on',x.dataset.m===m));
