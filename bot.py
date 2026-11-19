@@ -640,7 +640,7 @@ def route(key, to, phone, cust, tk):
             visit_card(to, phone)
             nav(to, phone, "👆 Tap below to continue", [("⬅ All sections", "s:all"), ("📋 Product Enquiry Form", "s:enquiry")])
         return True
-    if k == "p" and phone is None and v in ("gi", "ms", "hollow", "seamless", "gp"):   # web: the product page opens full screen; chat shows the 5 product buttons again
+    if k == "p" and phone is None and v in ("gi", "ms", "msblack", "ldp", "hollow", "seamless", "gp"):   # web: the product page opens full screen; chat shows the 5 product buttons again
         quiet(prod_btns(phone) + nxt("products")); return True
     if k == "p" and v in OPT.PRODUCT_INFO:
         lab, img, title, rows, desc, prod = OPT.PRODUCT_INFO[v]

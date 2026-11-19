@@ -581,7 +581,7 @@ input.imm-on{background:#edeffb!important;color:#26399e;font-weight:600;border-c
 .tw td{padding:14px;color:#222;border-bottom:1px solid #e3e3e3;border-right:1px solid #e3e3e3;vertical-align:top;line-height:1.5;background:#fafafa}
 .tw th:last-child,.tw td:last-child{border-right:0}.tw tr:last-child td{border-bottom:0}
 .tw.kv td:first-child{width:32%;font-weight:700;color:#fff;background:var(--blue);border-bottom-color:#4355b8}.tw.kv td{background:#fff;font-weight:600}
-.wcb a{margin:6px 8px}.wch{background:#fff}.wch img{display:block;width:100%;min-width:900px}
+.pbtns a{margin:6px 8px}.wch{background:#fff}.wch img{display:block;width:100%;min-width:900px}
 .vs{text-align:center;margin:22px 0 6px}.vs a{display:inline-block;background:#041262;color:#fff;font-weight:700;font-size:16px;padding:14px 30px;border-radius:3px;text-decoration:none}
 .pmain .subp{margin-top:36px;padding-top:4px;border-top:6px solid #edeff9}
 @media(max-width:860px){.pw{grid-template-columns:minmax(0,1fr);gap:22px;padding-top:18px}.pl3{grid-template-columns:1fr}.pmain h1{font-size:27px}.pmain h2{font-size:22px}.pcard{margin-top:0}.pmain p.d{padding-left:0}}
@@ -911,7 +911,7 @@ const ABOUT_RE=/\babout\s*-?\s*us\b|^(about|aboutus|about company|company|compan
 function pageOf(x){const w=String(x).toLowerCase().replace(/[^\w\s-]/g,'').trim(),h=String(x).trim();
  if(/^(उत्पाद|उत्पादों|प्रोडक्ट|प्रोडक्ट्स)$/.test(h))return 'prod:gi';if(/^(हमारे बारे में|कंपनी के बारे में)$/.test(h))return 'about';       // Hindi typed / spoken words
  if(/^गैलरी$/.test(h))return 'gl';if(/^गुणवत्ता आश्वासन$/.test(h))return 'qa';if(/^(होम|मुख्य पृष्ठ)$/.test(h))return 'home';       // button tokens AND typed words open the same page
- const pm=/^p:(gi|ms|hollow|seamless|gp)$/.exec(String(x));if(pm)return 'prod:'+pm[1];
+ const pm=/^p:(gi|ms|msblack|ldp|hollow|seamless|gp)$/.exec(String(x));if(pm)return 'prod:'+pm[1];
  if(x==='r:qa'||/^quality assurance$/.test(w))return 'qa';
  if(x==='v:dealers'||/^authori[sz]ed dealers?( (and|&) distributors?)?$/.test(w))return 'dl';
  if(x==='s:contact'||/^(contact|contact us|contact details|map|location|address)$/.test(w)||/^(संपर्क|सम्पर्क|संपर्क करें)$/.test(h))return 'ct';
@@ -1270,7 +1270,7 @@ function pBasic(q,first){return '<div class="'+(first?'':'subp')+'"><img class="
 function buildProd(k){const el=document.getElementById('prod');el.scrollTo(0,0);
  pdLoad().then(d=>{const p=d[k];if(!p)return;const x=PX[k];let m;
   if(x){const SC=a=>(a||[]).map(z=>'<h2>'+esc(z[0])+'</h2><p class="d">'+esc(z[1])+'</p>').join('');
-   m='<h1>'+esc(x.title)+'</h1>'+(x.desc?'<p class="d">'+esc(x.desc)+'</p>':'')+SC(x.secs)+(x.feat?'<h2>Features</h2>'+pList(x.feat):'')+'<h2>'+esc(x.appT)+'</h2>'+pList(x.app)+SC(x.after)+'<h2>'+esc(x.sizeT||'Size Range')+'</h2>'+pTable(x.size)+(x.std?'<h2>'+esc(x.stdT||'Application')+'</h2>'+pTable(x.std):'')+(x.tabs||[]).map(t=>'<h2>'+esc(t[0])+'</h2>'+pTable(t[1])).join('')+(x.btns?'<div class="vs wcb">'+x.btns.map((b,n)=>'<a href="'+escA(b[1])+'" target="_blank" rel="noopener">'+esc(b[0])+'</a>').join('')+'</div>':'')+(x.pdf?'<div class="vs"><a href="'+escA(x.pdf)+'" target="_blank" rel="noopener">View Specifications</a></div>':'')}
+   m='<h1>'+esc(x.title)+'</h1>'+(x.desc?'<p class="d">'+esc(x.desc)+'</p>':'')+SC(x.secs)+(x.feat?'<h2>Features</h2>'+pList(x.feat):'')+'<h2>'+esc(x.appT)+'</h2>'+pList(x.app)+SC(x.after)+'<h2>'+esc(x.sizeT||'Size Range')+'</h2>'+pTable(x.size)+(x.std?'<h2>'+esc(x.stdT||'Application')+'</h2>'+pTable(x.std):'')+(x.tabs||[]).map(t=>'<h2>'+esc(t[0])+'</h2>'+pTable(t[1])).join('')+(x.btns?'<div class="vs pbtns">'+x.btns.map((b,n)=>'<a href="'+escA(b[1])+'" target="_blank" rel="noopener">'+esc(b[0])+'</a>').join('')+'</div>':'')+(x.pdf?'<div class="vs"><a href="'+escA(x.pdf)+'" target="_blank" rel="noopener">View Specifications</a></div>':'')}
   else{const subs=k==='ms'?['msblack','ldp'].map(z=>d[z]).filter(Boolean):[];m=pBasic(p,1)+subs.map(q=>pBasic(q)).join('')}
   el.innerHTML='<div class="ab-ban"><h1>'+esc(x?x.title:p.label)+'</h1></div><div class="pw">'+pSide(k)+'<div class="pmain">'+m+'</div></div>';
   el.scrollTo(0,0)}).catch(()=>{})}
