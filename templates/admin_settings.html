@@ -12,7 +12,7 @@
 <h4>1. Feature on / off</h4>
 <label class="chk"><input type="checkbox" name="SALES_QUOTE" {{'checked' if v.SALES_QUOTE!='0'}}> Sales person price mail ON</label>
 <div class="hint">Off karne par purana tarika chalta hai: customer ko sheet ka price seedha auto-mail hota hai.</div>
-{% if not smtp_ok %}<div class="warn">⚠ Mail bhejne ke liye .env me SMTP_HOST / SMTP_USER / SMTP_PASS chahiye – abhi set nahi hain, isliye ye feature kaam nahi karega.</div>{% endif %}
+{% if not mail_ok %}<div class="warn">⚠ Mail bhejne ke liye Brevo chahiye: Render → Environment me BREVO_API_KEY aur MAIL_FROM_EMAIL set kijiye – abhi set nahi hain, isliye ye feature kaam nahi karega.</div>{% else %}<div class="good">Mail Brevo se jata hai (sender: <b>{{mail_from}}</b>).</div>{% endif %}
 
 <h4>2. Sales person kaun hai</h4>
 {% if sales %}<div class="good">Abhi sales mail in admins ko jata hai: {% for a in sales %}<b>{{a.name}}</b> ({{a.email}}){{', ' if not loop.last}}{% endfor %}</div>
@@ -30,9 +30,9 @@
 <div class="hint">Bot mailbox padhta hai. Gmail me Settings → Forwarding and POP/IMAP → IMAP ON hona chahiye, aur App Password lagta hai.</div>
 <label>IMAP server</label><input type="text" name="IMAP_HOST" value="{{v.IMAP_HOST}}" placeholder="imap.gmail.com">
 <label>IMAP port</label><input type="number" name="IMAP_PORT" value="{{v.IMAP_PORT}}">
-<label>IMAP email (mailbox jisme reply aata hai)</label><input type="text" name="IMAP_USER" value="{{v.IMAP_USER}}" placeholder="{{smtp_user or 'yourcompany@gmail.com'}}">
-<div class="hint">Khali chhodne par SMTP wala email use hota hai ({{smtp_user or 'not set'}}).</div>
-<label>IMAP password / App Password</label><input type="password" name="IMAP_PASS" placeholder="{{'•••••••• saved – naya likhne par hi badlega' if has_pass else 'khali = SMTP wala password'}}">
+<label>IMAP email (mailbox jisme reply aata hai)</label><input type="text" name="IMAP_USER" value="{{v.IMAP_USER}}" placeholder="yourcompany@gmail.com">
+<div class="hint">Wo mailbox jisme sales person ka reply aayega (mail ka Reply-To yahi hota hai). Reply-by-mail ON karne par ye zaroori hai.</div>
+<label>IMAP password / App Password</label><input type="password" name="IMAP_PASS" placeholder="{{'•••••••• saved – naya likhne par hi badlega' if has_pass else 'mailbox ka App Password'}}">
 {% if has_pass %}<label class="chk" style="font-weight:normal"><input type="checkbox" name="clear_pass"> Saved password hata do</label>{% endif %}
 <label>Mailbox kitne second me check ho</label><input type="number" name="SALES_POLL_SECONDS" min="10" value="{{v.SALES_POLL_SECONDS}}">
 

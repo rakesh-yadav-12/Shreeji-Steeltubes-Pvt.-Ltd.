@@ -12,11 +12,10 @@ the customer's chat never waits on it, and the result is saved on the enquiry (f
 Expected sheet columns (any order, header row required, case-insensitive; extra columns are ignored):
   Product | Size | Thickness | Price | Unit | Stock
 
-Uses the SAME SMTP_* settings as mailer.py to send the email, so no extra mail setup is needed.
+(The customer price mail is switched off in send() below; mails of the bot are sent with the Brevo API - see brevo.py.)
 """
 import os, re, threading, time
-from email.message import EmailMessage
-import smtplib
+import brevo
 from db import database, now_ist
 
 _CACHE = {"rows": None, "at": 0}
@@ -78,8 +77,7 @@ def find_matches(product, size, thickness=None):
 
 # ---------------------------------------------------------------- email
 def enabled():
-    return bool(os.getenv("GOOGLE_SHEET_ID")) and os.getenv("SHEET_QUOTE", "1") != "0" \
-        and bool(os.getenv("SMTP_HOST") and os.getenv("SMTP_USER") and os.getenv("SMTP_PASS"))
+    return bool(os.getenv("GOOGLE_SHEET_ID")) and os.getenv("SHEET_QUOTE", "1") != "0" and brevo.ready()
 
 
 def _row_block(r):

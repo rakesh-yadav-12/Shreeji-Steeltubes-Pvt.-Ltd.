@@ -458,7 +458,11 @@ def submit(key, to, phone, fid, vals, cust, items=None):
     cf = confirm.start(doc)          # WhatsApp confirmation to the customer (runs in background; 'queued' = will be sent)
     wa_note = (f"\n📲 A confirmation will also be sent on WhatsApp to *{fmt_phone(norm(doc['phone']))}*." if cf == "queued" else "")
     mailer.start(doc)                # emails the enquiry PDF to every admin with an email saved (runs in background)
-    sales_quote.start(doc)           # FIX: the admin(s) whose "Sales mails" switch is On (Admin -> Admins) were not getting
+    # OFF on owner's request: only the ONE enquiry mail (mailer.start above) goes to the admin(s) whose email is saved with
+    # "Sales mails" On. The second "stock check & price needed" mail is no longer sent. To bring it back, un-comment next line:
+    # sales_quote.start(doc)
+    database().enquiries.update_one({"no": doc["no"]}, {"$set": {"sq_sales_mail": "off"}})   # shows "off" in Admin -> Enquiries
+    # (old note) FIX: the admin(s) whose "Sales mails" switch is On (Admin -> Admins) were not getting
     # the automatic "stock check & price needed" mail for new enquiries - this call was missing/overridden before.
     # It mails only the admins with sales_notify=True (and an email saved); nothing changes for everyone else.
     # The old Google-Sheet price mail stays off (separate, unrelated feature).

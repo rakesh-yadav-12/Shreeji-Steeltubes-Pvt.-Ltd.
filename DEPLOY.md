@@ -7,10 +7,15 @@
 
 ## Ek baar ka setup (Render)
 1. https://render.com par GitHub se login -> **New > Blueprint** -> apna repo chuno (render.yaml khud mil jayegi).
-2. Jo env vars `sync: false` hain unki value dashboard me bharo (MONGO_URI, PUBLIC_URL, ADMIN_PASSWORD, SMTP_PASS, GST_API_KEY ...). Apni `.env` se copy karo.
+2. Jo env vars `sync: false` hain unki value dashboard me bharo (MONGO_URI, PUBLIC_URL, ADMIN_PASSWORD, BREVO_API_KEY, MAIL_FROM_EMAIL, GST_API_KEY ...). Apni `.env` se copy karo.
 3. **Environment > Secret Files** me `service_account.json` upload karo, path: `/etc/secrets/service_account.json`.
 4. MongoDB Atlas > Network Access me `0.0.0.0/0` allow karo (Render ka IP badalta rehta hai).
 5. PUBLIC_URL me Render ka https link daalo (QR code usi par khulta hai).
+
+## Mail (Brevo)
+- Mail ab Brevo API se jata hai (SMTP nahi). Render free plan par SMTP ports band hote hain, API par nahi.
+- Render > Environment me `BREVO_API_KEY` aur `MAIL_FROM_EMAIL` (Brevo me verified sender) daalo, phir Save -> auto redeploy.
+- Brevo > Security > Authorised IPs **deactivated** rakho (Render ka IP badalta rehta hai).
 
 ## Dhyan rakho
 - `.env`, service_account.json git me kabhi nahi jaate (gitignore). Live par secrets sirf Render dashboard me.

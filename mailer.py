@@ -3,23 +3,33 @@
 Only admins who are ACTIVE and have an email saved (Admin -> Admins -> set each admin's email) receive it.
 Runs in a background thread (like confirm.py's WhatsApp confirmation) so the customer's chat never waits on it.
 
-.env settings (see ENV_ADDITIONS.txt):
-  SMTP_HOST, SMTP_PORT (587 = STARTTLS, 465 = SSL), SMTP_USER, SMTP_PASS, SMTP_FROM (optional, defaults to SMTP_USER)
+Mails are sent with the Brevo API (see brevo.py) - NO SMTP any more.
+.env / Render settings (see ENV_ADDITIONS.txt):
+  BREVO_API_KEY, MAIL_FROM_EMAIL (verified sender in Brevo), MAIL_FROM_NAME (optional)
   MAIL_NOTIFY=0            -> switch this feature off entirely
   MAIL_NOTIFY_EXTRA         -> extra, comma-separated email addresses that are always copied (people without an admin login)
-Gmail: use an **App Password** (Google Account -> Security -> 2-Step Verification -> App passwords), a normal Gmail
-password will NOT work. SMTP_HOST=smtp.gmail.com, SMTP_PORT=587.
 
 Result is saved on the enquiry (field admin_mail: 'sent' | 'failed' | 'queued' | 'off' | 'no-recipient') and shown
 in Admin -> Enquiries, with a manual "Send" / "Resend" button for 'failed' / 'off' / 'no-recipient'.
 """
-import os, smtplib, threading
-from email.message import EmailMessage
+import os, re, threading
+import brevo
 from db import database, now_ist
 
 
 def enabled():
-    return bool(os.getenv("SMTP_HOST") and os.getenv("SMTP_USER") and os.getenv("SMTP_PASS")) and os.getenv("MAIL_NOTIFY", "1") != "0"
+    return brevo.ready() and os.getenv("MAIL_NOTIFY", "1") != "0"
+
+
+def _logo_url():
+    """Public https URL of the logo for the HTML mails (Brevo cannot embed cid: images). '' when PUBLIC_URL is not a real public address."""
+    try:
+        import sales_quote
+        base = (sales_quote.cfg("PUBLIC_URL") or "").strip().rstrip("/")
+    except Exception:
+        base = (os.getenv("PUBLIC_URL") or "").strip().rstrip("/")
+    if not base.startswith("http") or re.search(r"//(localhost|127\.|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)", base): return ""
+    return base + "/static/logo.png"
 
 
 def admin_emails():
@@ -64,22 +74,8 @@ def send(doc, to=None):
     """Send the submitted enquiry data (plain text, no attachment) to the given list of emails now (defaults to admin_emails()). Returns (ok, message)."""
     to = to if to is not None else admin_emails()
     if not to: return False, "no admin has an email saved (Admin -> Admins)"
-    m = EmailMessage()
-    m["Subject"] = f"New Enquiry #{doc['no']} - {doc.get('product', '')} - {doc.get('name', '')}"
-    m["From"] = os.getenv("SMTP_FROM") or os.getenv("SMTP_USER")
-    m["To"] = ", ".join(to)
-    m.set_content(_body(doc))
-    host, port = os.getenv("SMTP_HOST"), int(os.getenv("SMTP_PORT", "587"))
-    try:
-        if port == 465:
-            with smtplib.SMTP_SSL(host, port, timeout=20) as s:
-                s.login(os.getenv("SMTP_USER"), os.getenv("SMTP_PASS")); s.send_message(m)
-        else:
-            with smtplib.SMTP(host, port, timeout=20) as s:
-                s.starttls(); s.login(os.getenv("SMTP_USER"), os.getenv("SMTP_PASS")); s.send_message(m)
-        return True, f"sent to {', '.join(to)}"
-    except Exception as e:
-        return False, str(e)
+    subject = f"New Enquiry #{doc['no']} - {doc.get('product', '')} - {doc.get('name', '')}"
+    return brevo.send(to, subject, text=_body(doc), tags=["enquiry"])
 
 
 def _job(doc):
@@ -170,13 +166,13 @@ img{border:0;max-width:100%;height:auto}
 """
 
 
-def _job_html(doc, logo_cid):
+def _job_html(doc, logo_cid):               # logo_cid is now the logo's public URL (name kept so the template code below is unchanged)
     """The filled job form as a mobile-friendly (fluid, stacks on phones) email."""
     NAVY, LINE = "#1F2A63", "#c9cfe6"
     c = doc.get("created"); when = c.strftime("%d-%m-%Y %H:%M") if c else "-"
     addr = "".join(f'<div class="addr" style="font-size:12px;line-height:1.45;color:#222">{_addr_html(l)}</div>' for l in _company_lines())
     head = (f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-bottom:2px solid {NAVY}"><tr>'
-            + (f'<td class="logo" width="150" valign="middle" style="padding:6px 10px 10px 0"><img src="cid:{logo_cid}" width="140" alt="Shreeji SteelTubes Pvt. Ltd." style="display:block;max-width:100%;height:auto"></td>' if logo_cid else "")
+            + (f'<td class="logo" width="150" valign="middle" style="padding:6px 10px 10px 0"><img src="{logo_cid}" width="140" alt="Shreeji SteelTubes Pvt. Ltd." style="display:block;max-width:100%;height:auto"></td>' if logo_cid else "")
             + f'<td class="co" align="center" valign="middle" style="padding-bottom:8px"><div class="co-t" style="font-size:21px;font-weight:bold;color:{NAVY};letter-spacing:.5px">SHREEJI STEELTUBES PVT. LTD.</div>'
               f'<div style="font-size:13px;font-style:italic;color:#555;margin:2px 0 4px">House of Quality Steel Tubes</div>{addr}</td></tr></table>')
     row = lambda a, b, last=False: (f'<tr><td class="lab" width="34%" valign="top" style="background:#4a5584;color:#fff;font-size:13px;font-weight:bold;padding:9px 12px;border-bottom:1px solid #fff">{_esc(a)}</td>'
@@ -215,29 +211,8 @@ def send_job(doc, to=None):
     """Mail one job application: the mail body is the filled form, the resume is NOT attached - it opens through the Preview / Download links. Returns (ok, message)."""
     to = to if to is not None else job_recipients()
     if not to: return False, "no admin/HR email saved (Admin -> Admins, or HR_MAIL in .env)"
-    m = EmailMessage()
-    m["Subject"] = f"New Job Application #{doc['no']} - {doc.get('position', '')} - {doc.get('name', '')}"
-    m["From"] = os.getenv("SMTP_FROM") or os.getenv("SMTP_USER")
-    m["To"] = ", ".join(to)
-    if doc.get("email"): m["Reply-To"] = doc["email"]          # reply goes straight to the applicant
-    m.set_content(_job_text(doc))
-    logo = None
-    try:
-        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "static", "logo.png"), "rb") as fh: logo = fh.read()
-    except Exception: pass
-    m.add_alternative(_job_html(doc, "logo" if logo else ""), subtype="html")
-    if logo: m.get_payload()[1].add_related(logo, maintype="image", subtype="png", cid="<logo>", disposition="inline")
-    host, port = os.getenv("SMTP_HOST"), int(os.getenv("SMTP_PORT", "587"))
-    try:
-        if port == 465:
-            with smtplib.SMTP_SSL(host, port, timeout=30) as s:
-                s.login(os.getenv("SMTP_USER"), os.getenv("SMTP_PASS")); s.send_message(m)
-        else:
-            with smtplib.SMTP(host, port, timeout=30) as s:
-                s.starttls(); s.login(os.getenv("SMTP_USER"), os.getenv("SMTP_PASS")); s.send_message(m)
-        return True, f"sent to {', '.join(to)}"
-    except Exception as e:
-        return False, str(e)
+    subject = f"New Job Application #{doc['no']} - {doc.get('position', '')} - {doc.get('name', '')}"
+    return brevo.send(to, subject, html_body=_job_html(doc, _logo_url()), reply_to=(doc.get("email") or "").strip() or None, tags=["job"])   # reply goes straight to the applicant
 
 
 def _job_thread(doc):
@@ -265,7 +240,7 @@ def _interview_html(doc, accept_url, decline_url, logo_cid):
     NAVY, LINE = "#1F2A63", "#c9cfe6"
     addr = "".join(f'<div class="addr" style="font-size:12px;line-height:1.45;color:#222">{_addr_html(l)}</div>' for l in _company_lines())
     head = (f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-bottom:2px solid {NAVY}"><tr>'
-            + (f'<td class="logo" width="150" valign="middle" style="padding:6px 10px 10px 0"><img src="cid:{logo_cid}" width="140" alt="Shreeji SteelTubes Pvt. Ltd." style="display:block;max-width:100%;height:auto"></td>' if logo_cid else "")
+            + (f'<td class="logo" width="150" valign="middle" style="padding:6px 10px 10px 0"><img src="{logo_cid}" width="140" alt="Shreeji SteelTubes Pvt. Ltd." style="display:block;max-width:100%;height:auto"></td>' if logo_cid else "")
             + f'<td class="co" align="center" valign="middle" style="padding-bottom:8px"><div class="co-t" style="font-size:21px;font-weight:bold;color:{NAVY};letter-spacing:.5px">SHREEJI STEELTUBES PVT. LTD.</div>'
               f'<div style="font-size:13px;font-style:italic;color:#555;margin:2px 0 4px">House of Quality Steel Tubes</div>{addr}</td></tr></table>')
     row = lambda a, b: (f'<tr><td class="lab" width="34%" valign="top" style="background:#4a5584;color:#fff;font-size:13px;font-weight:bold;padding:9px 12px;border-bottom:1px solid #fff">{_esc(a)}</td>'
@@ -302,28 +277,8 @@ def send_interview(doc, accept_url="", decline_url=""):
     """Mail the candidate that their interview is scheduled, with Accept / Decline links. Returns (ok, message)."""
     to = (doc.get("email") or "").strip()
     if not to: return False, "candidate has no email saved"
-    m = EmailMessage()
-    m["Subject"] = f'Interview Scheduled - {doc.get("position", "")} - Shreeji SteelTubes Pvt. Ltd.'
-    m["From"] = os.getenv("SMTP_FROM") or os.getenv("SMTP_USER")
-    m["To"] = to
-    m.set_content(_interview_text(doc, accept_url, decline_url))
-    logo = None
-    try:
-        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "static", "logo.png"), "rb") as fh: logo = fh.read()
-    except Exception: pass
-    m.add_alternative(_interview_html(doc, accept_url, decline_url, "logo" if logo else ""), subtype="html")
-    if logo: m.get_payload()[1].add_related(logo, maintype="image", subtype="png", cid="<logo>", disposition="inline")
-    host, port = os.getenv("SMTP_HOST"), int(os.getenv("SMTP_PORT", "587"))
-    try:
-        if port == 465:
-            with smtplib.SMTP_SSL(host, port, timeout=30) as s:
-                s.login(os.getenv("SMTP_USER"), os.getenv("SMTP_PASS")); s.send_message(m)
-        else:
-            with smtplib.SMTP(host, port, timeout=30) as s:
-                s.starttls(); s.login(os.getenv("SMTP_USER"), os.getenv("SMTP_PASS")); s.send_message(m)
-        return True, f"sent to {to}"
-    except Exception as e:
-        return False, str(e)
+    subject = f'Interview Scheduled - {doc.get("position", "")} - Shreeji SteelTubes Pvt. Ltd.'
+    return brevo.send([to], subject, html_body=_interview_html(doc, accept_url, decline_url, _logo_url()), tags=["interview"])
 
 
 def _interview_thread(doc, accept_url, decline_url):

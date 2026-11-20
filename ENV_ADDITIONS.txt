@@ -23,20 +23,22 @@ GST_CACHE_DAYS=7
 UC_PREFIX=UC          # codes look like UC00001
 UC_START=1            # raise this if codes already exist (e.g. 1001 -> UC01001)
 
-# ---- Automatic email of the enquiry PDF to the admin(s) (new) ----
-# Every admin who is ACTIVE and has an email saved (Admin -> Admins) gets the PDF the moment a customer submits an enquiry.
-# Gmail: use an App Password (Google Account -> Security -> 2-Step Verification -> App passwords); a normal password will NOT work.
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587          # 587 = STARTTLS (Gmail/most providers) | 465 = SSL
-SMTP_USER=yourcompany@gmail.com
-SMTP_PASS=your_16_char_app_password
-SMTP_FROM=yourcompany@gmail.com        # optional, defaults to SMTP_USER
-MAIL_NOTIFY=1          # set to 0 to switch this feature off
+# ---- E-mail (Brevo API - replaces SMTP) ----
+# All mails (enquiry -> sales person / admins, job applications, interview mails) are sent with the Brevo API (brevo.py).
+# SMTP is NOT used any more (it is blocked on Render's free plan).
+# BREVO_API_KEY: Brevo dashboard -> top-right menu -> SMTP & API -> "API Keys" tab -> Generate a new API key (starts with xkeysib-)
+# MAIL_FROM_EMAIL: sender address - it MUST be added & verified in Brevo (Senders, domains & dedicated IPs -> Senders).
+#                  Best: an address on your own company domain, after authenticating that domain (DKIM / DMARC) in Brevo.
+BREVO_API_KEY=xkeysib-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+MAIL_FROM_EMAIL=info@yourcompany.com
+MAIL_FROM_NAME=Shreeji SteelTubes
+MAIL_NOTIFY=1          # set to 0 to switch enquiry mails off
 MAIL_NOTIFY_EXTRA=     # optional, comma-separated extra emails always copied (people without an admin login)
+# WHO gets the enquiry mail: Admin panel -> Admins -> save the person's email and switch "Sales mails" to On.
 
 # ---- Job Application mail (new) ----
 # Every new job application is mailed automatically (the mail body is the filled form, resume PDF attached) to the active admins
-# (Admin -> Admins email), MAIL_NOTIFY_EXTRA and the HR address(es) below (comma-separated). Uses the same SMTP_* settings as above.
+# (Admin -> Admins email), MAIL_NOTIFY_EXTRA and the HR address(es) below (comma-separated). Uses the Brevo settings above.
 HR_MAIL=hr@yourcompany.com
 # The Preview / Download buttons for the resume inside that mail use PUBLIC_URL - it must be the real public address of the site
 # (e.g. https://yourwebsite.com), not a LAN address like http://192.168.x.x:5000, or the buttons will not open outside your office network.
@@ -44,7 +46,7 @@ HR_MAIL=hr@yourcompany.com
 # ---- Google Sheet price/stock auto-reply to the CUSTOMER (new, sheet_quote.py) ----
 # The moment a customer submits a product enquiry (and gave an email), the bot looks up their Product + Size
 # (+ Thickness, if the sheet has that column) in this Google Sheet and emails them the matching price & stock.
-# Uses the same SMTP_* settings above to send the mail - no extra mail setup needed.
+# Mail is sent with the Brevo settings above.
 #
 # Sheet columns required (header row, any order, case-insensitive):  Product | Size | Thickness | Price | Unit | Stock
 #
@@ -81,9 +83,9 @@ SHEET_CACHE_MINUTES=10
 # 1 = on (default) | 0 = off (old behaviour: customer gets the sheet price automatically)
 SALES_QUOTE=1
 # Optional: the sales person can also just REPLY to the mail and write the price there (bot reads the mailbox every 30 sec).
-# Gmail: turn IMAP on (Settings -> Forwarding and POP/IMAP) and use the same App Password.
+# Gmail: turn IMAP on (Settings -> Forwarding and POP/IMAP) and use an App Password. Set IMAP_USER / IMAP_PASS in Admin -> Settings.
 SALES_IMAP_POLL=0
 IMAP_HOST=imap.gmail.com
-# IMAP_USER / IMAP_PASS default to SMTP_USER / SMTP_PASS
+# IMAP_USER / IMAP_PASS: the mailbox that receives the sales person's replies (set in Admin -> Settings; no SMTP fallback any more)
 SALES_POLL_SECONDS=30
 # PUBLIC_URL must be the real public https address - the "Write price" button in the sales mail uses it.

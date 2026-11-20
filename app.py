@@ -11,7 +11,7 @@ from flask import (Flask, request, session, redirect, url_for, render_template, 
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import qrcode
-import db, bot, whatsapp, pdfgen, about_fetch, confirm, voice, vendor, mailer, job, sheet_quote, sales_quote
+import db, bot, whatsapp, pdfgen, about_fetch, confirm, voice, vendor, mailer, job, sheet_quote, sales_quote, brevo
 from db import database, norm, ser, fmt_phone
 
 app = Flask(__name__)
@@ -687,8 +687,8 @@ def admin_settings():
     v = {k: g(k, d) for k, d in (("SALES_QUOTE", "1"), ("PUBLIC_URL", ""), ("SALES_MAIL", ""), ("SALES_IMAP_POLL", "0"),
                                   ("IMAP_HOST", ""), ("IMAP_PORT", "993"), ("IMAP_USER", ""), ("SALES_POLL_SECONDS", "30"))}
     sales = [a for a in database().admins.find({"active": True, "sales_notify": True})]
-    return render_template("admin_settings.html", v=v, has_pass=bool(cur.get("IMAP_PASS")), smtp_ok=sales_quote.smtp_ready(),
-                           smtp_user=os.getenv("SMTP_USER", ""), sales=sales, req_host=request.url_root.rstrip("/"))
+    return render_template("admin_settings.html", v=v, has_pass=bool(cur.get("IMAP_PASS")), mail_ok=sales_quote.mail_ready(),
+                           mail_from=brevo.from_email(), sales=sales, req_host=request.url_root.rstrip("/"))
 
 @app.post("/admin/enquiries/<int:no>/delete")
 @admin_required

@@ -13,16 +13,15 @@ FLOW
 SETTINGS: Admin panel -> Settings (saved in MongoDB). The same names in .env are only the fallback.
   SALES_QUOTE=0        -> switch the whole feature off (old behaviour: price mail to customer straight from the sheet)
   (sales person email(s) are set in Admin -> Admins -> 'Sales mails' switch; SALES_MAIL in .env is optional)
-  SALES_IMAP_POLL=1    -> also accept the price typed as a REPLY to the mail (needs IMAP_HOST/IMAP_USER/IMAP_PASS or SMTP_USER/SMTP_PASS)
-  IMAP_HOST=imap.gmail.com   IMAP_USER / IMAP_PASS (default = SMTP_USER / SMTP_PASS)   SALES_POLL_SECONDS=30
-Uses the same SMTP_* settings as mailer.py.
+  SALES_IMAP_POLL=1    -> also accept the price typed as a REPLY to the mail (needs IMAP_HOST + IMAP_USER + IMAP_PASS, set in Admin -> Settings)
+  IMAP_HOST=imap.gmail.com   IMAP_USER / IMAP_PASS (the mailbox that receives the replies)   SALES_POLL_SECONDS=30
+Mails are sent with the Brevo API (brevo.py) - no SMTP. The sales mail's Reply-To is the IMAP mailbox, so a reply lands where the bot reads it.
 """
-import os, re, hmac, hashlib, smtplib, threading, time, imaplib, email, email.header
-from email.message import EmailMessage
-from email.utils import parseaddr, make_msgid
+import os, re, hmac, hashlib, threading, time, imaplib, email, email.header
+from email.utils import parseaddr
 from html import escape
 from db import database, now_ist
-import sheet_quote
+import sheet_quote, brevo
 
 DECRYPT = lambda t: t           # app.py sets this to its password decrypt function (IMAP password is stored encrypted)
 _CFG = {"at": 0, "doc": {}}
@@ -47,12 +46,12 @@ _NO_STOCK = re.compile(r"^\s*(0|0\.0+|no|nil|none|n/?a|na|out\s*of\s*stock|not\s
 
 
 # ------------------------------------------------------------------ settings / recipients
-def smtp_ready():
-    return bool(os.getenv("SMTP_HOST") and os.getenv("SMTP_USER") and os.getenv("SMTP_PASS"))
+def mail_ready():
+    return brevo.ready()
 
 
 def enabled():
-    return str(cfg("SALES_QUOTE", "1")) != "0" and smtp_ready()
+    return str(cfg("SALES_QUOTE", "1")) != "0" and mail_ready()
 
 
 def sales_emails():
@@ -129,20 +128,6 @@ def _row_text(r):
 
 
 # ------------------------------------------------------------------ mail helpers
-def _smtp_send(m):
-    host, port = os.getenv("SMTP_HOST"), int(os.getenv("SMTP_PORT", "587"))
-    if port == 465:
-        with smtplib.SMTP_SSL(host, port, timeout=20) as s:
-            s.login(os.getenv("SMTP_USER"), os.getenv("SMTP_PASS")); s.send_message(m)
-    else:
-        with smtplib.SMTP(host, port, timeout=20) as s:
-            s.starttls(); s.login(os.getenv("SMTP_USER"), os.getenv("SMTP_PASS")); s.send_message(m)
-
-
-def _from():
-    return os.getenv("SMTP_FROM") or os.getenv("SMTP_USER")
-
-
 def _item_text(n, it):
     return (f"Item {n}: {it.get('product', '-')} | Size {it.get('size', '-')} | Thk {it.get('thickness', '-')} | "
             f"Length {it.get('length', '-')} | Qty {it.get('qty', '-')} | Grade {it.get('grade', '-')} | Std {it.get('standard', '-')}")
@@ -193,16 +178,13 @@ def send_to_sales(doc):
     to = sales_emails()
     if not to: return False, "no sales person set - Admin -> Admins: save an email and switch 'Sales mails' On"
     checks = check_all(doc)
-    m = EmailMessage()
-    m["Subject"] = f"[Enq#{doc['no']}] Stock check & price needed - {doc.get('product', '')} - {doc.get('name', '')}"
-    m["From"] = _from(); m["To"] = ", ".join(to); m["Message-ID"] = make_msgid()
-    m.set_content(_sales_text(doc, checks)); m.add_alternative(_sales_html(doc, checks), subtype="html")
-    try:
-        _smtp_send(m)
+    subject = f"[Enq#{doc['no']}] Stock check & price needed - {doc.get('product', '')} - {doc.get('name', '')}"
+    reply_to = (cfg("IMAP_USER") or "").strip() if imap_ready() else ""      # a reply must land in the mailbox the bot reads
+    ok, note = brevo.send(to, subject, html_body=_sales_html(doc, checks), reply_to=reply_to or None, tags=["sales-quote"])
+    if ok:
         summary = ", ".join(f"{c['n']}:{c['status']}" for c in checks)
-        return True, f"sent to {', '.join(to)} ({summary})"
-    except Exception as e:
-        return False, str(e)
+        note = f"{note} ({summary})"
+    return ok, note
 
 
 # ------------------------------------------------------------------ 2) mail to the CUSTOMER (when the sales person writes the price)
@@ -258,8 +240,7 @@ def start(doc):
 
 # ------------------------------------------------------------------ 3) optional: price typed as a REPLY to the sales mail (IMAP)
 def imap_ready():
-    return str(cfg("SALES_IMAP_POLL", "0")) == "1" and bool(cfg("IMAP_HOST") and (cfg("IMAP_USER") or os.getenv("SMTP_USER"))
-                                                             and (cfg("IMAP_PASS") or os.getenv("SMTP_PASS")))
+    return str(cfg("SALES_IMAP_POLL", "0")) == "1" and bool(cfg("IMAP_HOST") and cfg("IMAP_USER") and cfg("IMAP_PASS"))
 
 
 _QUOTE_START = re.compile(r"^(on .+wrote:|on .+, .+ at .+|-{2,}\s*original message|-{2,}\s*forwarded|from:\s.+|sent from my|_{5,})", re.I)
@@ -284,7 +265,7 @@ def reply_text(msg):
 
 def poll_once():
     host = cfg("IMAP_HOST")
-    user = cfg("IMAP_USER") or os.getenv("SMTP_USER"); pw = cfg("IMAP_PASS") or os.getenv("SMTP_PASS")
+    user = cfg("IMAP_USER"); pw = cfg("IMAP_PASS")
     allowed = [e.lower() for e in sales_emails()]
     done = 0
     M = imaplib.IMAP4_SSL(host, int(cfg("IMAP_PORT", "993") or 993))

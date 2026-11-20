@@ -223,7 +223,7 @@
     {% if m in ('failed','no-recipient','off') or not m %}<form method="post" action="/admin/enquiries/{{e.no}}/resend-mail"><button class="rs" title="Email the enquiry PDF to the admin(s) now">↻ Send</button></form>{% endif %}
    </div>
    <div class="eq-nt"><span>Customer price/stock mail</span>
-    {% if sq=='sent' %}<span class="badge b-ok" title="{{e.sheet_quote_note}}">✓ Sent</span>{% elif sq=='failed' or sq=='error' %}<span class="badge b-bad" title="{{e.sheet_quote_note}}">✗ Failed</span>{% elif sq=='queued' %}<span class="badge b-off">… Sending</span>{% elif sq=='no-email' %}<span class="badge b-off" title="Customer did not give an email">No email given</span>{% else %}<span class="badge b-off" title="GOOGLE_SHEET_ID / SMTP not set in .env">Off</span>{% endif %}
+    {% if sq=='sent' %}<span class="badge b-ok" title="{{e.sheet_quote_note}}">✓ Sent</span>{% elif sq=='failed' or sq=='error' %}<span class="badge b-bad" title="{{e.sheet_quote_note}}">✗ Failed</span>{% elif sq=='queued' %}<span class="badge b-off">… Sending</span>{% elif sq=='no-email' %}<span class="badge b-off" title="Customer did not give an email">No email given</span>{% else %}<span class="badge b-off" title="GOOGLE_SHEET_ID / Brevo (BREVO_API_KEY) not set">Off</span>{% endif %}
     <form method="post" action="/admin/enquiries/{{e.no}}/resend-sheet-quote"><button class="rs" title="Re-check the Google Sheet and email the customer now">↻ Send</button></form>
    </div>
   </footer>
