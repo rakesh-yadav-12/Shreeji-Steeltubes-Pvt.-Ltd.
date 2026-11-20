@@ -1,0 +1,141 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2E3F96">
+<title>Login | Shreeji SteelTubes Pvt. Ltd.</title><link rel="icon" href="/static/logo.png">
+<style>
+:root{--blue:#26399e;--blue2:#172574;--orange:#f15307;--bg:#f2f4fc;--line:#e5e7f5;--text:#1c2035;--mute:#696e8a;--bad:#d64545;--ok:#1f9d55}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:15px;color:var(--text);
+ background:radial-gradient(1200px 560px at 50% -10%,#dfe4ff 0,var(--bg) 62%);display:flex;align-items:center;justify-content:center;padding:18px}
+.card{width:100%;max-width:440px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px 22px 20px;box-shadow:0 2px 4px #16215e0d,0 14px 40px #16215e14}
+.logo{display:block;height:56px;margin:0 auto 6px}
+h1{font-size:21px;text-align:center;margin:6px 0 2px;color:var(--blue2)}
+.sub{text-align:center;color:var(--mute);margin:0 0 16px;font-size:13.5px}
+.tabs{display:flex;background:#edeffc;border-radius:12px;padding:4px;margin-bottom:16px}
+.tabs button{flex:1;border:0;background:none;padding:10px;border-radius:9px;font:inherit;font-weight:700;color:var(--blue);cursor:pointer}
+.tabs button.on{background:#fff;box-shadow:0 1px 4px #16215e22}
+label{display:block;font-size:12.5px;font-weight:700;color:#474f7b;margin:11px 0 4px}
+label i{color:var(--bad);font-style:normal}label small{font-weight:500;color:var(--mute)}
+input{width:100%;font:inherit;padding:11px 12px;border:1px solid #d3d7ec;border-radius:10px;outline:0;background:#fff;color:var(--text)}
+input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #26399e25}
+input.bad{border-color:var(--bad)}
+.err{color:var(--bad);font-size:12.5px;min-height:0;margin-top:3px}
+.pw{position:relative}.pw input{padding-right:46px}
+.eye{position:absolute;right:4px;top:3px;border:0;background:none;font-size:18px;padding:8px 10px;cursor:pointer}
+.ph{display:flex;gap:8px}.ph span{flex:none;display:flex;align-items:center;padding:0 12px;border:1px solid #d3d7ec;border-radius:10px;background:#f5f7ff;font-weight:700;color:#474f7b}
+.go{width:100%;margin-top:18px;border:0;border-radius:11px;padding:13px;font:inherit;font-weight:700;font-size:15.5px;color:#fff;cursor:pointer;
+ background:linear-gradient(135deg,var(--blue),var(--blue2));box-shadow:0 4px 14px #26399e44}
+.go:disabled{opacity:.6;cursor:wait}
+.lnk{background:none;border:0;color:var(--blue);font:inherit;font-weight:600;cursor:pointer;padding:0;text-decoration:underline}
+.row{display:flex;justify-content:space-between;margin-top:10px;font-size:13px}
+.note{margin-top:12px;padding:10px 12px;border-radius:10px;font-size:13.5px;display:none}
+.note.bad{display:block;background:#fdeeee;color:#9b2c2c;border:1px solid #f5c2c2}
+.note.ok{display:block;background:#e9f8ef;color:#17663a;border:1px solid #b9e5cb}
+.foot{text-align:center;color:var(--mute);font-size:11.5px;margin:16px 0 0}
+.view{display:none}.view.on{display:block}
+.guest{text-align:center;margin-top:12px;font-size:12.5px;color:var(--mute)}
+</style></head><body>
+<div class="card">
+<img class="logo" src="/static/logo.png" alt="Shreeji SteelTubes Pvt. Ltd.">
+
+<!-- LOGIN -->
+<div class="view" id="v-login">
+ <h1>Welcome back 🙏</h1><p class="sub">Login to continue to Shreeji SteelTubes</p>
+ <div class="tabs"><button type="button" class="on" data-go="login">Login</button><button type="button" data-go="signup">Sign Up</button></div>
+ <form data-api="/auth/login" autocomplete="on" novalidate>
+  <label>Email or mobile number <i>*</i></label>
+  <input name="login" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="you@company.com or 98XXXXXXXX"><div class="err" data-e="login"></div>
+  <label>Password <i>*</i></label>
+  <div class="pw"><input name="password" type="password" autocomplete="current-password" placeholder="Enter your password"><button type="button" class="eye" aria-label="Show password">👁️</button></div>
+  <div class="row"><span></span><button type="button" class="lnk" data-go="forgot">Forgot password?</button></div>
+  <button class="go" type="submit">Login →</button><div class="note" data-n></div>
+ </form>
+</div>
+
+<!-- SIGN UP -->
+<div class="view" id="v-signup">
+ <h1>Create your account</h1><p class="sub">One-time registration - takes 30 seconds</p>
+ <div class="tabs"><button type="button" data-go="login">Login</button><button type="button" class="on" data-go="signup">Sign Up</button></div>
+ <form data-api="/auth/signup" autocomplete="on" novalidate>
+  <label>Full name <i>*</i></label><input name="name" autocomplete="name" placeholder="Your full name"><div class="err" data-e="name"></div>
+  <label>Email <i>*</i></label><input name="email" type="email" autocomplete="email" autocapitalize="none" placeholder="you@company.com"><div class="err" data-e="email"></div>
+  <label>Contact number <i>*</i></label>
+  <div class="ph"><span>+91</span><input name="phone" type="tel" inputmode="numeric" maxlength="14" autocomplete="tel-national" placeholder="10-digit mobile number"></div><div class="err" data-e="phone"></div>
+  <label>Company name <small>(optional)</small></label><input name="company" autocomplete="organization" placeholder="Your company / firm name"><div class="err" data-e="company"></div>
+  <label>Create password <i>*</i></label>
+  <div class="pw"><input name="password" type="password" autocomplete="new-password" placeholder="Min {{ min_pw }} characters, letters + numbers"><button type="button" class="eye" aria-label="Show password">👁️</button></div><div class="err" data-e="password"></div>
+  <label>Confirm password <i>*</i></label>
+  <div class="pw"><input name="password2" type="password" autocomplete="new-password" placeholder="Re-enter password"><button type="button" class="eye" aria-label="Show password">👁️</button></div><div class="err" data-e="password2"></div>
+  <button class="go" type="submit">Sign Up →</button><div class="note" data-n></div>
+  <p class="row" style="justify-content:center">Already registered?&nbsp;<button type="button" class="lnk" data-go="login">Login</button></p>
+ </form>
+</div>
+
+<!-- FORGOT -->
+<div class="view" id="v-forgot">
+ <h1>Forgot password?</h1><p class="sub">Enter your registered email or mobile number. We will email you a reset link.</p>
+ <form data-api="/auth/forgot" novalidate>
+  <label>Email or mobile number <i>*</i></label>
+  <input name="login" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="you@company.com or 98XXXXXXXX"><div class="err" data-e="login"></div>
+  <button class="go" type="submit">Send reset link</button><div class="note" data-n></div>
+  <p class="row" style="justify-content:center"><button type="button" class="lnk" data-go="login">← Back to Login</button></p>
+ </form>
+</div>
+
+<!-- RESET (from the e-mailed link) -->
+<div class="view" id="v-reset">
+ <h1>Set a new password</h1><p class="sub">Choose a new password for your account</p>
+ <form data-api="/auth/reset" novalidate>
+  <input type="hidden" name="token" value="{{ token }}">
+  <label>New password <i>*</i></label>
+  <div class="pw"><input name="password" type="password" autocomplete="new-password" placeholder="Min {{ min_pw }} characters, letters + numbers"><button type="button" class="eye" aria-label="Show password">👁️</button></div><div class="err" data-e="password"></div>
+  <label>Confirm new password <i>*</i></label>
+  <div class="pw"><input name="password2" type="password" autocomplete="new-password" placeholder="Re-enter password"><button type="button" class="eye" aria-label="Show password">👁️</button></div><div class="err" data-e="password2"></div>
+  <button class="go" type="submit">Change password</button><div class="note" data-n></div>
+ </form>
+</div>
+
+<!-- EXPIRED LINK -->
+<div class="view" id="v-expired">
+ <h1>Link expired</h1><p class="sub">This password reset link has expired or was already used.</p>
+ <button class="go" type="button" data-go="forgot" onclick="location.href='/auth?v=forgot'">Request a new link</button>
+</div>
+
+<p class="foot">Shreeji SteelTubes Pvt. Ltd. &middot; House of Quality Steel Tubes</p>
+</div>
+<script>
+(function(){
+var VIEW={{ view|tojson }};
+function show(v){document.querySelectorAll('.view').forEach(function(x){x.classList.toggle('on',x.id==='v-'+v)});
+ var f=document.querySelector('#v-'+v+' input:not([type=hidden])');if(f&&matchMedia('(min-width:700px)').matches)f.focus()}
+show(VIEW);
+document.addEventListener('click',function(e){
+ var g=e.target.closest('[data-go]');if(g&&g.id!=='' ){}
+ if(g&&!g.hasAttribute('onclick')){e.preventDefault();show(g.dataset.go)}
+ var eye=e.target.closest('.eye');if(eye){var i=eye.previousElementSibling,on=i.type==='password';i.type=on?'text':'password';eye.textContent=on?'🙈':'👁️'}
+});
+document.querySelectorAll('form[data-api]').forEach(function(f){
+ f.addEventListener('submit',function(ev){ev.preventDefault();
+  var btn=f.querySelector('.go'),note=f.querySelector('[data-n]'),body={};
+  new FormData(f).forEach(function(v,k){body[k]=v});
+  f.querySelectorAll('.err').forEach(function(x){x.textContent=''});f.querySelectorAll('input.bad').forEach(function(x){x.classList.remove('bad')});
+  note.className='note';note.textContent='';
+  var t=btn.textContent;btn.disabled=true;btn.textContent='Please wait…';
+  fetch(f.dataset.api,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),credentials:'same-origin'})
+  .then(function(r){return r.json().catch(function(){return{ok:false,errors:{_:'Server error. Please try again.'}}})})
+  .then(function(d){
+   if(d.ok){
+    if(d.redirect){location.href=d.redirect;return}
+    note.className='note ok';note.textContent=d.message||'Done';
+    if(f.dataset.api==='/auth/reset'){setTimeout(function(){location.href='/auth'},1800)}
+    btn.disabled=false;btn.textContent=t;return}
+   var er=d.errors||{};
+   Object.keys(er).forEach(function(k){var el=f.querySelector('[data-e="'+k+'"]');
+    if(el){el.textContent=er[k];var inp=f.querySelector('[name="'+k+'"]');if(inp)inp.classList.add('bad')}
+    else{note.className='note bad';note.textContent=er[k]}});
+   btn.disabled=false;btn.textContent=t;
+  }).catch(function(){note.className='note bad';note.textContent='Network error. Please try again.';btn.disabled=false;btn.textContent=t});
+ });
+});
+})();
+</script></body></html>

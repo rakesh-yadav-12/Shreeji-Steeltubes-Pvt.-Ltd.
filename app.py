@@ -11,7 +11,7 @@ from flask import (Flask, request, session, redirect, url_for, render_template, 
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import qrcode
-import db, bot, whatsapp, pdfgen, about_fetch, confirm, voice, vendor, mailer, job, sheet_quote, sales_quote, brevo
+import db, bot, whatsapp, pdfgen, about_fetch, confirm, voice, vendor, mailer, job, sheet_quote, sales_quote, brevo, auth
 from db import database, norm, ser, fmt_phone
 
 app = Flask(__name__)
@@ -38,6 +38,7 @@ def client_ip(): return (request.headers.get("X-Forwarded-For", "").split(",")[0
 UPLOADS = os.path.join(os.path.dirname(__file__), "uploads")
 os.makedirs(UPLOADS, exist_ok=True)
 db.init(os.getenv("ADMIN_PHONE", "9930988307"), os.getenv("ADMIN_PASSWORD", "admin123"), os.getenv("ADMIN_NAME", "Admin"))
+auth.register(app, too_many, client_ip)      # customer Login / Sign Up / Forgot password  (/auth, /auth/*)
 
 def site_url():
     return (os.getenv("PUBLIC_URL") or request.url_root).rstrip("/")
@@ -92,6 +93,7 @@ def healthz():             # for hosting uptime checks
 
 @app.route("/")
 def home():
+    if not auth.current_user(): return redirect("/auth")      # QR scan -> first time / signed out visitors must Login or Sign Up first
     return render_template("home.html", open_page="")
 
 @app.route("/vendor-registration")
@@ -158,6 +160,7 @@ def live_version():        # open screens poll this; when the value changes they
 
 @app.post("/chat/send")
 def chat_send():
+    if not auth.current_user(): return jsonify(replies=[{"type": "text", "text": "Please login to continue."}], login=True), 401
     sid = session.setdefault("sid", uuid.uuid4().hex)
     if too_many("chat:" + sid, 40, 60) or too_many("chatip:" + client_ip(), 120, 60):      # 40 msgs / minute per visitor
         return jsonify(replies=[{"type": "text", "text": "\u23F3 You are sending messages too fast. Please wait a few seconds and try again."}]), 429
@@ -369,6 +372,7 @@ def enquiry_form_data():
 
 @app.post("/enquiry/submit")
 def enquiry_submit():
+    if not auth.current_user(): return jsonify(ok=False, errors={"_": "Please login to submit your enquiry."}, login=True), 401
     sid = session.setdefault("sid", uuid.uuid4().hex); key = "web:" + sid
     if too_many("enq:" + sid, 10, 600) or too_many("enqip:" + client_ip(), 40, 600):
         return jsonify(ok=False, errors={"_": "Too many requests. Please wait a few minutes and try again."}), 429
