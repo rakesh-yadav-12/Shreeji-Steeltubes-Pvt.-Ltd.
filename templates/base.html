@@ -122,6 +122,7 @@ select.st-New{background:#e6eaff;color:#26399e}select.st-Quoted{background:#fff1
  <div class="grp">Leads</div>
  <a class="it {{'on' if p.startswith('/admin/enquiries')}}" href="/admin/enquiries"><i>📋</i>Enquiries</a>
  <a class="it {{'on' if p.startswith('/admin/customers')}}" href="/admin/customers"><i>👥</i>Customers</a>
+ <a class="it {{'on' if p.startswith('/admin/web-users')}}" href="/admin/web-users"><i>🔑</i>Website Users</a>
  <a class="it {{'on' if p.startswith('/admin/jobs')}}" href="/admin/jobs"><i>💼</i>Jobs</a>
  <a class="it {{'on' if p.startswith('/admin/vendors')}}" href="/admin/vendors"><i>🤝</i>Vendors</a>
  <div class="grp">Content</div>
@@ -136,7 +137,7 @@ select.st-New{background:#e6eaff;color:#26399e}select.st-Quoted{background:#fff1
 <div class="scrim" onclick="document.body.classList.remove('nav-open')"></div>
 <div class="main">
  <div class="top"><button class="burger" type="button" aria-label="Menu" onclick="document.body.classList.toggle('nav-open')">☰</button>
-  <h1>{% if p.startswith('/admin/dashboard') %}Dashboard{% elif p.startswith('/admin/enquiries') %}Enquiries{% elif p.startswith('/admin/customers') %}Customers{% elif p.startswith('/admin/jobs') %}Job applications{% elif p.startswith('/admin/vendors') %}Vendor registrations{% elif p.startswith('/admin/contacts') %}Contacts{% elif p.startswith('/admin/documents') %}Uploads{% elif p.startswith('/admin/qr') %}QR code{% elif p.startswith('/admin/admins') %}Admins{% elif p.startswith('/admin/settings') %}Settings{% else %}Shreeji SteelTubes{% endif %}</h1>
+  <h1>{% if p.startswith('/admin/dashboard') %}Dashboard{% elif p.startswith('/admin/enquiries') %}Enquiries{% elif p.startswith('/admin/customers') %}Customers{% elif p.startswith('/admin/web-users') %}Website Users{% elif p.startswith('/admin/jobs') %}Job applications{% elif p.startswith('/admin/vendors') %}Vendor registrations{% elif p.startswith('/admin/contacts') %}Contacts{% elif p.startswith('/admin/documents') %}Uploads{% elif p.startswith('/admin/qr') %}QR code{% elif p.startswith('/admin/admins') %}Admins{% elif p.startswith('/admin/settings') %}Settings{% else %}Shreeji SteelTubes{% endif %}</h1>
   <span class="sp"></span></div>
   <main>
 {% else %}

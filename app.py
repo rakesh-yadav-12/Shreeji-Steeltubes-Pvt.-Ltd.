@@ -11,7 +11,7 @@ from flask import (Flask, request, session, redirect, url_for, render_template, 
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import qrcode
-import db, bot, whatsapp, pdfgen, about_fetch, confirm, voice, vendor, mailer, job, sheet_quote, sales_quote, brevo
+import db, bot, whatsapp, pdfgen, about_fetch, confirm, voice, vendor, mailer, job, sheet_quote, sales_quote, brevo, auth
 from db import database, norm, ser, fmt_phone
 
 app = Flask(__name__)
@@ -38,6 +38,7 @@ def client_ip(): return (request.headers.get("X-Forwarded-For", "").split(",")[0
 UPLOADS = os.path.join(os.path.dirname(__file__), "uploads")
 os.makedirs(UPLOADS, exist_ok=True)
 db.init(os.getenv("ADMIN_PHONE", "9930988307"), os.getenv("ADMIN_PASSWORD", "admin123"), os.getenv("ADMIN_NAME", "Admin"))
+auth.register(app, too_many, client_ip)      # customer Login / Sign Up / Forgot password  (/auth, /auth/*)
 
 def site_url():
     return (os.getenv("PUBLIC_URL") or request.url_root).rstrip("/")
@@ -92,6 +93,7 @@ def healthz():             # for hosting uptime checks
 
 @app.route("/")
 def home():
+    if not auth.current_user(True): return redirect("/auth")      # QR scan -> first time / signed out visitors must Login or Sign Up first (social users must also add a contact number)
     return render_template("home.html", open_page="")
 
 @app.route("/vendor-registration")
@@ -158,6 +160,7 @@ def live_version():        # open screens poll this; when the value changes they
 
 @app.post("/chat/send")
 def chat_send():
+    if not auth.current_user(True): return jsonify(replies=[{"type": "text", "text": "Please login to continue."}], login=True), 401
     sid = session.setdefault("sid", uuid.uuid4().hex)
     if too_many("chat:" + sid, 40, 60) or too_many("chatip:" + client_ip(), 120, 60):      # 40 msgs / minute per visitor
         return jsonify(replies=[{"type": "text", "text": "\u23F3 You are sending messages too fast. Please wait a few seconds and try again."}]), 429
@@ -369,6 +372,7 @@ def enquiry_form_data():
 
 @app.post("/enquiry/submit")
 def enquiry_submit():
+    if not auth.current_user(True): return jsonify(ok=False, errors={"_": "Please login to submit your enquiry."}, login=True), 401
     sid = session.setdefault("sid", uuid.uuid4().hex); key = "web:" + sid
     if too_many("enq:" + sid, 10, 600) or too_many("enqip:" + client_ip(), 40, 600):
         return jsonify(ok=False, errors={"_": "Too many requests. Please wait a few minutes and try again."}), 429
@@ -782,6 +786,38 @@ def bulk_delete_customers():       # delete the ticked customers; their enquirie
     n = database().customers.delete_many({"_id": {"$in": ids}}).deleted_count if ids else 0
     flash(f"{n} customer{'' if n == 1 else 's'} deleted (their enquiries are kept)" if n else "Nothing selected - no customer deleted")
     return redirect(url_for("admin_customers", q=request.form.get("q", "")))
+
+# ---------- admin: website users (people who registered on the Login / Sign Up page) ----------
+def _web_users(q):
+    f = {}
+    if q:
+        rx = {"$regex": re.escape(q), "$options": "i"}
+        f["$or"] = [{k: rx} for k in ("name", "email", "phone", "company")]
+    return ser(database().users.find(f, {"password_hash": 0}).sort("created", -1))
+
+@app.route("/admin/web-users")
+@admin_required
+def admin_web_users():
+    q = request.args.get("q", "").strip()
+    return render_template("admin_webusers.html", rows=_web_users(q), q=q)
+
+@app.get("/admin/web-users/export.csv")
+@admin_required
+def web_users_csv():
+    out = io.StringIO(); w = csv.writer(out)
+    w.writerow(["Name", "Email", "Contact", "Company", "Signed up with", "Registered", "Last login"])
+    for u in _web_users(request.args.get("q", "").strip()):
+        w.writerow([u.get("name", ""), u.get("email", ""), fmt_phone(u.get("phone")), u.get("company", ""), u.get("provider", "password"),
+                    u["created"].strftime("%Y-%m-%d %H:%M") if u.get("created") else "", u["last_login"].strftime("%Y-%m-%d %H:%M") if u.get("last_login") else ""])
+    return Response("\ufeff" + out.getvalue(), mimetype="text/csv", headers={"Content-Disposition": "attachment; filename=website_users.csv"})
+
+@app.post("/admin/web-users/delete")
+@admin_required
+def web_user_delete():
+    try: n = database().users.delete_one({"_id": ObjectId(request.form.get("id", ""))}).deleted_count
+    except Exception: n = 0
+    flash("User deleted" if n else "User not found - it may already be deleted")
+    return redirect(url_for("admin_web_users"))
 
 # ---------- admin: job applications + vendor registrations (from the chatbot) ----------
 @app.route("/admin/jobs")
