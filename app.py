@@ -93,8 +93,12 @@ def healthz():             # for hosting uptime checks
 
 @app.route("/")
 def home():
-    if not auth.current_user(True): return redirect("/auth")      # QR scan -> first time / signed out visitors must Login or Sign Up first (social users must also add a contact number)
+    if not auth.current_user(True): return render_template("landing.html")      # public landing page (Google/visitors see company info); chat itself still needs Login via /auth
     return render_template("home.html", open_page="")
+
+@app.get("/privacy")
+def privacy():
+    return render_template("privacy.html")
 
 @app.route("/vendor-registration")
 def vendor_registration_link():      # direct link (WhatsApp / QR / email): opens the site straight on the Vendor Registration page
