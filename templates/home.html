@@ -417,7 +417,7 @@ input.imm-on{background:#edeffb!important;color:#26399e;font-weight:600;border-c
 #eq .eq-row{grid-template-columns:minmax(0,1fr)!important}
 #eq .eq-row .ct-f{grid-column:1/-1!important}
 }
-@media(min-width:1100px){
+@media(min-width:700px){
 #eq .ct-w.eq1{max-width:1180px}
 #eq .eq-hd{display:grid;gap:8px;margin-top:6px;padding:11px 10px;background:#465089;color:#fff;font-size:12.5px;font-weight:700;letter-spacing:.3px;border-radius:3px 3px 0 0}
 #eq .eq-sh{margin:22px 0 8px!important;font-size:1.05em}
@@ -470,7 +470,16 @@ input.imm-on{background:#edeffb!important;color:#26399e;font-weight:600;border-c
 .eq-cn{font-size:17px;color:#c62828;background:#fff;border:1px solid #e0b4b4}.eq-cn:hover{background:#fdecec}
 .eq-le{margin-top:6px;font-size:12.5px;font-weight:600;color:#c62828}
 .eq-lh{margin-top:6px;font-size:12px;font-weight:600;color:#9a6a00}
-@media(min-width:1100px){
+/* ONE-ROW layout (like a table) on every screen >=700px. The row is at least 1060px wide so every box can show what was typed; if the chat is narrower than that the form scrolls sideways
+   (only sideways - vertical scrolling still goes to the chat). On a wide screen the chat widens while this form is open so no sideways scroll is needed. */
+@media(min-width:700px){
+#eq .ct-fm{overflow-x:auto;overflow-y:hidden;padding-left:18px;padding-right:18px;overscroll-behavior-y:auto}
+#msgs:has(.pgrow[data-pg=eq]){max-width:1240px}
+.eq-hd.eqw,.eq-row.eqw,.eq-li{min-width:1060px}
+#eq .eq-row input,#eq .eq-row select{padding-left:8px;padding-right:8px}
+.eq-cb{padding-left:8px;padding-right:8px}
+}
+@media(min-width:700px){
 .eq-li{padding:8px 10px}
 .eq-lg{grid-template-columns:var(--eqc);gap:8px;align-items:center}
 .eq-lc::before{display:none}
@@ -480,7 +489,7 @@ input.imm-on{background:#edeffb!important;color:#26399e;font-weight:600;border-c
 #eq .eq-row [id^="ef-delivery_date"]{grid-column:span 2}
 @media(max-width:699px){
 #eq .eq-row [id^="ef-product"],#eq .eq-row [id^="ef-std_grade"]{grid-column:1/-1}#eq .eq-row [id^="ef-delivery_date"]{grid-column:auto}}
-@media(min-width:1100px){
+@media(min-width:700px){
 #eq .eq-row .eq-ac{grid-column:auto;align-self:start}}
 #eq{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}
 .ct-f select{display:block;width:100%;box-sizing:border-box;padding:22px 20px;font:inherit;font-size:16px;color:#333;background:#f3f4f8;border:1px solid transparent;border-radius:2px;outline:0}.ct-f select:focus{border-color:#26399e;background:#fff}.ct-f.err select{border-color:#d33}.ct-f select.ph{color:#757575}
@@ -779,27 +788,20 @@ input.imm-on{background:#edeffb!important;color:#26399e;font-weight:600;border-c
 .pgcard .hbx,.pgcard .ab-back,.pgcard .ab-x{display:none!important}
 #jb{position:relative}
 #jb .jb-px{position:absolute;top:10px;right:12px}
-#eq .eqf{position:sticky;right:auto;bottom:14px;margin:0 14px 14px auto;width:fit-content}
+#eq .eqf{position:sticky;right:auto;bottom:14px;margin:0 14px 14px auto;width:fit-content}
+/* FORM CARDS IN CHAT: the form must not be its own scroll box (it swallowed touch/wheel scrolling) and the card must not be a scroll box either
+   (that is what made the sticky contact button slide to the bottom of the form). Only the chat (#box) scrolls; clip = round corners without a scroll container. */
+.pgrow .pgcard{overflow:hidden;overflow:clip}
+.pgrow .pgb>*{overflow:visible!important;overscroll-behavior:auto!important;-webkit-overflow-scrolling:auto}
+#eq .eqf{z-index:60}
 #jb-pop{position:static;inset:auto;z-index:auto;padding:18px 0;background:none}
 /* option lists (the old popup sheet) = a bot card at the bottom of the chat */
 #msgs>.shrow{align-self:flex-start;width:min(100%,460px);margin:6px 0}
-#sheet{position:static;display:block;height:auto;padding:0;z-index:auto}
-#sheet[hidden]{display:none}
-#sheet .sbk{display:none}
-#sheet .spn{margin:0;max-width:100%;max-height:none;border:1px solid #d3d8f0;box-shadow:0 1px 3px #0b141a33}
-#sheet .sls{overflow:visible;max-height:none}
-#sheet .dqf{position:static}
 /* help list, calculator, success card, product details = chat messages too */
 #msgs>.mrow{align-self:flex-start;width:min(100%,460px);margin:6px 0}
 #msgs>.mrow:empty{display:none}
 .mrow>*{flex:1 1 auto;min-width:0}
-.eqhm{position:static;display:block;inset:auto;z-index:auto;padding:0}
-.eqhm-k{display:none}
-.eqhm-p{max-width:100%;max-height:none;border:1px solid #d3d8f0;box-shadow:0 1px 3px #0b141a33}
-.eqhm-b{overflow:visible}
-.wcx{position:static;inset:auto;z-index:auto;padding:0;display:block;pointer-events:auto}
-.wcb{display:none}
-.wcp{max-height:none;overflow:visible;width:min(360px,100%)}
+/* help (Call our team) and the weight calculator open as pop-ups ON TOP of the form (rules above) */
 .m.sxm{background:transparent;box-shadow:none;border:0;padding:0}.m.sxm .ts{display:none}
 .m.pdm{padding:0;overflow:hidden;white-space:normal;max-width:min(100%,560px)}.m.pdm .ts{display:none}
 .pdm .pdv .pb2{max-height:none;overflow:visible;box-shadow:none;border-radius:0;max-width:none}
@@ -1032,12 +1034,7 @@ async function go(x,silent,label){
  if(!rs.length)untype(tp);ui(rs);if(rs.every(m=>m.type==='text'&&(m.popup||(m.page&&!String(m.text||'').trim()))))NEEDH=true;busy=false;setTimeout(homeHint,350)}
 const sh=document.createElement('div');sh.id='sheet';sh.hidden=true;
 sh.innerHTML='<div class="sbk"></div><div class="spn"><div class="shd"><button type="button" class="sx" aria-label="Close">&#10005;</button><b></b></div><div class="sls"></div></div>';
-SHROW=document.createElement('div');SHROW.className='r rl shrow';SHROW.appendChild(sh);   // option lists are a bot card at the bottom of the conversation (never a popup over it)
-(function(){let q=false;
- const rev=()=>{if(q)return;q=true;requestAnimationFrame(()=>{q=false;if(sh.hidden||!SHROW.isConnected)return;const b=sc.getBoundingClientRect(),r=SHROW.getBoundingClientRect();
-  if(r.height>b.height-24||r.top<b.top)sc.scrollBy({top:r.top-b.top-8,behavior:'smooth'});else if(r.bottom>b.bottom-8)sc.scrollBy({top:r.bottom-b.bottom+14,behavior:'smooth'})})};
- new MutationObserver(()=>{if(sh.hidden){SHROW.remove()}else{if(SHROW.parentNode!==msgs||SHROW.nextElementSibling){msgs.appendChild(SHROW);last='card'}rev()}}).observe(sh,{attributes:true,attributeFilter:['hidden']});
- new MutationObserver(rev).observe(sh,{childList:true,subtree:true})})();
+SHROW=document.createElement('div');document.body.appendChild(sh);   // option lists / Welcome menu are a POP-UP on top of the page (fixed overlay), not a message in the chat
 let ASKX=null;   // set while the 'Want to know about the company?' popup is open -> X / outside tap / Esc opens the Product Enquiry Form
 function sheetClose(){sh.hidden=true;SHB=null;ASKX=null;try{sh.querySelector('.spn').classList.remove('usr')}catch(e){};setTimeout(homeHint,450)}
 let SHB=null,SHC=null;   // 'previous popup' - X / outside tap / Esc re-opens it; null = first popup, so it closes
@@ -1325,6 +1322,13 @@ function buildProd(k){const el=document.getElementById('prod');el.scrollTo(0,0);
 /* ---------- ENQUIRY SUBMITTED: short "officially successful" popup (closes by itself) -> Google-Forms style confirmation page ---------- */
 const SX_T={en:['Successfully Submitted','Your enquiry has been recorded.','Enquiry No. #'],
  hi:['\u0938\u092B\u0932\u0924\u093E\u092A\u0942\u0930\u094D\u0935\u0915 \u091C\u092E\u093E \u0939\u094B \u0917\u092F\u093E','\u0906\u092A\u0915\u0940 \u092A\u0942\u091B\u0924\u093E\u091B \u0926\u0930\u094D\u091C \u0915\u0930 \u0932\u0940 \u0917\u0908 \u0939\u0948\u0964','\u092A\u0942\u091B\u0924\u093E\u091B \u0915\u094D\u0930. #']};
+/* every response to something the person submits (contact message, quote request, vendor registration ...) appears as a POP-UP on top of the page, not as a line inside the chat */
+function msgPop(html,title){const old=document.getElementById('mpx');if(old)old.remove();
+ if(!document.getElementById('mpx-css')){const st=document.createElement('style');st.id='mpx-css';st.textContent='#mpx{position:fixed;inset:0;z-index:2100;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(10,20,50,.62);animation:sxf .2s ease}#mpx .mpb{background:#fff;color:#1a1e35;border-radius:14px;max-width:440px;width:100%;max-height:86vh;overflow-y:auto;padding:30px 26px 24px;text-align:center;box-shadow:0 18px 60px rgba(0,0,0,.35);animation:sxp .35s cubic-bezier(.2,1.2,.4,1);font-size:15.5px;line-height:1.6}#mpx .mpi{width:56px;height:56px;margin:0 auto 12px;border-radius:50%;background:#1a9f4b;display:flex;align-items:center;justify-content:center}#mpx .mpi svg{width:30px;height:30px;stroke:#fff;fill:none;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}#mpx h3{margin:0 0 8px;font-size:20px;color:#041262}#mpx a{color:#041262;font-weight:700}#mpx button.mpo{margin-top:18px;border:0;border-radius:10px;background:#26399e;color:#fff;font:inherit;font-weight:700;padding:12px 36px;cursor:pointer}#mpx button.mpo:hover{background:#041262}';document.head.appendChild(st)}
+ const m=document.createElement('div');m.id='mpx';m.setAttribute('role','dialog');m.setAttribute('aria-modal','true');
+ m.innerHTML='<div class="mpb"><div class="mpi"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h3>'+(title||'Submitted Successfully!')+'</h3><div>'+html+'</div><button type="button" class="mpo">OK</button></div>';
+ const x=()=>{m.remove();document.removeEventListener('keydown',kd,true)},kd=e=>{if(e.key==='Escape')x()};
+ m.addEventListener('click',e=>{if(e.target===m||e.target.closest('.mpo'))x()});document.addEventListener('keydown',kd,true);document.body.appendChild(m);const b=m.querySelector('.mpo');if(b)b.focus({preventScroll:true})}
 function eqPop(t,after){
  if(!document.getElementById('sx-css')){const st=document.createElement('style');st.id='sx-css';st.textContent=`#sx{display:block;animation:sxf .2s ease}
 #sx .sb{width:100%;max-width:300px;background:#fff;border-radius:18px;overflow:hidden;text-align:center;box-shadow:0 18px 50px rgba(8,14,50,.4);animation:sxp .45s cubic-bezier(.2,1.35,.35,1)}
@@ -1403,7 +1407,7 @@ function buildCT(){const el=document.getElementById('ct');el.scrollTo(0,0);
  ids.forEach(i=>document.getElementById('ct-'+i).addEventListener('input',()=>document.getElementById('cf-'+i).classList.remove('err')));
  sb.onclick=async()=>{const v={};ids.forEach(i=>v[i]=document.getElementById('ct-'+i).value.trim());top.style.display='none';ok.style.display='none';ids.forEach(i=>document.getElementById('cf-'+i).classList.remove('err'));sb.disabled=true;sb.textContent='Sending\u2026';
   try{const r=await fetch('/contact/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(v)}),j=await r.json();
-   if(j.ok){ids.forEach(i=>document.getElementById('ct-'+i).value='');ok.innerHTML='\u2705 Thank you! Your message <b>#'+j.no+'</b> has been sent.<br>Our team will contact you shortly.';ok.style.display='block';logAct('\uD83D\uDCE8 Message #'+j.no+' sent','s:contact');ok.scrollIntoView({block:'center',behavior:'smooth'})}
+   if(j.ok){ids.forEach(i=>document.getElementById('ct-'+i).value='');msgPop('Your message <b>#'+j.no+'</b> has been sent.<br>Our team will contact you shortly.','Thank you!');logAct('\uD83D\uDCE8 Message #'+j.no+' sent','s:contact')}
    else{const er=j.errors||{};let first=null;ids.forEach(i=>{if(er[i]){const w=document.getElementById('cf-'+i);w.classList.add('err');w.querySelector('.em').textContent=er[i];first=first||w}});if(er._){top.textContent=er._;top.style.display='block'}if(first)first.scrollIntoView({block:'center',behavior:'smooth'})}}
   catch(e){top.textContent='Connection problem. Please check your internet and try again.';top.style.display='block'}
   sb.disabled=false;sb.textContent='Send Now'};
@@ -1467,13 +1471,13 @@ function eqHelp(){const el=document.getElementById('eq');if(!el)return;
  f.onclick=e=>{if(e.target.closest('.eqf-b,.eqf-l'))eqHelpOpen()};f.querySelector('.eqf-b').setAttribute('aria-haspopup','dialog');el.appendChild(f);
  setTimeout(()=>f.classList.add('min'),6000);
  if(!el._eqfx){el._eqfx=1;const tp=e=>/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName),sm=()=>window.matchMedia('(max-width:700px)').matches;
-  el.addEventListener('focusin',e=>{const b=el.querySelector('.eqf');if(b&&tp(e)&&sm())b.classList.add('hide')});
-  el.addEventListener('focusout',e=>{const b=el.querySelector('.eqf');if(b&&tp(e))setTimeout(()=>{if(!/^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement||{}).tagName))b.classList.remove('hide')},150)})}}
+  el.addEventListener('focusin',e=>{const b=el.querySelector('.eqf');if(b&&tp(e)&&sm())b.classList.add('min')});
+  el.addEventListener('focusout',e=>{const b=el.querySelector('.eqf');if(b&&tp(e))setTimeout(()=>b.classList.remove('hide'),150)})}}
 function eqHelpClose(){const m=document.getElementById('eqhm');if(m)m.remove();const d=document.getElementById('eqhm2');if(d)d.remove()}
 async function eqHelpOpen(){eqHelpClose();
  const m=document.createElement('div');m.id='eqhm';m.className='eqhm';
  m.innerHTML='<div class="eqhm-k"></div><div class="eqhm-p" role="dialog" aria-label="Help"><div class="eqhm-h"><button type="button" class="eqhm-x" aria-label="Close">&#10005;</button><div><b>Need help?</b><span>Select a department &ndash; call, direct line or email</span></div></div><div class="eqhm-b"><div class="eqhm-m">Loading&hellip;</div></div></div>';
- inlineMount(m,'mrow');
+ document.body.appendChild(m);
  m.querySelector('.eqhm-k').onclick=eqHelpClose;m.querySelector('.eqhm-x').onclick=eqHelpClose;
  const body=m.querySelector('.eqhm-b');
  let rows=window.__CT;
@@ -1500,7 +1504,7 @@ function eqDeptClose(){const m=document.getElementById('eqhm2');if(m)m.remove()}
 function eqDeptOpen(g,person){eqDeptClose();
  const m=document.createElement('div');m.id='eqhm2';m.className='eqhm';
  m.innerHTML='<div class="eqhm-k"></div><div class="eqhm-p" role="dialog" aria-label="'+escA(g.dep)+'"><div class="eqhm-h"><button type="button" class="eqhm-x" aria-label="Back">&#10005;</button><div><b>'+esc(g.dep)+'</b><span>'+g.list.length+(g.list.length>1?' contacts':' contact')+' &ndash; tap Call or Mail</span></div></div><div class="eqhm-b">'+g.list.map(c=>''+person(c)+'').join('')+'</div></div>';
- inlineMount(m,'mrow');m.querySelector('.eqhm-k').onclick=eqDeptClose;m.querySelector('.eqhm-x').onclick=eqDeptClose;m.querySelector('.eqhm-b').scrollTop=0}
+ document.body.appendChild(m);m.querySelector('.eqhm-k').onclick=eqDeptClose;m.querySelector('.eqhm-x').onclick=eqDeptClose;m.querySelector('.eqhm-b').scrollTop=0}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(document.getElementById('eqhm2'))eqDeptClose();else eqHelpClose()}});
 /* ---------- PIPE WEIGHT CALCULATOR (Product Enquiry Form) ----------
    For Round Pipe :  (OD - thk) x thk x 0.0246615 = Kg/MTR          Weight/pipe = Kg/MTR x 6.00
@@ -1538,7 +1542,7 @@ function wcOpen(btn,solo,opt){
   +'<div class="wc-c pp" id="wc-k2"><small>WEIGHT / PIPE</small><b id="wc-v2">\u2013</b><em>kg &times; 6.00 m</em></div></div>'
   +'<div class="wc-er" id="wc-er"></div>'
   +'<div class="wc-ac"><button type="button" class="wc-use" id="wc-use" disabled title="Use in my enquiry">Save</button><button type="button" class="wc-clr" id="wc-clr" title="Clear all fields and start again"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>Clear / Reset</button></div></div></div>';
- inlineMount(wrap,'mrow wcrow');
+ document.body.appendChild(wrap);
  const pn=wrap.querySelector('.wcp'),g=id=>wrap.querySelector('#'+id),f=n=>String(Math.round(n*1000)/1000);
  const ID={od:'wc-od',a:'wc-a',b:'wc-b',t:'wc-t'};
  const P=()=>({od:wcNum(V.od),a:wcNum(V.a),b:wcNum(V.b),t:wcNum(V.t)});
@@ -1586,8 +1590,9 @@ async function buildEQ(m){const el=document.getElementById('eq');el.scrollTo(0,0
   return '<div class="ct-f'+(x.name==='product'||x.name==='remarks'||x.name==='std_grade'?' full':'')+'" id="ef-'+x.name+sfx+'">'+(lb?'<label class="eq-lb" for="'+id+'">'+esc(x.label)+(x.req?' *':'')+'</label>':'')+c+(lb&&x.name==='std_grade'?'<small class="eq-hint">Tap to choose from the list, or type your own</small>':'')+'<div class="em"></div></div>'};
  const SH=t=>'<div class="eq-sh" style="font-weight:700;margin:16px 0 10px;font-size:1.05em">'+esc(t)+'</div>',
   ROWW={c_name:1.2,c_company:1.5,c_gst:1.4,c_mobile:1,c_email:1.3,c_uc:1.3,product:3,size:.9,thickness:1,std_grade:1.5,length:.9,brand:1.1,qty:.9,unit:.8,delivery_date:1.5},
-  colW=x=>x.name==='unit'?'minmax(92px,.9fr)':'minmax(0,'+(ROWW[x.name]||1)+'fr)',
-  rowSec=(z,t)=>{const fs=z.fields.filter(x=>x.name!=='remarks'),cols=fs.map(x=>colW(x)).join(' ');return (t?SH(z.title):'')+'<div class="eq-hd" style="grid-template-columns:'+cols+'">'+fs.map(x=>'<span>'+esc(x.label)+(x.req?' *':'')+'</span>').join('')+'</div><div class="ct-g eq-row" style="--eqc:'+cols+'">'+z.fields.map(x=>fld(x,1)).join('')+'</div>'},
+  MINW={c_name:120,c_company:140,c_gst:140,c_mobile:110,c_email:150,c_uc:130,product:130,size:96,thickness:100,std_grade:100,length:76,brand:96,qty:72,unit:88,delivery_date:112},
+  colW=x=>'minmax('+(MINW[x.name]||80)+'px,'+(ROWW[x.name]||1)+'fr)',
+  rowSec=(z,t)=>{const fs=z.fields.filter(x=>x.name!=='remarks'),cols=fs.map(x=>colW(x)).join(' ');return (t?SH(z.title):'')+'<div class="eq-hd'+(z.fields.some(x=>x.name==='product')?' eqw':'')+'" style="grid-template-columns:'+cols+'">'+fs.map(x=>'<span>'+esc(x.label)+(x.req?' *':'')+'</span>').join('')+'</div><div class="ct-g eq-row'+(z.fields.some(x=>x.name==='product')?' eqw':'')+'" style="--eqc:'+cols+'">'+z.fields.map(x=>fld(x,1)).join('')+'</div>'},
   sec=(z,i)=>{const h=(z.fields.some(x=>x.name==='product'||x.name==='c_name')?rowSec(z,1):'<div class="ct-g">'+z.fields.map(x=>fld(x)).join('')+'</div>');return d.need_cust&&i===0?'<div id="eq-csec">'+h+'</div>':h};
  el.innerHTML=BAN+'<div class="ct-w eq1"><div class="ct-fm"><h2>Send an Enquiry</h2><div class="qa-ln"></div>'
   +'<div class="ct-ok" id="eq-ok"></div><div class="ct-top" id="eq-top"></div>'+fm.sections.map(sec).join('')
@@ -1775,7 +1780,7 @@ if(d.need_cust){window.__ucNeed=false;window.__ucOk=false;gclCss();const mode=d.
     On submit: list[0] = the form's own product fields, list[1..] = items.  A filled-but-not-added row is added automatically.  Remarks belong to the whole enquiry. */
  const fmEl=el.querySelector('.ct-fm'),MAXI=10;
  const rowSecF=fm.sections.find(z=>z.fields.some(x=>x.name==='product')),ITF=rowSecF?rowSecF.fields.filter(x=>x.name!=='remarks'):[],ICOLS=ITF.map(x=>colW(x)).join(' ');
- const ACOL=' 120px',CCOL='',LIST=[];let EDIT=-1;
+ const ACOL=' 96px',CCOL='',LIST=[];let EDIT=-1;
  const EL=(n)=>document.getElementById('eq-'+n),WR=(n)=>document.getElementById('ef-'+n);
  /* hover on a box shows the whole entered text (the columns are narrow, long text gets cut) */
  {const tips=ITF.map(x=>E(x.name)).filter(e=>e&&e.tagName==='INPUT');['length_other','brand_other'].forEach(n=>{const e=EL(n);if(e)tips.push(e)});
@@ -1901,7 +1906,7 @@ function buildRQ(){const el=document.getElementById('rq');el.scrollTo(0,0);
  sb.onclick=async()=>{const v={};ids.forEach(i=>v[i]=document.getElementById('rq-'+i).value.trim());top.style.display='none';ok.style.display='none';
   ids.forEach(i=>document.getElementById('rf-'+i).classList.remove('err'));sb.disabled=true;sb.textContent='Submitting\u2026';
   try{const r=await fetch('/rfq/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(v)}),j=await r.json();
-   if(j.ok){ids.forEach(i=>document.getElementById('rq-'+i).value='');ok.innerHTML='\u2705 Thank you! Your request for quote <b>#'+j.no+'</b> has been submitted.<br>Our team will contact you shortly.';ok.style.display='block';ok.scrollIntoView({block:'center',behavior:'smooth'})}
+   if(j.ok){ids.forEach(i=>document.getElementById('rq-'+i).value='');msgPop('Your request for quote <b>#'+j.no+'</b> has been submitted.<br>Our team will contact you shortly.','Thank you!')}
    else{const er=j.errors||{};let first=null;ids.forEach(i=>{if(er[i]){const w=document.getElementById('rf-'+i);w.classList.add('err');w.querySelector('.em').textContent=er[i];first=first||w}});
     if(er._){top.textContent=er._;top.style.display='block'}if(first)first.scrollIntoView({block:'center',behavior:'smooth'})}}
   catch(e){top.textContent='Connection problem. Please check your internet and try again.';top.style.display='block'}
@@ -2016,7 +2021,7 @@ async function buildVR(okHtml){const el=document.getElementById('vr');el.scrollT
   sb.disabled=true;sb.textContent='Submitting\u2026';
   try{const r=await fetch('/vendor/submit',{method:'POST',body:fd}),j=await r.json();
    if(j.ok){const u='/vendor/'+encodeURIComponent(j.no)+'/pdf?t='+encodeURIComponent(j.t);
-    buildVR('\u2705 Thank you! Your vendor registration <b>#'+esc(String(j.no))+'</b> has been submitted.<br>Reference: <b>'+esc(j.ref)+'</b><br>Our team will verify your details and get in touch with you.<br>\uD83D\uDCC4 <a href="'+escA(u)+'" download>Download your copy of the form (PDF)</a>');return}
+    buildVR();msgPop('Your vendor registration <b>#'+esc(String(j.no))+'</b> has been submitted.<br>Reference: <b>'+esc(j.ref)+'</b><br>Our team will verify your details and get in touch with you.<br>\uD83D\uDCC4 <a href="'+escA(u)+'" download>Download your copy of the form (PDF)</a>','Thank you!');return}
    showErr(j.errors||{_:'Please check the form and try again.'})}
   catch(e){showErr({_:'Connection problem. Please check your internet and try again.'})}
   sb.disabled=false;sb.textContent='Submit Registration'}}
