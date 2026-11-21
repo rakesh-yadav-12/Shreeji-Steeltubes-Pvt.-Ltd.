@@ -810,7 +810,32 @@ input.imm-on{background:#edeffb!important;color:#26399e;font-weight:600;border-c
 .qrs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 2px}
 .qrs button{background:#fff;color:var(--blue);border:1.5px solid var(--blue);border-radius:18px;padding:8px 14px;font-size:14px;font-weight:600;cursor:pointer}
 .qrs button:hover,.qrs button:active{background:var(--blue);color:#fff}
-</style></head><body><div id="app">
+/* ---------- Shreeji mascot watermark ---------- */
+/* Sits fixed behind the whole app (negative z-index) so it only shows through areas
+   that don't paint their own solid background - this is exactly the chat screen (#box),
+   which is also the screen the person lands on right after logging in. Header / footer /
+   the Home-tab card keep their own solid backgrounds so text there stays fully readable. */
+.wmlayer{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.wmlayer img{position:absolute;opacity:.07;will-change:transform}
+.wmlayer .w1{width:300px;top:-30px;left:-60px;animation:wmA 26s ease-in-out infinite}
+.wmlayer .w2{width:230px;bottom:-20px;right:-40px;animation:wmB 32s ease-in-out infinite}
+.wmlayer .w3{width:170px;top:44%;left:58%;opacity:.05;animation:wmC 22s ease-in-out infinite}
+@keyframes wmA{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(30px,38px) rotate(8deg)}}
+@keyframes wmB{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-32px,-28px) rotate(-9deg)}}
+@keyframes wmC{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(18px,-22px) scale(1.12)}}
+@media(prefers-reduced-motion:reduce){.wmlayer img{animation:none}}
+/* soft version of the same mark, baked at low opacity, used as the Home-tab's own
+   background so it works on its solid white panel too - and gently drifts */
+#home{background-color:#fff;background-image:url(/static/watermark_soft.png),url(/static/watermark_soft.png);background-repeat:no-repeat,no-repeat;background-position:-40px 420px,110% 1400px;background-size:360px auto,300px auto;animation:wmHome 34s ease-in-out infinite}
+@keyframes wmHome{0%,100%{background-position:-40px 420px,110% 1400px}50%{background-position:-10px 460px,110% 1440px}}
+@media(prefers-reduced-motion:reduce){ #home{animation:none} }
+</style></head><body>
+<div class="wmlayer" aria-hidden="true">
+ <img class="w1" src="/static/watermark.png" alt="">
+ <img class="w2" src="/static/watermark.png" alt="">
+ <img class="w3" src="/static/watermark.png" alt="">
+</div>
+<div id="app">
 <header><div class="lw"><img class="pf" src="/static/logo.png" alt="Shreeji SteelTubes Pvt. Ltd."><span class="on"><i></i>online</span></div>
 
 <button id="lg" type="button" aria-label="Change language / भाषा बदलें" title="Change language / भाषा बदलें">🌐 <span id="lgt">हिंदी</span></button>

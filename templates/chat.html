@@ -1,6 +1,8 @@
 {% extends "base.html" %}{% block body %}
 <style>
-#box{height:60vh;overflow-y:auto;background:#f2f4fc;border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px}
+#box{height:60vh;overflow-y:auto;background:#f2f4fc url(/static/watermark_soft.png) no-repeat center/55% ;background-blend-mode:normal;border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px;position:relative;animation:wmBoxDrift 30s ease-in-out infinite}
+@keyframes wmBoxDrift{0%,100%{background-position:center}50%{background-position:52% 46%}}
+@media(prefers-reduced-motion:reduce){ #box{animation:none} }
 .m{max-width:80%;padding:8px 12px;border-radius:8px;font-size:14px;line-height:1.45;white-space:pre-wrap;word-wrap:break-word;box-shadow:0 1px 1px #0002}
 .bot{background:#fff;align-self:flex-start;border:1px solid #e5e7f5}.me{background:#26399e;color:#fff;align-self:flex-end}
 #f{display:flex;gap:8px;margin-top:10px}#t{flex:1;padding:12px;border:1px solid #d3d7e0;border-radius:20px}
