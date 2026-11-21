@@ -5,15 +5,15 @@
   <button type="submit">Search</button>{% if q %}<a class="btn g" href="/admin/web-users">Clear</a>{% endif %}
   <a class="btn o" href="/admin/web-users/export.csv?q={{ q }}">⬇ Export CSV</a>
  </form>
- <p class="mute" style="margin:4px 0 10px">{{ rows|length }} registered website user{{ '' if rows|length==1 else 's' }} (Login / Sign Up page){% if q %} · matching “{{ q }}”{% endif %}</p>
+ <p class="mute" style="margin:4px 0 10px">{{ rows|length }} website visitor{{ '' if rows|length==1 else 's' }} (Welcome page){% if q %} · matching “{{ q }}”{% endif %}</p>
  {% if rows %}<table>
   <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Contact</th><th>Company</th><th>Signed up with</th><th>Registered</th><th>Last login</th><th></th></tr></thead>
   <tbody>{% for u in rows %}<tr>
    <td>{{ loop.index }}</td><td><b>{{ u.name or '—' }}</b></td><td>{{ u.email or '—' }}</td>
    <td>{% if u.phone %}{{ u.phone|fmt_phone }}{% else %}<span class="mute">not added</span>{% endif %}</td>
-   <td>{{ u.company or '—' }}</td><td style="text-transform:capitalize">{{ u.provider or 'password' }}</td>
+   <td>{{ u.company or '—' }}</td><td style="text-transform:capitalize">{{ u.provider or 'chat' }}</td>
    <td>{{ u.created.strftime('%d %b %y %H:%M') if u.created else '—' }}</td><td>{{ u.last_login.strftime('%d %b %y %H:%M') if u.last_login else '—' }}</td>
    <td><form method="post" action="/admin/web-users/delete" onsubmit="return confirm('Delete this user? They can sign up again.')" style="margin:0"><input type="hidden" name="id" value="{{ u.id }}"><button class="s" style="background:#fff;color:#d64545;border:1px solid #f1c9c9">Delete</button></form></td>
   </tr>{% endfor %}</tbody></table>
- {% else %}<p class="mute" style="padding:30px;text-align:center"><b>No registered users yet</b><br>People who sign up on the Login page appear here.</p>{% endif %}
+ {% else %}<p class="mute" style="padding:30px;text-align:center"><b>No website visitors yet</b><br>People who enter their details on the Welcome page appear here.</p>{% endif %}
 </div>{% endblock %}

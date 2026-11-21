@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#172574">
-<title>Login | Shreeji SteelTubes Pvt. Ltd.</title><link rel="icon" href="/static/logo.png">
+<title>Welcome | Shreeji SteelTubes Pvt. Ltd.</title><link rel="icon" href="/static/logo.png">
 <style>
 /* Shreeji brand: logo blue #2E3F96 / deep #172574, logo orange #F15307, steel silver #C9CED9 */
 :root{--blue:#2e3f96;--blue2:#172574;--navy:#0d1650;--orange:#f15307;--orange2:#ff8a3d;--steel:#c9ced9;--line:#e3e6f4;--text:#1c2035;--mute:#6a6f8c;--bad:#d64545;--ok:#1f9d55}
@@ -65,21 +65,6 @@ body{margin:0;min-height:100vh;min-height:100dvh;font-family:Inter,system-ui,-ap
 .logo{display:block;height:54px;margin:2px auto 4px}
 h1{font-size:22px;text-align:center;margin:8px 0 2px;color:var(--blue2);font-weight:800}
 .sub{text-align:center;color:var(--mute);margin:0 0 16px;font-size:13.5px;line-height:1.45}
-.view{display:none}.view.on{display:block;animation:vin .45s cubic-bezier(.2,.8,.2,1)}
-@keyframes vin{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
-
-.tabs{position:relative;display:grid;grid-template-columns:1fr 1fr;background:#eceffd;border-radius:13px;padding:4px;margin-bottom:16px}
-.tabs .ind{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);background:#fff;border-radius:10px;box-shadow:0 2px 8px #16215e26;transition:transform .35s cubic-bezier(.3,.9,.3,1)}
-.tabs[data-on=signup] .ind{transform:translateX(100%)}
-.tabs button{position:relative;z-index:1;border:0;background:none;padding:10px;font:inherit;font-weight:700;color:var(--mute);cursor:pointer;transition:color .25s}
-.tabs button.on{color:var(--blue)}
-
-.social{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.sb{display:flex;align-items:center;justify-content:center;gap:9px;padding:10px 8px;border:1px solid #d6daee;border-radius:11px;background:#fff;color:#2b3150;font-weight:600;font-size:13.5px;text-decoration:none;transition:transform .18s,box-shadow .18s,border-color .18s}
-.sb:hover{transform:translateY(-2px);border-color:var(--blue);box-shadow:0 8px 18px #2e3f9624}
-.sb svg{width:19px;height:19px;flex:none}
-.or{display:flex;align-items:center;gap:10px;margin:14px 0 2px;color:#9aa0bd;font-size:12px;font-weight:600}
-.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
 
 label{display:block;font-size:12.5px;font-weight:700;color:#474f7b;margin:11px 0 4px}
 label i{color:var(--bad);font-style:normal}label small{font-weight:500;color:var(--mute)}
@@ -89,32 +74,18 @@ input{width:100%;font:inherit;padding:11px 12px 11px 38px;border:1.5px solid #d6
 input:focus{border-color:var(--blue);box-shadow:0 0 0 4px #2e3f962a}
 input.bad{border-color:var(--bad);box-shadow:0 0 0 4px #d6454522}
 .in.ph input{padding-left:74px}.in.ph b{position:absolute;left:38px;top:50%;transform:translateY(-50%);font-size:14px;color:#474f7b;font-weight:700}
-.in.pw input{padding-right:46px}
-.eye{position:absolute;right:3px;top:50%;transform:translateY(-50%);border:0;background:none;padding:8px 10px;cursor:pointer;color:#8a90b3;display:flex}
-.eye svg{width:19px;height:19px;position:static;transform:none}.eye:hover{color:var(--blue)}
 .err{color:var(--bad);font-size:12.5px;margin-top:3px}.err:empty{display:none}
-.meter{display:flex;gap:4px;margin-top:6px}.meter i{flex:1;height:4px;border-radius:3px;background:#e3e6f4;transition:background .3s}
-.mt{font-size:11.5px;color:var(--mute);margin-top:3px}.mt:empty{display:none}
 
 .go{position:relative;overflow:hidden;width:100%;margin-top:18px;border:0;border-radius:12px;padding:13px;font:inherit;font-weight:700;font-size:15.5px;color:#fff;cursor:pointer;
  background:linear-gradient(135deg,var(--orange),#c23e07);box-shadow:0 8px 22px #f1530755;transition:transform .15s,box-shadow .2s}
 .go::after{content:"";position:absolute;top:0;bottom:0;width:60px;left:-90px;background:linear-gradient(90deg,transparent,#ffffff66,transparent);transform:skewX(-20deg);transition:left .6s}
 .go:hover{transform:translateY(-2px);box-shadow:0 12px 28px #f1530766}.go:hover::after{left:120%}
 .go:active{transform:translateY(0)}.go:disabled{opacity:.65;cursor:wait}
-.go.blue{background:linear-gradient(135deg,var(--blue),var(--blue2));box-shadow:0 8px 22px #2e3f9655}
-.lnk{background:none;border:0;color:var(--blue);font:inherit;font-weight:700;cursor:pointer;padding:0}.lnk:hover{color:var(--orange)}
-.row{display:flex;justify-content:space-between;margin-top:10px;font-size:13px}
-.row.c{justify-content:center;gap:6px;color:var(--mute)}
 .note{margin-top:12px;padding:10px 12px;border-radius:10px;font-size:13.5px;display:none}
 .note.bad{display:block;background:#fdeeee;color:#9b2c2c;border:1px solid #f5c2c2}
-.note.ok{display:block;background:#e9f8ef;color:#17663a;border:1px solid #b9e5cb}
-.who{display:flex;align-items:center;gap:12px;background:#f3f5ff;border:1px solid var(--line);border-radius:13px;padding:11px 13px;margin-bottom:4px}
-.who u{flex:none;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--orange));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;text-decoration:none}
-.who b{display:block;color:var(--blue2)}.who span{font-size:12.5px;color:var(--mute);overflow-wrap:anywhere}
 .foot{text-align:center;color:var(--mute);font-size:11.5px;margin:16px 0 0}
 
 @media(max-width:900px){.wrap{grid-template-columns:1fr;gap:18px;padding:18px 14px}.hero{display:none}.card{padding:22px 18px 16px}}
-@media(max-width:380px){.social{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style></head><body>
 
@@ -130,7 +101,7 @@ input.bad{border-color:var(--bad);box-shadow:0 0 0 4px #d6454522}
 <section class="hero">
  <span class="tag"><b></b>House of Quality Steel Tubes™</span>
  <h2>Premium steel tubes,<br><em>delivered across India.</em></h2>
- <p>Login or create your account to request quotes, download catalogues and track your enquiries with Shreeji SteelTubes Pvt. Ltd.</p>
+ <p>Share a few quick details and chat with us instantly to request quotes, download catalogues and track your enquiries with Shreeji SteelTubes Pvt. Ltd.</p>
  <div class="stats">
   <div><b data-n="5">0</b><span>Decades of Legacy</span></div>
   <div><b data-n="2500">0</b><span>Satisfied Clients</span></div>
@@ -142,140 +113,46 @@ input.bad{border-color:var(--bad);box-shadow:0 0 0 4px #d6454522}
 
 <main class="card" id="card">
 <img class="logo" src="/static/logo.png" alt="Shreeji SteelTubes Pvt. Ltd.">
+<h1>Welcome 🙏</h1><p class="sub">Tell us a little about yourself to start chatting</p>
 
-{% macro social() %}
-<div class="social">
- <a class="sb" href="/auth/social/google"><svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.7a14.5 14.5 0 0 1 0-9.4l-7.9-6.1a24 24 0 0 0 0 21.6l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.9 2.3-8.4 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>Google</a>
- <a class="sb" href="/auth/social/microsoft"><svg viewBox="0 0 24 24"><path fill="#F25022" d="M1 1h10v10H1z"/><path fill="#7FBA00" d="M13 1h10v10H13z"/><path fill="#00A4EF" d="M1 13h10v10H1z"/><path fill="#FFB900" d="M13 13h10v10H13z"/></svg>Microsoft</a>
- <a class="sb" href="/auth/social/facebook"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1877F2"/><path fill="#fff" d="M16.7 15.5l.5-3.5h-3.4V9.8c0-1 .5-1.9 2-1.9h1.5V4.9s-1.4-.2-2.7-.2c-2.8 0-4.6 1.7-4.6 4.7V12H7v3.5h3V24h3.8v-8.5z"/></svg>Facebook</a>
- <a class="sb" href="/auth/social/linkedin"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.5H4.4V19h2.7zM5.8 8.3a1.6 1.6 0 1 0 0-3.2 1.6 1.6 0 0 0 0 3.2zM19.6 19v-5.2c0-2.5-1.3-3.6-3.1-3.6-1.4 0-2.1.8-2.4 1.3V9.5h-2.7V19h2.7v-5.3c0-1.4.8-2.2 1.9-2.2s1.6.8 1.6 2.2V19z"/></svg>LinkedIn</a>
-</div>
-{% endmacro %}
+<form id="details-form" novalidate>
+ <label>Your name <i>*</i></label>
+ <div class="in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><input name="name" autocomplete="name" placeholder="Your full name"></div><div class="err" data-e="name"></div>
 
-{% macro eye() %}<button type="button" class="eye" aria-label="Show password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>{% endmacro %}
-{% macro ic(n) %}{% if n=='user' %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>{% elif n=='mail' %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>{% elif n=='phone' %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>{% elif n=='bld' %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5l8-3v19M12 9h8v12M4 21h16M8 8h1M8 12h1M8 16h1M16 13h1M16 17h1"/></svg>{% else %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>{% endif %}{% endmacro %}
+ <label>Contact number <i>*</i></label>
+ <div class="in ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg><b>+91</b><input name="phone" type="tel" inputmode="numeric" maxlength="14" autocomplete="tel-national" placeholder="10-digit mobile number"></div><div class="err" data-e="phone"></div>
 
-<!-- LOGIN -->
-<div class="view" id="v-login">
- <h1>Welcome back 🙏</h1><p class="sub">Login to continue to Shreeji SteelTubes</p>
- <div class="tabs" data-on="login"><span class="ind"></span><button type="button" class="on" data-go="login">Login</button><button type="button" data-go="signup">Sign Up</button></div>
- {{ social() }}<div class="or">or login with email</div>
- <form data-api="/auth/login" autocomplete="on" novalidate>
-  <label>Email or mobile number <i>*</i></label>
-  <div class="in">{{ ic('user') }}<input name="login" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="you@company.com or 98XXXXXXXX"></div><div class="err" data-e="login"></div>
-  <label>Password <i>*</i></label>
-  <div class="in pw">{{ ic('lock') }}<input name="password" type="password" autocomplete="current-password" placeholder="Enter your password">{{ eye() }}</div>
-  <div class="row"><span></span><button type="button" class="lnk" data-go="forgot">Forgot password?</button></div>
-  <button class="go" type="submit">Login →</button><div class="note{% if err %} bad{% endif %}" data-n>{{ err or '' }}</div>
- </form>
-</div>
+ <label>Company name <small>(optional)</small></label>
+ <div class="in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5l8-3v19M12 9h8v12M4 21h16M8 8h1M8 12h1M8 16h1M16 13h1M16 17h1"/></svg><input name="company" autocomplete="organization" placeholder="Your company / firm name"></div>
 
-<!-- SIGN UP -->
-<div class="view" id="v-signup">
- <h1>Create your account</h1><p class="sub">One-time registration · takes 30 seconds</p>
- <div class="tabs" data-on="signup"><span class="ind"></span><button type="button" data-go="login">Login</button><button type="button" class="on" data-go="signup">Sign Up</button></div>
- {{ social() }}<div class="or">or sign up with email</div>
- <form data-api="/auth/signup" autocomplete="on" novalidate>
-  <label>Full name <i>*</i></label><div class="in">{{ ic('user') }}<input name="name" autocomplete="name" placeholder="Your full name"></div><div class="err" data-e="name"></div>
-  <label>Email <i>*</i></label><div class="in">{{ ic('mail') }}<input name="email" type="email" autocomplete="email" autocapitalize="none" placeholder="you@company.com"></div><div class="err" data-e="email"></div>
-  <label>Contact number <i>*</i></label><div class="in ph">{{ ic('phone') }}<b>+91</b><input name="phone" type="tel" inputmode="numeric" maxlength="14" autocomplete="tel-national" placeholder="10-digit mobile number"></div><div class="err" data-e="phone"></div>
-  <label>Company name <small>(optional)</small></label><div class="in">{{ ic('bld') }}<input name="company" autocomplete="organization" placeholder="Your company / firm name"></div><div class="err" data-e="company"></div>
-  <label>Create password <i>*</i></label>
-  <div class="in pw">{{ ic('lock') }}<input name="password" type="password" data-meter autocomplete="new-password" placeholder="Min {{ min_pw }} chars, letters + numbers">{{ eye() }}</div>
-  <div class="meter"><i></i><i></i><i></i><i></i></div><div class="mt"></div><div class="err" data-e="password"></div>
-  <label>Confirm password <i>*</i></label>
-  <div class="in pw">{{ ic('lock') }}<input name="password2" type="password" autocomplete="new-password" placeholder="Re-enter password">{{ eye() }}</div><div class="err" data-e="password2"></div>
-  <button class="go" type="submit">Create Account →</button><div class="note" data-n></div>
-  <p class="row c">Already registered? <button type="button" class="lnk" data-go="login">Login</button></p>
- </form>
-</div>
-
-<!-- FORGOT -->
-<div class="view" id="v-forgot">
- <h1>Forgot password?</h1><p class="sub">Enter your registered email or mobile number. We will email you a reset link.</p>
- <form data-api="/auth/forgot" novalidate>
-  <label>Email or mobile number <i>*</i></label>
-  <div class="in">{{ ic('mail') }}<input name="login" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="you@company.com or 98XXXXXXXX"></div><div class="err" data-e="login"></div>
-  <button class="go" type="submit">Send reset link</button><div class="note" data-n></div>
-  <p class="row c"><button type="button" class="lnk" data-go="login">← Back to Login</button></p>
- </form>
-</div>
-
-<!-- RESET (from the e-mailed link) -->
-<div class="view" id="v-reset">
- <h1>Set a new password</h1><p class="sub">Choose a new password for your account</p>
- <form data-api="/auth/reset" novalidate>
-  <input type="hidden" name="token" value="{{ token }}">
-  <label>New password <i>*</i></label>
-  <div class="in pw">{{ ic('lock') }}<input name="password" type="password" data-meter autocomplete="new-password" placeholder="Min {{ min_pw }} chars, letters + numbers">{{ eye() }}</div>
-  <div class="meter"><i></i><i></i><i></i><i></i></div><div class="mt"></div><div class="err" data-e="password"></div>
-  <label>Confirm new password <i>*</i></label>
-  <div class="in pw">{{ ic('lock') }}<input name="password2" type="password" autocomplete="new-password" placeholder="Re-enter password">{{ eye() }}</div><div class="err" data-e="password2"></div>
-  <button class="go blue" type="submit">Change password</button><div class="note" data-n></div>
- </form>
-</div>
-
-<!-- ONE LAST STEP (after Google / Facebook ... login: contact number is mandatory) -->
-<div class="view" id="v-complete">
- <h1>One last step</h1><p class="sub">Please add your contact number so our team can reach you.</p>
- <div class="who"><u>{{ ((user_name or '?')[:1])|upper }}</u><div><b>{{ user_name }}</b><span>{{ user_email }}</span></div></div>
- <form data-api="/auth/complete" novalidate>
-  <label>Contact number <i>*</i></label><div class="in ph">{{ ic('phone') }}<b>+91</b><input name="phone" type="tel" inputmode="numeric" maxlength="14" autocomplete="tel-national" placeholder="10-digit mobile number"></div><div class="err" data-e="phone"></div>
-  <label>Company name <small>(optional)</small></label><div class="in">{{ ic('bld') }}<input name="company" autocomplete="organization" placeholder="Your company / firm name"></div>
-  <button class="go" type="submit">Continue →</button><div class="note" data-n></div>
-  <p class="row c"><a class="lnk" href="/auth/logout" style="text-decoration:none">Use a different account</a></p>
- </form>
-</div>
-
-<!-- EXPIRED LINK -->
-<div class="view" id="v-expired">
- <h1>Link expired</h1><p class="sub">This password reset link has expired or was already used.</p>
- <a class="go" style="display:block;text-align:center;text-decoration:none" href="/auth?v=forgot">Request a new link</a>
-</div>
+ <button class="go" type="submit">Start Chat →</button><div class="note" data-n></div>
+</form>
 
 <p class="foot">Shreeji SteelTubes Pvt. Ltd. &middot; House of Quality Steel Tubes</p>
 </main>
 </div>
 <script>
 (function(){
-var VIEW={{ view|tojson }},card=document.getElementById('card');
-function show(v){document.querySelectorAll('.view').forEach(function(x){x.classList.toggle('on',x.id==='v-'+v)});
- var f=document.querySelector('#v-'+v+' input:not([type=hidden])');if(f&&matchMedia('(min-width:900px)').matches)f.focus()}
-show(VIEW);
-document.addEventListener('click',function(e){
- var g=e.target.closest('[data-go]');if(g){e.preventDefault();show(g.dataset.go)}
- var eye=e.target.closest('.eye');if(eye){var i=eye.parentNode.querySelector('input'),on=i.type==='password';i.type=on?'text':'password';eye.style.color=on?'#f15307':''}
-});
-/* phone: digits only */
+var card=document.getElementById('card'),f=document.getElementById('details-form');
+function bad(){card.classList.remove('shake');void card.offsetWidth;card.classList.add('shake')}
 document.querySelectorAll('input[name=phone]').forEach(function(i){i.addEventListener('input',function(){i.value=i.value.replace(/[^0-9+ ]/g,'')})});
-/* password strength */
-document.querySelectorAll('input[data-meter]').forEach(function(i){
- var m=i.closest('.in').nextElementSibling,t=m.nextElementSibling,bars=m.querySelectorAll('i'),cols=['#d64545','#f15307','#e6a100','#2e3f96'],tx=['Too weak','Weak','Good','Strong'];
- i.addEventListener('input',function(){var v=i.value,s=0;if(v.length>={{ min_pw }})s++;if(/[A-Za-z]/.test(v)&&/\d/.test(v))s++;if(v.length>=11)s++;if(/[^A-Za-z0-9]/.test(v)&&v.length>={{ min_pw }})s++;
-  bars.forEach(function(b,k){b.style.background=(s>0&&k<s)?cols[s-1]:'#e3e6f4'});t.textContent=s>0?tx[s-1]:(v?tx[0]:'')})});
-document.querySelectorAll('form[data-api]').forEach(function(f){
- f.addEventListener('submit',function(ev){ev.preventDefault();
-  var btn=f.querySelector('.go'),note=f.querySelector('[data-n]'),body={};
-  new FormData(f).forEach(function(v,k){body[k]=v});
-  f.querySelectorAll('.err').forEach(function(x){x.textContent=''});f.querySelectorAll('input.bad').forEach(function(x){x.classList.remove('bad')});
-  note.className='note';note.textContent='';
-  var t=btn.textContent;btn.disabled=true;btn.textContent='Please wait…';
-  function bad(){card.classList.remove('shake');void card.offsetWidth;card.classList.add('shake')}
-  fetch(f.dataset.api,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),credentials:'same-origin'})
-  .then(function(r){return r.json().catch(function(){return{ok:false,errors:{_:'Server error. Please try again.'}}})})
-  .then(function(d){
-   if(d.ok){
-    if(d.redirect){btn.textContent='✓ Success';location.href=d.redirect;return}
-    note.className='note ok';note.textContent=d.message||'Done';
-    if(f.dataset.api==='/auth/reset'){setTimeout(function(){location.href='/auth'},1800)}
-    btn.disabled=false;btn.textContent=t;return}
-   var er=d.errors||{};
-   Object.keys(er).forEach(function(k){var el=f.querySelector('[data-e="'+k+'"]');
-    if(el){el.textContent=er[k];var inp=f.querySelector('[name="'+k+'"]');if(inp)inp.classList.add('bad')}
-    else{note.className='note bad';note.textContent=er[k]}});
-   bad();btn.disabled=false;btn.textContent=t;
-  }).catch(function(){note.className='note bad';note.textContent='Network error. Please try again.';bad();btn.disabled=false;btn.textContent=t});
- });
+f.addEventListener('submit',function(ev){
+ ev.preventDefault();
+ var btn=f.querySelector('.go'),note=f.querySelector('[data-n]'),body={};
+ new FormData(f).forEach(function(v,k){body[k]=v});
+ f.querySelectorAll('.err').forEach(function(x){x.textContent=''});f.querySelectorAll('input.bad').forEach(function(x){x.classList.remove('bad')});
+ note.className='note';note.textContent='';
+ var t=btn.textContent;btn.disabled=true;btn.textContent='Please wait…';
+ fetch('/auth/enter',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),credentials:'same-origin'})
+ .then(function(r){return r.json().catch(function(){return{ok:false,errors:{_:'Server error. Please try again.'}}})})
+ .then(function(d){
+  if(d.ok){btn.textContent='✓ Success';location.href=d.redirect||'/';return}
+  var er=d.errors||{};
+  Object.keys(er).forEach(function(k){var el=f.querySelector('[data-e="'+k+'"]');
+   if(el){el.textContent=er[k];var inp=f.querySelector('[name="'+k+'"]');if(inp)inp.classList.add('bad')}
+   else{note.className='note bad';note.textContent=er[k]}});
+  bad();btn.disabled=false;btn.textContent=t;
+ }).catch(function(){note.className='note bad';note.textContent='Network error. Please try again.';bad();btn.disabled=false;btn.textContent=t});
 });
 /* count-up numbers on the left panel */
 document.querySelectorAll('.stats b').forEach(function(b){var n=+b.dataset.n,s=n>=1000?'+':'',st=null;
