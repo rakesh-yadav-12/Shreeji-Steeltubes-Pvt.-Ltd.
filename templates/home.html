@@ -236,7 +236,7 @@ footer{background:#f0f1f5;border-top:0;padding:8px 10px calc(8px + env(safe-area
 #tabs button{flex:1;background:none;border:0;border-bottom:3px solid transparent;padding:11px 8px;font-size:14.5px;font-weight:700;color:#54656f;cursor:pointer}
 #tabs button.on{color:var(--blue);border-bottom-color:var(--orange)}
 #home{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain}
-#app.th #home{display:block}#app.th #box,#app.th footer,#app.th #prog{display:none}
+
 .hero{position:relative;height:min(68vh,540px);min-height:400px;overflow:hidden;background:#091241;touch-action:pan-y}
 .sl{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .9s ease,visibility .9s;background-size:cover;background-position:center}
 .sl.on{opacity:1;visibility:visible}.sl.on:before{animation:kb 9s ease-out forwards}
@@ -268,7 +268,7 @@ footer{background:#f0f1f5;border-top:0;padding:8px 10px calc(8px + env(safe-area
 
 /* ================= ABOUT US PAGE - same layout as https://www.shreejisteeltubes.com/about-us/ ================= */
 #about{display:none;flex:1;overflow-y:auto;background:#f2eeee;overscroll-behavior:contain;color:#4a4a4a}
-#app.ta #about{display:block}#app.ta #box,#app.ta footer,#app.ta #prog{display:none}
+
 .ab-ban{position:relative;background:linear-gradient(90deg,#05135e 0%,#05135ee6 35%,#05135e99 70%,#05135e55 100%),url(/static/home/hero-pipes.jpg) center/cover;padding:46px 18px;min-height:130px;display:flex;align-items:center}
 .ab-x{position:absolute;top:14px;right:14px;width:38px;height:38px;border:1.5px solid #ffffff80;border-radius:50%;background:#05135ee6;color:#fff;font-size:19px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px #0006;z-index:2}.ab-x:hover,.ab-x:focus-visible{background:#f15307;border-color:#f15307}
 .ab-back{position:absolute;top:14px;left:14px;display:flex;align-items:center;gap:6px;border:0;border-radius:22px;background:var(--orange,#f15307);color:#fff;font-size:14px;font-weight:700;line-height:1;cursor:pointer;padding:9px 16px 9px 13px;box-shadow:0 3px 10px #0004}.ab-back svg{width:15px;height:15px;flex:none}.ab-back:hover,.ab-back:focus-visible{background:#ca4d11}
@@ -307,17 +307,17 @@ footer{background:#f0f1f5;border-top:0;padding:8px 10px calc(8px + env(safe-area
 /* product detail popup (opens on the Home screen itself) */
 #pd{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;background:#0009;padding:16px;overscroll-behavior:contain}
 #pd.on{display:flex}
-#pd .pb2{background:#fff;border-radius:10px;max-width:560px;width:100%;max-height:92vh;overflow-y:auto;position:relative;box-shadow:0 12px 40px #0006}
-#pd .px{position:absolute;top:8px;right:8px;width:34px;height:34px;border:0;border-radius:50%;background:#000a;color:#fff;font-size:20px;line-height:1;cursor:pointer}
-#pd .pi{height:210px;background-size:cover;background-position:center;border-radius:10px 10px 0 0}
-#pd .pt2{padding:16px 18px 20px}#pd h3{color:var(--blue);font-size:19px;margin:0 0 4px}
-#pd .pl2{width:46px;height:3px;background:var(--orange);margin:6px 0 12px}
-#pd p{color:#4a4a4a;font-size:14px;line-height:1.55;margin:0 0 14px}
-#pd table{width:100%;border-collapse:collapse;font-size:14.5px;border:1px solid #cdd2ec;border-radius:8px;overflow:hidden}
-#pd td{padding:10px 12px;border-bottom:1px solid #cdd2ec;vertical-align:top;color:#1a1e35!important;font-weight:600;background:#fff!important;line-height:1.45}
-#pd td:first-child{width:34%;font-weight:700;color:#fff!important;background:var(--blue)!important;border-bottom-color:#4355b8}
-#pd tr:last-child td{border-bottom:0}
-#pd h3{color:var(--blue)!important}#pd p{color:#333!important}
+.pdv .pb2{background:#fff;border-radius:10px;max-width:560px;width:100%;max-height:92vh;overflow-y:auto;position:relative;box-shadow:0 12px 40px #0006}
+.pdv .px{position:absolute;top:8px;right:8px;width:34px;height:34px;border:0;border-radius:50%;background:#000a;color:#fff;font-size:20px;line-height:1;cursor:pointer}
+.pdv .pi{height:210px;background-size:cover;background-position:center;border-radius:10px 10px 0 0}
+.pdv .pt2{padding:16px 18px 20px}.pdv h3{color:var(--blue);font-size:19px;margin:0 0 4px}
+.pdv .pl2{width:46px;height:3px;background:var(--orange);margin:6px 0 12px}
+.pdv p{color:#4a4a4a;font-size:14px;line-height:1.55;margin:0 0 14px}
+.pdv table{width:100%;border-collapse:collapse;font-size:14.5px;border:1px solid #cdd2ec;border-radius:8px;overflow:hidden}
+.pdv td{padding:10px 12px;border-bottom:1px solid #cdd2ec;vertical-align:top;color:#1a1e35!important;font-weight:600;background:#fff!important;line-height:1.45}
+.pdv td:first-child{width:34%;font-weight:700;color:#fff!important;background:var(--blue)!important;border-bottom-color:#4355b8}
+.pdv tr:last-child td{border-bottom:0}
+.pdv h3{color:var(--blue)!important}.pdv p{color:#333!important}
 /* chat product card: keep text readable too */
 .sc td{color:#1a1e35!important}.sc td:first-child{color:#26399e!important;font-weight:700}
 /* products check-list (chat) */
@@ -327,18 +327,18 @@ footer{background:#f0f1f5;border-top:0;padding:8px 10px calc(8px + env(safe-area
 .ck input{width:20px;height:20px;accent-color:var(--orange);flex:none;cursor:pointer}
 .ck button{display:block;width:100%;margin:8px 0 4px;border:0;border-radius:8px;padding:11px;font-size:15px;font-weight:800;background:var(--orange);color:#fff;cursor:pointer}
 .ck button:disabled{background:#c7cbe1;cursor:not-allowed}
-#pd .pk+.pk{border-top:6px solid #edeff9}
+.pdv .pk+.pk{border-top:6px solid #edeff9}
 /* PRODUCT PAGES - full screen, same layout as the website product page */
-#gl{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}#app.tg #gl{display:block}#app.tg #box,#app.tg footer,#app.tg #prog{display:none}
+#gl{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}
 .gl-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:1180px;margin:0 auto;padding:6px 20px 22px}.gl-tabs button{border:2px solid var(--blue);background:#fff;color:var(--blue);font-weight:700;font-size:15px;padding:10px 24px;border-radius:30px;cursor:pointer;transition:background .15s,color .15s}.gl-tabs button:hover{background:#edeff9}.gl-tabs button.on{background:var(--blue);color:#fff}.gl-empty{grid-column:1/-1;text-align:center;color:#696e8a;padding:34px 10px;font-size:15px}
 .gl-g{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1180px;margin:0 auto;padding:0 20px 34px}.gl-g button{display:block;padding:0;border:0;background:#edeff6;overflow:hidden;cursor:zoom-in;aspect-ratio:4/3}.gl-g img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}.gl-g button:hover img,.gl-g button:focus-visible img{transform:scale(1.07)}
 @media(max-width:900px){.gl-g{grid-template-columns:repeat(3,1fr);gap:12px}}@media(max-width:600px){.gl-g{grid-template-columns:repeat(2,1fr);gap:8px;padding:0 12px 26px}}
-#qa{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}#app.tq #qa{display:block}#app.tq #box,#app.tq footer,#app.tq #prog{display:none}
+#qa{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}
 .qa-b{max-width:1000px;margin:0 auto;padding:48px 22px 44px;text-align:center}.qa-b h2{margin:0;color:#041262;font-size:34px;font-weight:700;letter-spacing:-.5px}
 .qa-ln{position:relative;width:150px;height:1px;background:#d2d4e1;margin:18px auto 34px}.qa-ln:before{content:"";position:absolute;left:0;top:0;width:50px;height:1px;background:#041262}
 .qa-b p{margin:0;font-size:16.5px;line-height:2;color:#555}@media(max-width:760px){.qa-b{padding:34px 18px 30px}.qa-b h2{font-size:27px}.qa-b p{font-size:15px;line-height:1.85}}
 /* AUTHORISED DEALERS & DISTRIBUTORS PAGE */
-#dl{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}#app.td #dl{display:block}#app.td #box,#app.td footer,#app.td #prog{display:none}
+#dl{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}
 .dl-lead{max-width:900px;margin:0 auto;padding:0 22px;text-align:center;font-size:16.5px;line-height:1.85;font-weight:600;color:#484d6a}
 .dl-sub{max-width:1100px;margin:46px auto 0;padding:0 22px;text-align:center}.dl-sub h2{margin:0;color:#041262;font-size:30px;font-weight:700;letter-spacing:-.5px}.dl-sub .qa-ln{margin:16px auto 30px}
 .dl-img{max-width:640px;margin:0 auto;padding:0 22px 40px}.dl-img img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid #dcdfef;box-shadow:0 4px 16px #0c164a14}@media(max-width:600px){.dl-img{padding:0 14px 30px}}
@@ -348,9 +348,9 @@ footer{background:#f0f1f5;border-top:0;padding:8px 10px calc(8px + env(safe-area
 @media(max-width:900px){.dl-g{grid-template-columns:repeat(3,1fr);gap:18px}}
 @media(max-width:600px){.dl-g{grid-template-columns:repeat(2,1fr);gap:12px;padding:0 14px 26px}.dl-sub h2{font-size:22px}.dl-sub{margin-top:34px}.dl-lead{font-size:15px;line-height:1.8}}
 /* REQUEST FOR QUOTE PAGE */
-#cl{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}#app.tc #cl{display:block}#app.tc #box,#app.tc footer,#app.tc #prog{display:none}
+#cl{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}
 .cl-ban{background:linear-gradient(90deg,#05135e 0%,#05135ef2 30%,#05135e99 62%,#05135e22 100%),url(/static/home/clients-banner.jpg) right center/cover}
-#sv{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#222}#app.tv #sv{display:block}#app.tv #box,#app.tv footer,#app.tv #prog{display:none}
+#sv{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#222}
 .sv-lead{max-width:1000px;margin:0 auto;padding:0 22px;text-align:center;font-size:20px;line-height:1.6;font-weight:700;color:#222}
 .sv-car{position:relative;max-width:1100px;margin:34px auto 0;padding:0 22px}
 .sv-trk{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
@@ -363,7 +363,7 @@ footer{background:#f0f1f5;border-top:0;padding:8px 10px calc(8px + env(safe-area
 .sv-g div:last-child:nth-child(3n+1){grid-column:2}
 @media(max-width:900px){.sv-g{grid-template-columns:repeat(2,1fr);gap:16px}.sv-g div:last-child:nth-child(3n+1){grid-column:auto}.sv-trk{gap:14px}}
 @media(max-width:600px){.sv-lead{font-size:16px}.sv-trk{grid-template-columns:1fr}.sv-trk div:not(.c){display:none}.sv-car{padding:0 14px}.sv-ar.l{left:22px}.sv-ar.r{right:22px}.sv-g{grid-template-columns:1fr;gap:10px;padding:0 14px 26px}.sv-g div{min-height:54px;font-size:15.5px}}
-#ct{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}#app.tk #ct{display:block}#app.tk #box,#app.tk footer,#app.tk #prog{display:none}
+#ct{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}
 .ct-w{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);gap:56px;max-width:1100px;margin:46px auto 0;padding:0 22px;align-items:start}
 .ct-card{background:#f3f4f8;padding:34px 30px 30px;box-shadow:0 10px 36px #0000001c}.ct-card h2{margin:0 0 10px;font-size:28px;font-weight:700;color:#4a4a4a}.ct-card>p{margin:0 0 24px;font-size:16px;line-height:1.7;color:#444}
 .ct-i{display:flex;gap:16px;margin-bottom:22px}.ct-i svg{flex:none;width:28px;height:28px;margin-top:2px;stroke:#444;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
@@ -482,12 +482,12 @@ input.imm-on{background:#edeffb!important;color:#26399e;font-weight:600;border-c
 #eq .eq-row [id^="ef-product"],#eq .eq-row [id^="ef-std_grade"]{grid-column:1/-1}#eq .eq-row [id^="ef-delivery_date"]{grid-column:auto}}
 @media(min-width:1100px){
 #eq .eq-row .eq-ac{grid-column:auto;align-self:start}}
-#eq{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}#app.tf #eq{display:block}#app.tf #box,#app.tf footer,#app.tf #prog{display:none}
+#eq{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}
 .ct-f select{display:block;width:100%;box-sizing:border-box;padding:22px 20px;font:inherit;font-size:16px;color:#333;background:#f3f4f8;border:1px solid transparent;border-radius:2px;outline:0}.ct-f select:focus{border-color:#26399e;background:#fff}.ct-f.err select{border-color:#d33}.ct-f select.ph{color:#757575}
 .ct-f>label{display:block;margin:0 0 6px;font-size:13.5px;font-weight:700;color:#041262}.ct-f>label em{color:#d33;font-style:normal}
 .eq-cu{margin:0 0 20px;padding:12px 16px;background:#edeffc;border-left:4px solid #041262;font-size:15px;color:#333;line-height:1.6}.eq-cu small{display:block;color:#667;font-size:12.5px}.ct-ok a{color:#041262;font-weight:700}
 /* Job Application page: same look as the Enquiry form (dark header bar over one row of boxes on wide screens; labels above boxes on small screens) + resume upload */
-#jb{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}#app.tj #jb{display:block}#app.tj #box,#app.tj footer,#app.tj #prog{display:none}
+#jb{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}
 #jb .ct-w.eq1{max-width:1180px}#jb .ct-fm{padding-bottom:64px}
 #jb .eq-sh{margin:22px 0 8px;font-weight:700;font-size:1.05em;color:#4a4a4a}#jb .eq-sh:first-of-type{margin-top:6px}
 #jb .eq-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 10px}
@@ -535,7 +535,7 @@ input.imm-on{background:#edeffb!important;color:#26399e;font-weight:600;border-c
 #jb .eq-row{grid-template-columns:var(--eqc);gap:8px;padding:12px 10px;background:#fff;border:1px solid #d3d7ec;border-top:0;align-items:start}
 #jb .eq-row .eq-lb{display:none}
 #jb .eq-row input,#jb .eq-row select{padding:13px 10px;font-size:14px;background:#fff;border:1px solid #cdd1e8;border-radius:3px}#jb .eq-row input:focus,#jb .eq-row select:focus{border-color:#26399e}}
-#vr{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}#app.tw #vr{display:block}#app.tw #box,#app.tw footer,#app.tw #prog{display:none}
+#vr{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}
 #vr .ct-w.eq1{max-width:900px}#vr .ct-f input,#vr .ct-f select,#vr .ct-f textarea{padding:14px 16px}#vr .ct-f textarea{min-height:84px}#vr .ct-f>label{margin-bottom:6px}
 #vr .ct-f input[type=file]{padding:10px 12px;font-size:14px;background:#f3f4f8;cursor:pointer}#vr .ct-f.err input[type=file]{border-color:#d33}
 .vr-sh{margin:30px 0 14px;padding:10px 14px;background:#041262;color:#fff;font-size:15px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;border-radius:2px}.vr-sh:first-child{margin-top:0}
@@ -544,7 +544,7 @@ input.imm-on{background:#edeffb!important;color:#26399e;font-weight:600;border-c
 #vr .ct-f .vr-ck{display:flex;gap:12px;align-items:flex-start;margin:0;padding:14px 16px;background:#f3f4f8;border:1px solid transparent;border-radius:2px;font-size:14.5px;line-height:1.6;cursor:pointer;color:#333}
 #vr .ct-f.err .vr-ck{border-color:#d33}#vr .ct-f .vr-ck input{flex:none;width:20px;height:20px;margin:2px 0 0;padding:0;accent-color:#041262}
 #vr .ct-f>label em,.vr-info em{color:#d33;font-style:normal}
-#rq{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}#app.tr #rq{display:block}#app.tr #box,#app.tr footer,#app.tr #prog{display:none}
+#rq{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}
 .rq-lead{max-width:900px;margin:0 auto;padding:0 22px;text-align:center;font-size:16.5px;line-height:2;color:#555}
 .rq-card{max-width:830px;margin:44px auto 60px;padding:30px 30px 34px;background:#fff;border:1px solid #e5e7ef;border-radius:3px;box-shadow:0 1px 6px #0000001a}
 .rq-f{margin-bottom:26px}.rq-f label{display:block;margin-bottom:9px;font-size:16px;font-weight:700;color:#555}
@@ -555,7 +555,7 @@ input.imm-on{background:#edeffb!important;color:#26399e;font-weight:600;border-c
 .rq-ok{display:none;margin:0 0 24px;padding:16px 18px;border-radius:4px;background:#e8f6ec;border:1px solid #9bd5ab;color:#1d6b35;font-weight:600;line-height:1.6;text-align:center}.rq-top{display:none;margin:0 0 20px;padding:12px 16px;border-radius:4px;background:#fdecec;border:1px solid #f0b3b3;color:#b02323;text-align:center}
 @media(max-width:600px){.rq-card{margin:28px 14px 40px;padding:22px 16px 26px}.rq-lead{font-size:15px;line-height:1.85}.rq-f label{font-size:15px}}
 #prod{display:none;flex:1;overflow-y:auto;background:#fff;overscroll-behavior:contain;color:#4a4a4a}
-#app.tp #prod{display:block}#app.tp #box,#app.tp footer,#app.tp #prog{display:none}
+
 .pw{max-width:1180px;margin:0 auto;padding:30px 18px 24px;display:grid;grid-template-columns:300px minmax(0,1fr);gap:40px;align-items:start}
 .pmain,.pside{min-width:0}.pside .sm{background:#272727;border:0}
 .pside .sm a,.pside .sm .sg>a{display:flex;align-items:center;justify-content:space-between;padding:19px 24px;border-bottom:1px solid #3d3d3d;color:#fff;font-weight:600;font-size:16px;text-decoration:none;cursor:pointer}
@@ -769,6 +769,43 @@ input.imm-on{background:#edeffb!important;color:#26399e;font-weight:600;border-c
 #eq input.wc-fl,#eq select.wc-fl{animation:wcFl 1.5s ease-out}
 @keyframes wcFl{0%{background:#fff1e8;box-shadow:0 0 0 0 #f1530777}100%{background:#fff;box-shadow:0 0 0 14px #f1530700}}
 @media(prefers-reduced-motion:reduce){.wcp,.wcp.out,.wcb,.eq-calc:before,.wc-c.pop{animation:none!important}}
+
+/* ================= CHAT-ONLY MODE =================
+   Everything the bot opens (About, Products, Resources, Gallery, forms, calculator, lists, help ...) is a message INSIDE the chat.
+   No full-screen page and no popup sheet ever replaces / covers the chat screen. Colours and fonts of every page are unchanged. */
+#msgs>.pgrow{align-self:stretch;width:100%;margin:6px 0}
+.pgcard{background:#fff;border:1px solid #d3d8f0;border-radius:12px;box-shadow:0 1px 3px #0b141a33;overflow:hidden}
+.pgb>*{display:block!important;flex:none!important;height:auto!important;max-height:none!important;overflow-x:auto!important;overflow-y:visible!important}
+.pgcard .hbx,.pgcard .ab-back,.pgcard .ab-x{display:none!important}
+#jb{position:relative}
+#jb .jb-px{position:absolute;top:10px;right:12px}
+#eq .eqf{position:sticky;right:auto;bottom:14px;margin:0 14px 14px auto;width:fit-content}
+#jb-pop{position:static;inset:auto;z-index:auto;padding:18px 0;background:none}
+/* option lists (the old popup sheet) = a bot card at the bottom of the chat */
+#msgs>.shrow{align-self:flex-start;width:min(100%,460px);margin:6px 0}
+#sheet{position:static;display:block;height:auto;padding:0;z-index:auto}
+#sheet[hidden]{display:none}
+#sheet .sbk{display:none}
+#sheet .spn{margin:0;max-width:100%;max-height:none;border:1px solid #d3d8f0;box-shadow:0 1px 3px #0b141a33}
+#sheet .sls{overflow:visible;max-height:none}
+#sheet .dqf{position:static}
+/* help list, calculator, success card, product details = chat messages too */
+#msgs>.mrow{align-self:flex-start;width:min(100%,460px);margin:6px 0}
+#msgs>.mrow:empty{display:none}
+.mrow>*{flex:1 1 auto;min-width:0}
+.eqhm{position:static;display:block;inset:auto;z-index:auto;padding:0}
+.eqhm-k{display:none}
+.eqhm-p{max-width:100%;max-height:none;border:1px solid #d3d8f0;box-shadow:0 1px 3px #0b141a33}
+.eqhm-b{overflow:visible}
+.wcx{position:static;inset:auto;z-index:auto;padding:0;display:block;pointer-events:auto}
+.wcb{display:none}
+.wcp{max-height:none;overflow:visible;width:min(360px,100%)}
+.m.sxm{background:transparent;box-shadow:none;border:0;padding:0}.m.sxm .ts{display:none}
+.m.pdm{padding:0;overflow:hidden;white-space:normal;max-width:min(100%,560px)}.m.pdm .ts{display:none}
+.pdm .pdv .pb2{max-height:none;overflow:visible;box-shadow:none;border-radius:0;max-width:none}
+.qrs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 2px}
+.qrs button{background:#fff;color:var(--blue);border:1.5px solid var(--blue);border-radius:18px;padding:8px 14px;font-size:14px;font-weight:600;cursor:pointer}
+.qrs button:hover,.qrs button:active{background:var(--blue);color:#fff}
 </style></head><body><div id="app">
 <header><div class="lw"><img class="pf" src="/static/logo.png" alt="Shreeji SteelTubes Pvt. Ltd."><span class="on"><i></i>online</span></div>
 
@@ -812,13 +849,14 @@ function seedResume(){   // opened via  /?resume=1  (admin 'Open chatbot' button
 function saveLog(){try{let L=LOG;if(L.length>300)L=L.slice(-300);sessionStorage.setItem('srjlog',JSON.stringify(L));sessionStorage.setItem('srjlang',LANG)}catch(e){}mirrorChat()}
 window.addEventListener('pagehide',mirrorChat);document.addEventListener('visibilitychange',()=>{if(document.hidden)mirrorChat()});
 const msgs=document.getElementById('msgs'),sc=document.getElementById('box'),t=document.getElementById('t');let started=false,busy=false,last='';
-const now=()=>new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),down=()=>sc.scrollTo({top:sc.scrollHeight}),sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const now=()=>new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),down=()=>{if(window.__HOLD)return;sc.scrollTo({top:sc.scrollHeight})},sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
 const fmt=s=>esc(s).replace(/\*(.+?)\*/g,'<b>$1</b>').replace(/_(.+?)_/g,'<i>$1</i>');
+var SHROW=null;   // chat row that holds the option-list card (see below)
 function row(who,cls,h){const r=document.createElement('div');r.className='r '+(who==='me'?'rr':'rl');
  if(who==='bot')r.innerHTML='<img class="av'+(last==='bot'?' ghost':'')+'" src="/static/avatar.png" alt="">';
- const d=document.createElement('div');d.className='m '+cls+(last!==who?' tail':'');d.innerHTML=h;r.appendChild(d);msgs.appendChild(r);last=who;down();return r}
-function add(c,h,k){const me=c.startsWith('me'),kk=!!(k&&me);
+ const d=document.createElement('div');d.className='m '+cls+(last!==who?' tail':'');d.innerHTML=h;r.appendChild(d);msgs.appendChild(r);if(SHROW&&SHROW.parentNode===msgs&&!sh.hidden)msgs.appendChild(SHROW);last=who;down();return r}
+function add(c,h,k){const me=c.startsWith('me'),kk=!!(k&&me);if(me)window.__HOLD=null;
  const r=row(me?'me':'bot',c,(kk?'':h)+'<span class="ts">'+now()+(me?'<span class="tk">✓✓</span>':'')+'</span>');
  if(kk){const m=r.querySelector('.m');m.dataset.re=k;m.classList.add('re');   // the chat name itself is the tappable WhatsApp-style row -> opens that chat again
   const b=document.createElement('button');b.type='button';b.className='ro';
@@ -883,9 +921,9 @@ function render(m){
  if(m.type==='text'&&(m.popup==='supply'||/^\*?(Supply Chain|\u0938\u092A\u094D\u0932\u093E\u0908 \u091A\u0947\u0928)\*?\s*\n\s*(Choose one|\u0915\u094B\u0908 \u090F\u0915 \u091A\u0941\u0928\u0947\u0902)/.test(String(m.text||'').trim())||m.lt==='Select supply chain topic')){showSupply();return}
  if(m.type==='text'&&(m.popup==='user'||m.popup==='sections')&&m.chips&&m.chips.length){CUR=m.chips.slice();if(m.popup==='sections'){SECT={chips:m.chips,title:m.lt,extra:[]};if(!RST)showOverviewAsk(m.chips,m.lt);return}if(!RST)openSheet(m.chips,m.lt,m.extra);return}   // user-type / section choice = popup only, never a chat bubble
  if(m.type!=='text'){const ext=(m.name.split('.').pop()||'').toLowerCase(),viewable=['pdf','png','jpg','jpeg','gif','webp','txt'].includes(ext),cl=ext==='pdf'?'':['xls','xlsx','csv'].includes(ext)?'o':['doc','docx'].includes(ext)?'w':['png','jpg','jpeg','gif','webp'].includes(ext)?'i':'',u=m.url.split('?')[0];
- add('bot wide','<div class="dc"><div class="hd"><div class="ic '+cl+'">'+esc(ext.toUpperCase().slice(0,4))+'</div><div class="tt"><b>'+esc(m.caption||m.name)+'</b><small>'+esc(ext.toUpperCase())+(m.size?' • '+esc(m.size):'')+'</small></div></div><div class="bt'+(viewable?'':' one')+'">'+(viewable?'<a class="v" href="'+esc(u)+'" target="_blank" rel="noopener">👁 View</a>':'')+'<a class="d" href="'+esc(u)+'?dl=1" download="'+esc(m.name)+'">⬇ Download</a></div></div>');return}
- if(m.page==='jb'&&!RST)setTimeout(()=>{if(window.CURT!=='jb')tab('jb')},400);
- if(m.page==='eq'&&!RST)setTimeout(()=>tab('eq'),400);   // RST = chat is being rebuilt after a refresh -> never re-open the form from the saved log
+ add('bot wide','<div class="dc"><div class="hd"><div class="ic '+cl+'">'+esc(ext.toUpperCase().slice(0,4))+'</div><div class="tt"><b>'+esc(m.caption||m.name)+'</b><small>'+esc(ext.toUpperCase())+(m.size?' • '+esc(m.size):'')+'</small></div></div><div class="bt'+(viewable?'':' one')+'">'+(viewable?'<a class="v" href="'+esc(u)+'" data-url="'+escA(u)+'" data-t="'+escA(m.caption||m.name)+'">👁 View</a>':'')+'<a class="d" href="'+esc(u)+'?dl=1" download="'+esc(m.name)+'">⬇ Download</a></div></div>');return}
+ if(m.page==='jb'&&!RST&&Date.now()-(PG_T.jb||0)>1500)tab('jb');
+ if(m.page==='eq'&&!RST&&Date.now()-(PG_T.eq||0)>1500)tab('eq');   // RST = chat is being rebuilt after a refresh -> never re-open the form from the saved log
  if(m.thanks){setTimeout(()=>showThanks(m.thanks),450);return}      // Thank-you popup only - no 'Enquiry #N submitted!' chat bubble
  if(m.page&&!String(m.text||'').trim()&&!m.image&&!m.chips)return;   // page-open signal only - never an empty bubble
  let h=(m.image?'<img class="lg" src="'+m.image+'" alt="Shreeji SteelTubes Pvt. Ltd.">':'')+fmt(m.text);
@@ -959,10 +997,13 @@ fetch('/chat/lang').then(r=>r.json()).then(j=>setLang(j.lang)).catch(()=>{});
 })();
 const keyOf=x=>/^[a-z]{1,3}:[\w-]+$/i.test(String(x))?String(x):'';   // only real option tokens can be re-opened (never typed text / form submits)
 function hint(){msgs.querySelectorAll('.hintb').forEach(e=>e.remove());
- const r=add('bot',LANG==='hi'?fmt('💡 *कुछ और देखना चाहते हैं?*\nआप सीधे टाइप भी कर सकते हैं — जैसे *products*, *price*, *catalogue* या *contact*।\nविकल्प दोबारा देखने के लिए कभी भी *Hi* लिखें।'):fmt('💡 *Want to choose something else?*\nYou can also just type what you need — like *products*, *price*, *catalogue* or *contact*.\nType *Hi* anytime to see the options again.'));
- r.classList.add('hintb')}
+ const r=add('bot',LANG==='hi'?fmt('😊 *क्या मैं और कुछ मदद कर सकता हूँ?*\nअपना सवाल लिखें या नीचे से चुनें।'):fmt('😊 *Is there anything else I can help you with?*\nType your question or tap an option below.'));
+ r.classList.add('hintb');
+ const hi=LANG==='hi',q=document.createElement('div');q.className='qrs';
+ [[hi?'🏠 मुख्य मेनू':'🏠 Main Menu','Hi'],[hi?'📋 प्रोडक्ट इन्क्वायरी':'📋 Product Enquiry','s:enquiry'],[hi?'📞 संपर्क करें':'📞 Contact Us','s:contact']].forEach(z=>{const b=document.createElement('button');b.type='button';b.textContent=z[0];b.onclick=()=>{if(!busy)go(z[1],false,z[0])};q.appendChild(b)});
+ r.querySelector('.m').insertBefore(q,r.querySelector('.ts'))}
 let NEEDH=false;
-function homeHint(){if(NEEDH&&sh.hidden&&(!window.CURT||window.CURT==='chat')&&(typeof RV==='undefined'||RV.hidden)&&!busy){NEEDH=false;hint()}}   // chat screen visible -> show the suggestion once
+function homeHint(){const le=msgs.lastElementChild;if(NEEDH&&!window.__PGBUSY&&sh.hidden&&!(le&&le.classList.contains('frm'))&&(typeof RV==='undefined'||RV.hidden)&&!busy){NEEDH=false;hint()}}   // chat screen visible -> show the suggestion once
 function said(l,k){add('me',esc(l),k);LOG.push({me:l,k:k||''});saveLog();NEEDH=true}
 const SECT_DEF={chips:[['\uD83C\uDFE0 Home','u:home'],['\u2139\uFE0F About Us','s:about'],['\uD83D\uDCE6 Products','s:products'],['\uD83D\uDCDA Resources','s:resource'],['\uD83D\uDE9A Supply Chain','s:supply'],['\uD83D\uDEE0 Services','s:services']],title:'Select section',extra:[]};
 let SECT=null,RST=false;
@@ -980,8 +1021,9 @@ function reopen(k){if(busy)return;sheetClose();CUR=[];NEEDH=true;
 msgs.addEventListener('click',e=>{const m=e.target.closest&&e.target.closest('.m.re');if(m&&m.dataset.re)reopen(m.dataset.re)});   // popup pick / typed option -> appears in the chat history
 async function go(x,silent,label){
  if(x==='s:supply'||/^(supply\s*chain|supplychain|सप्लाई चेन)$/i.test(String(x).trim())){if(!silent)add('me',esc(label||x),'pop:supply');NEEDH=true;showSupply();return}
- if(busy)return;busy=true;CUR=[];NEEDH=false;msgs.querySelectorAll('.hintb').forEach(e=>e.remove());tab(pageOf(x));msgs.querySelectorAll('.dp').forEach(e=>e.remove());msgs.querySelectorAll('.opts:not(.old)').forEach(e=>e.classList.add('old'));     // answered option buttons disappear
+ if(busy)return;busy=true;CUR=[];NEEDH=false;msgs.querySelectorAll('.hintb').forEach(e=>e.remove());msgs.querySelectorAll('.dp').forEach(e=>e.remove());msgs.querySelectorAll('.opts:not(.old)').forEach(e=>e.classList.add('old'));     // answered option buttons disappear
  if(!silent){add('me',esc(label||x),keyOf(x));LOG.push({me:label||x,k:keyOf(x)});saveLog()}
+ tab(pageOf(x));      // the page opens as a card right under the visitor's own message
  let tp=typing(),j;
  try{const r=await fetch('/chat/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:x})});j=await r.json();if(j.lang)setLang(j.lang)}
  catch(e){untype(tp);busy=false;add('bot',LANG==='hi'?'⚠️ कनेक्शन में समस्या है। कृपया इंटरनेट जाँचकर फिर कोशिश करें।':'⚠️ Connection problem. Please check your internet and try again.');return}
@@ -990,7 +1032,12 @@ async function go(x,silent,label){
  if(!rs.length)untype(tp);ui(rs);if(rs.every(m=>m.type==='text'&&(m.popup||(m.page&&!String(m.text||'').trim()))))NEEDH=true;busy=false;setTimeout(homeHint,350)}
 const sh=document.createElement('div');sh.id='sheet';sh.hidden=true;
 sh.innerHTML='<div class="sbk"></div><div class="spn"><div class="shd"><button type="button" class="sx" aria-label="Close">&#10005;</button><b></b></div><div class="sls"></div></div>';
-document.body.appendChild(sh);
+SHROW=document.createElement('div');SHROW.className='r rl shrow';SHROW.appendChild(sh);   // option lists are a bot card at the bottom of the conversation (never a popup over it)
+(function(){let q=false;
+ const rev=()=>{if(q)return;q=true;requestAnimationFrame(()=>{q=false;if(sh.hidden||!SHROW.isConnected)return;const b=sc.getBoundingClientRect(),r=SHROW.getBoundingClientRect();
+  if(r.height>b.height-24||r.top<b.top)sc.scrollBy({top:r.top-b.top-8,behavior:'smooth'});else if(r.bottom>b.bottom-8)sc.scrollBy({top:r.bottom-b.bottom+14,behavior:'smooth'})})};
+ new MutationObserver(()=>{if(sh.hidden){SHROW.remove()}else{if(SHROW.parentNode!==msgs||SHROW.nextElementSibling){msgs.appendChild(SHROW);last='card'}rev()}}).observe(sh,{attributes:true,attributeFilter:['hidden']});
+ new MutationObserver(rev).observe(sh,{childList:true,subtree:true})})();
 let ASKX=null;   // set while the 'Want to know about the company?' popup is open -> X / outside tap / Esc opens the Product Enquiry Form
 function sheetClose(){sh.hidden=true;SHB=null;ASKX=null;try{sh.querySelector('.spn').classList.remove('usr')}catch(e){};setTimeout(homeHint,450)}
 let SHB=null,SHC=null;   // 'previous popup' - X / outside tap / Esc re-opens it; null = first popup, so it closes
@@ -1101,7 +1148,7 @@ const RV=document.createElement('div');RV.id='rv';RV.hidden=true;
 RV.innerHTML='<div class="rvh"><button type="button" class="rvx" aria-label="Close">&#10005;</button><b></b><a class="rvd" target="_blank" rel="noopener" download title="Download" aria-label="Download">'+DLI+'</a></div><div class="rvb"></div>';
 document.body.appendChild(RV);let RVT=0;
 window.RVopen=()=>!RV.hidden;
-function rvDone(){RV.hidden=true;RVT++;RV.querySelector('.rvb').innerHTML='';if(!document.getElementById('app').classList.contains('tg'))showResources()}   // X -> back to where all resources are
+function rvDone(){RV.hidden=true;RVT++;RV.querySelector('.rvb').innerHTML='';}   // X -> back to where all resources are
 window.RVclose=rvDone;
 RV.querySelector('.rvx').onclick=()=>{if(history.state&&history.state.rv)history.back();else rvDone()};
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!RV.hidden)RV.querySelector('.rvx').click()});
@@ -1118,11 +1165,11 @@ function rsThumbs(ls,cs){
  if(!todo.length)return;
  const draw=(c,u)=>loadPdfJs().then(()=>pdfjsLib.getDocument(u).promise).then(pdf=>pdf.getPage(1)).then(pg=>{const v1=pg.getViewport({scale:1}),vp=pg.getViewport({scale:Math.min(2,(340*(window.devicePixelRatio>1?1.5:1))/v1.width)}),cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;
   return pg.render({canvasContext:cv.getContext('2d'),viewport:vp}).promise.then(()=>{const d=cv.toDataURL('image/jpeg',.82);THB.set(u,d);if(c.isConnected)put(c,d)})}).catch(()=>{});
- const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;io.unobserve(en.target);const t=todo.find(z=>z[0]===en.target);if(t)draw(t[0],t[1])}),{root:ls,rootMargin:'400px 0px'});
+ const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;io.unobserve(en.target);const t=todo.find(z=>z[0]===en.target);if(t)draw(t[0],t[1])}),{root:sc,rootMargin:'400px 0px'});
  todo.forEach(t=>io.observe(t[0]))}
 function openViewer(url,title){const tk=++RVT,body=RV.querySelector('.rvb'),clean0=String(url).split('?')[0],isImg=/\.(png|jpe?g|webp|gif)$/i.test(clean0);
  RV.querySelector('.rvh b').textContent=title||'';const dl=RV.querySelector('.rvd');dl.href=clean0+(clean0.startsWith('/')?'?dl=1':'');dl.style.display=isImg?'none':'';
- sh.hidden=true;RV.hidden=false;body.scrollTop=0;history.pushState({rv:1},'');
+ RV.hidden=false;body.scrollTop=0;history.pushState({rv:1},'');
  const fallback=()=>{if(tk===RVT)body.innerHTML='<iframe class="rvf" src="'+escA(clean0)+'"></iframe><div class="rvn"><a href="'+escA(clean0)+'" target="_blank" rel="noopener">Open in new tab</a></div>'};
  if(isImg){body.innerHTML='<img class="rvi" src="'+escA(clean0)+'" alt="">';return}
  body.innerHTML='<div class="rvn">Loading document\u2026</div>';
@@ -1203,8 +1250,7 @@ function pdLoad(){return PD?Promise.resolve(PD):fetch('/products/data').then(r=>
 function pdBlock(p){return '<div class="pk"><div class="pi" style="background-image:url('+escA(p.img)+')"></div><div class="pt2"><h3>'+esc(p.title)+'</h3><div class="pl2"></div><p>'+esc(p.desc)+'</p><table>'+p.rows.map(r=>'<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td></tr>').join('')+'</table></div></div>'}
 function pdOpen(k){pdOpenMany([k])}
 function pdOpenMany(keys){pdLoad().then(d=>{const ps=keys.map(k=>d[k]).filter(Boolean);if(!ps.length)return;
- document.getElementById('pdc').innerHTML=ps.map(pdBlock).join('');
- document.getElementById('pd').classList.add('on');document.querySelector('#pd .pb2').scrollTo(0,0)}).catch(()=>{})}
+ const r=add('bot wide pdm','<div class="pdv"><div class="pb2">'+ps.map(pdBlock).join('')+'</div></div>');window.__HOLD=r;revealRow(r,true)}).catch(()=>{})}   // product details = a chat message
 function attachChecklist(rw){const bx=rw.querySelectorAll('.ck input'),bt=rw.querySelector('.ck button');
  const sync=()=>{bt.disabled=![...bx].some(i=>i.checked)};bx.forEach(i=>i.onchange=sync);
  bt.onclick=()=>pdOpenMany([...bx].filter(i=>i.checked).map(i=>i.value))}
@@ -1280,7 +1326,7 @@ function buildProd(k){const el=document.getElementById('prod');el.scrollTo(0,0);
 const SX_T={en:['Successfully Submitted','Your enquiry has been recorded.','Enquiry No. #'],
  hi:['\u0938\u092B\u0932\u0924\u093E\u092A\u0942\u0930\u094D\u0935\u0915 \u091C\u092E\u093E \u0939\u094B \u0917\u092F\u093E','\u0906\u092A\u0915\u0940 \u092A\u0942\u091B\u0924\u093E\u091B \u0926\u0930\u094D\u091C \u0915\u0930 \u0932\u0940 \u0917\u0908 \u0939\u0948\u0964','\u092A\u0942\u091B\u0924\u093E\u091B \u0915\u094D\u0930. #']};
 function eqPop(t,after){
- if(!document.getElementById('sx-css')){const st=document.createElement('style');st.id='sx-css';st.textContent=`#sx{position:fixed;inset:0;z-index:99998;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(12,18,48,.45);animation:sxf .2s ease;cursor:pointer}#sx.out{opacity:0;transition:opacity .25s}
+ if(!document.getElementById('sx-css')){const st=document.createElement('style');st.id='sx-css';st.textContent=`#sx{display:block;animation:sxf .2s ease}
 #sx .sb{width:100%;max-width:300px;background:#fff;border-radius:18px;overflow:hidden;text-align:center;box-shadow:0 18px 50px rgba(8,14,50,.4);animation:sxp .45s cubic-bezier(.2,1.35,.35,1)}
 #sx .si{padding:26px 20px 20px}#sx .tk{width:68px;height:68px;margin:0 auto 12px;border-radius:50%;background:linear-gradient(135deg,#1a9f4b,#36d17a);box-shadow:0 0 0 0 rgba(26,159,75,.45);animation:sxu 1.4s .6s ease-out 2}#sx .tk svg{width:68px;height:68px;display:block}
 #sx .c{fill:none;stroke:rgba(255,255,255,.55);stroke-width:2.5;stroke-dasharray:176;stroke-dashoffset:176;animation:sxd .5s .1s ease forwards}#sx .t{fill:none;stroke:#fff;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:50;stroke-dashoffset:50;animation:sxd .35s .45s ease forwards}
@@ -1288,11 +1334,11 @@ function eqPop(t,after){
 #sx .pg{height:3px;background:#e7eaf8}#sx .pg i{display:block;height:100%;background:linear-gradient(90deg,#1a9f4b,#36d17a);transform-origin:left;animation:sxb 2.6s linear forwards}
 @keyframes sxf{from{opacity:0}to{opacity:1}}@keyframes sxp{from{transform:scale(.6) translateY(20px);opacity:0}to{transform:none;opacity:1}}@keyframes sxd{to{stroke-dashoffset:0}}@keyframes sxu{0%{box-shadow:0 0 0 0 rgba(26,159,75,.45)}100%{box-shadow:0 0 0 18px rgba(26,159,75,0)}}@keyframes sxb{to{transform:scaleX(0)}}
 @media(prefers-reduced-motion:reduce){ #sx .sb,#sx .tk{animation:none}#sx .c,#sx .t{animation:none;stroke-dashoffset:0}}`;document.head.appendChild(st)}
- const x=SX_T[LANG]||SX_T.en,old=document.getElementById('sx');if(old)old.remove();
- const ov=document.createElement('div');ov.id='sx';ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label',x[0]);
- ov.innerHTML='<div class="sb"><div class="si"><div class="tk"><svg viewBox="0 0 64 64" aria-hidden="true"><circle class="c" cx="32" cy="32" r="28"/><path class="t" d="M19 33l9 9 17-19"/></svg></div><h3>'+esc(x[0])+'</h3><p>'+esc(x[1])+'</p>'+(t&&t.no!=null?'<div class="n">'+esc(x[2]+t.no)+'</div>':'')+'</div><div class="pg"><i></i></div></div>';
- let done=false,tm=null;const close=()=>{if(done)return;done=true;clearTimeout(tm);document.removeEventListener('keydown',kd);ov.classList.add('out');setTimeout(()=>{ov.remove();if(after)after()},250)},kd=e=>{if(e.key==='Escape'||e.key==='Enter'){e.preventDefault();close()}};
- ov.addEventListener('click',close);document.addEventListener('keydown',kd);document.body.appendChild(ov);tm=setTimeout(close,2700)}
+ const x=SX_T[LANG]||SX_T.en,old=document.getElementById('sx');if(old)old.removeAttribute('id');
+ const ov=document.createElement('div');ov.id='sx';ov.setAttribute('role','status');ov.setAttribute('aria-label',x[0]);
+ ov.innerHTML='<div class="sb"><div class="si"><div class="tk"><svg viewBox="0 0 64 64" aria-hidden="true"><circle class="c" cx="32" cy="32" r="28"/><path class="t" d="M19 33l9 9 17-19"/></svg></div><h3>'+esc(x[0])+'</h3><p>'+esc(x[1])+'</p>'+(t&&t.no!=null?'<div class="n">'+esc(x[2]+t.no)+'</div>':'')+'</div></div>';
+ const r=add('bot sxm','');r.querySelector('.m').insertBefore(ov,r.querySelector('.ts'));      // the success card is a normal chat message (stays in the history)
+ revealRow(r,true);if(after)setTimeout(after,1300)}
 function showThanks(t){if(window.__EQTY&&Date.now()-window.__EQTY<8000)return;eqPop(t)}   /* the Enquiry Form page shows its own popup + confirmation page; this is only for enquiries sent from the chat */
 function pdClose(){document.getElementById('pd').classList.remove('on')}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){pdClose()}});
@@ -1427,7 +1473,7 @@ function eqHelpClose(){const m=document.getElementById('eqhm');if(m)m.remove();c
 async function eqHelpOpen(){eqHelpClose();
  const m=document.createElement('div');m.id='eqhm';m.className='eqhm';
  m.innerHTML='<div class="eqhm-k"></div><div class="eqhm-p" role="dialog" aria-label="Help"><div class="eqhm-h"><button type="button" class="eqhm-x" aria-label="Close">&#10005;</button><div><b>Need help?</b><span>Select a department &ndash; call, direct line or email</span></div></div><div class="eqhm-b"><div class="eqhm-m">Loading&hellip;</div></div></div>';
- document.body.appendChild(m);
+ inlineMount(m,'mrow');
  m.querySelector('.eqhm-k').onclick=eqHelpClose;m.querySelector('.eqhm-x').onclick=eqHelpClose;
  const body=m.querySelector('.eqhm-b');
  let rows=window.__CT;
@@ -1454,7 +1500,7 @@ function eqDeptClose(){const m=document.getElementById('eqhm2');if(m)m.remove()}
 function eqDeptOpen(g,person){eqDeptClose();
  const m=document.createElement('div');m.id='eqhm2';m.className='eqhm';
  m.innerHTML='<div class="eqhm-k"></div><div class="eqhm-p" role="dialog" aria-label="'+escA(g.dep)+'"><div class="eqhm-h"><button type="button" class="eqhm-x" aria-label="Back">&#10005;</button><div><b>'+esc(g.dep)+'</b><span>'+g.list.length+(g.list.length>1?' contacts':' contact')+' &ndash; tap Call or Mail</span></div></div><div class="eqhm-b">'+g.list.map(c=>''+person(c)+'').join('')+'</div></div>';
- document.body.appendChild(m);m.querySelector('.eqhm-k').onclick=eqDeptClose;m.querySelector('.eqhm-x').onclick=eqDeptClose;m.querySelector('.eqhm-b').scrollTop=0}
+ inlineMount(m,'mrow');m.querySelector('.eqhm-k').onclick=eqDeptClose;m.querySelector('.eqhm-x').onclick=eqDeptClose;m.querySelector('.eqhm-b').scrollTop=0}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(document.getElementById('eqhm2'))eqDeptClose();else eqHelpClose()}});
 /* ---------- PIPE WEIGHT CALCULATOR (Product Enquiry Form) ----------
    For Round Pipe :  (OD - thk) x thk x 0.0246615 = Kg/MTR          Weight/pipe = Kg/MTR x 6.00
@@ -1472,7 +1518,7 @@ function wcCalc(mode,p){   /* p: {od,a,b,t} in mm  ->  {ok,err,msg,eq,kgm,per} *
 let WCS=null;
 function wcClose(){const s=WCS;if(!s)return;WCS=null;clearInterval(s.iv);document.removeEventListener('keydown',s.kd,true);
  document.querySelectorAll('#eq .eq-calc').forEach(bt=>{bt.classList.remove('on');bt.setAttribute('aria-expanded','false')});
- s.pn.classList.add('out');s.wrap.classList.add('out');if(s.onClose)try{s.onClose()}catch(e){}setTimeout(()=>{if(s.wrap.parentNode)s.wrap.parentNode.removeChild(s.wrap)},260)}
+ s.pn.classList.add('out');s.wrap.classList.add('out');if(s.onClose)try{s.onClose()}catch(e){}setTimeout(()=>{const p=s.wrap.parentNode;if(p){p.removeChild(s.wrap);if(p.classList&&p.classList.contains('wcrow'))p.remove()}},260)}
 function wcToggle(){if(WCS)wcClose();else wcOpen(null,false)}
 function wcOpen(btn,solo,opt){
  if(WCS)return;document.querySelectorAll('#eq .eq-calc').forEach(b=>{b.classList.add('on');b.setAttribute('aria-expanded','true')});
@@ -1492,7 +1538,7 @@ function wcOpen(btn,solo,opt){
   +'<div class="wc-c pp" id="wc-k2"><small>WEIGHT / PIPE</small><b id="wc-v2">\u2013</b><em>kg &times; 6.00 m</em></div></div>'
   +'<div class="wc-er" id="wc-er"></div>'
   +'<div class="wc-ac"><button type="button" class="wc-use" id="wc-use" disabled title="Use in my enquiry">Save</button><button type="button" class="wc-clr" id="wc-clr" title="Clear all fields and start again"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>Clear / Reset</button></div></div></div>';
- document.body.appendChild(wrap);
+ inlineMount(wrap,'mrow wcrow');
  const pn=wrap.querySelector('.wcp'),g=id=>wrap.querySelector('#'+id),f=n=>String(Math.round(n*1000)/1000);
  const ID={od:'wc-od',a:'wc-a',b:'wc-b',t:'wc-t'};
  const P=()=>({od:wcNum(V.od),a:wcNum(V.a),b:wcNum(V.b),t:wcNum(V.t)});
@@ -1522,7 +1568,7 @@ function wcOpen(btn,solo,opt){
  const iv=solo?0:setInterval(()=>{const a=document.getElementById('app');if(!a||!a.classList.contains('tf')||!document.getElementById('eq-size'))wcClose()},500);
  WCS={wrap:wrap,pn:pn,kd:kd,iv:iv,onClose:solo&&opt&&opt.onClose};
  if(solo){const bk=wrap.querySelector('.wcb');if(bk)bk.onclick=wcClose;
-  try{const r=opt&&opt.from&&opt.from.getBoundingClientRect();if(r){pn.style.setProperty('--fx',Math.round(r.left+r.width/2-window.innerWidth/2)+'px');pn.style.setProperty('--fy',Math.round(r.top+r.height/2-window.innerHeight/2)+'px')}}catch(e){}}
+  }
  setMode(mode)}
 async function buildEQ(m){const el=document.getElementById('eq');el.scrollTo(0,0);const MQ=(m==='exist'||m==='new')?'?mode='+m:'';
  const BAN='<div class="ab-ban cl-ban"><button type="button" class="ab-back" onclick="pageBack()" aria-label="Back to chat screen" title="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m0 0l6-6m-6 6l6 6"/></svg><span>Back</span></button><h1>Product Enquiry Form</h1></div>',BACK='';
@@ -1986,39 +2032,63 @@ async function buildVR(okHtml){const el=document.getElementById('vr');el.scrollT
    const bk=document.createElement('button');bk.type='button';bk.className='ab-back';bk.title='Back';bk.setAttribute('aria-label','Back to chat screen');bk.innerHTML=ARW+'<span>Back</span>';bk.onclick=()=>pageBack();
    b.insertBefore(bk,b.firstChild)})}
  new MutationObserver(fix).observe(document.body,{childList:true,subtree:true});fix()})();
-function pageBack(){if(PSTACK.length){const p=PSTACK.pop();BACKNAV=true;try{tab(p)}finally{BACKNAV=false}}else backToChat()}   // Back: previous page you were on (or the chat screen / popup you came from)
-function pageClose(){PSTACK.length=0;backToChat()}   // Cross: cancel the whole page -> chat screen
-function backToChat(){
- const stuck=()=>{let t='';try{t=sessionStorage.getItem('srjtab')||''}catch(e){}return t&&t!=='chat'};
- if(history.state&&history.state.pg){history.back();
-  setTimeout(()=>{if(stuck()){POPPING=true;try{tab('chat')}finally{POPPING=false}try{history.replaceState(null,'')}catch(e){}}},350)}   // fallback: no history entry below -> still go to chat
- else tab('chat')}
-window.addEventListener('popstate',e=>{if(window.RVopen&&window.RVopen()&&!(e.state&&e.state.rv)){window.RVclose();return}if(e.state&&e.state.rv)return;const pg=e.state&&e.state.pg;POPPING=true;
- try{if(pg)tab(pg);else{tab('chat');if(PAGE_RET){const r=PAGE_RET;PAGE_RET=null;if(r.sup)showSupply();else if(r.res)showResources();else openSheet(r.chips,r.title,r.extra,true)}}}finally{POPPING=false}});
-const BOOT=history.state||null;   // reload: the browser keeps history.state, so we reopen the same screen (see boot code at the end)
-function tab(n){if(String(n)==='chat')PSTACK.length=0;else if(!POPPING&&!BACKNAV){const c=window.CURT;if(c&&c!=='chat'&&c!==String(n))PSTACK.push(c)}
- if(!POPPING){
-  if(n==='chat'){if(history.state&&history.state.pg){PAGE_RET=null;history.back();return}}   // leaving a page by code (not via popup flow)
-  else{if(RET){PAGE_RET=RET;RET=null}
-   if(history.state&&history.state.pg)history.replaceState({pg:n},'');   // page -> page (sidebar): one Back still returns to chat
-   else history.pushState({pg:n},'')}}
- window.CURT=String(n);try{sessionStorage.setItem('srjtab',String(n))}catch(e){}   // remember the screen we are on (chat / about / qa / ...)
- const a=document.getElementById('app'),h=n==='home',ab=n==='about',pr=String(n).startsWith('prod:'),qa=n==='qa',gl=n==='gl',dl=n==='dl',rq=n==='rq',cl=n==='cl',sv=n==='sv',ct=n==='ct',eq=n==='eq',vr=n==='vr',jb=n==='jb';a.classList.toggle('tj',jb);a.classList.toggle('tf',eq);a.classList.toggle('tw',vr);a.classList.toggle('tk',ct);a.classList.toggle('tv',sv);a.classList.toggle('tc',cl);a.classList.toggle('tr',rq);a.classList.toggle('td',dl);a.classList.toggle('tg',gl);a.classList.toggle('th',h);a.classList.toggle('ta',ab);a.classList.toggle('tp',pr);a.classList.toggle('tq',qa);
- if(pr){homeStop&&homeStop();buildProd(n.slice(5))}
- else if(h){document.getElementById('home').scrollTo(0,0);homeShow(0);counters()}
- else if(ab){homeStop&&homeStop();document.getElementById('about').scrollTo(0,0);counters()}
- else if(qa){homeStop&&homeStop();buildQA()}
- else if(gl){homeStop&&homeStop();buildGL()}
- else if(dl){homeStop&&homeStop();buildDL()}
- else if(vr){homeStop&&homeStop();buildVR()}
- else if(jb){homeStop&&homeStop();buildJB()}
- else if(eq){homeStop&&homeStop();buildEQ()}
- else if(ct){homeStop&&homeStop();buildCT()}
- else if(sv){homeStop&&homeStop();buildSV()}
- else if(cl){homeStop&&homeStop();buildCL()}
- else if(rq){homeStop&&homeStop();buildRQ()}
- else{homeStop&&homeStop();down()}
- setTimeout(homeHint,350)}
+/* ================= CHAT-ONLY NAVIGATION =================
+   About, Products, Quality, Gallery, Dealers, Clients, Services, Contact, Enquiry, Quote, Vendor and Job pages open as a CARD INSIDE the chat
+   (a normal bot message). The chat screen is never replaced: no Back button, no browser-history hop, no popup sheet over the conversation. */
+const BOOT=history.state||null;
+const PG_BOX={home:'home',about:'about',prod:'prod',qa:'qa',gl:'gl',dl:'dl',cl:'cl',sv:'sv',ct:'ct',eq:'eq',rq:'rq',vr:'vr',jb:'jb'};
+const PG_TTL={home:'Home',about:'About Us',prod:'Products',qa:'Quality Assurance',gl:'Gallery',dl:'Authorised Dealers & Distributors',cl:'Our Clients',sv:'Our Services',ct:'Contact Us',eq:'Product Enquiry Form',rq:'Request For Quote',vr:'Vendor Registration',jb:'Join our Team'};
+const PG_FORM={eq:1,rq:1,vr:1,jb:1};
+const PG_SAY={home:['Welcome! 🙏 Here is our home page 👇','स्वागत है! 🙏 यह रहा हमारा होम पेज 👇'],about:['Sure! Here is a little about *Shreeji SteelTubes* 👇','ज़रूर! यह रही *Shreeji SteelTubes* की जानकारी 👇'],
+ prod:['Here are our products 📦 Tap any pipe type to see sizes & specs 👇','ये रहे हमारे प्रोडक्ट्स 📦 साइज़ और स्पेसिफिकेशन देखने के लिए किसी पर टैप करें 👇'],qa:['This is how we keep our quality high ✅','हम क्वालिटी कैसे बनाए रखते हैं ✅'],gl:['Here are some photos from our stock yard 📸','हमारे स्टॉक यार्ड की कुछ तस्वीरें 📸'],
+ dl:['These are the brands we are authorised to supply 👇','ये वे ब्रांड हैं जिनके हम अधिकृत डीलर हैं 👇'],cl:['Some of our valued clients 👇','हमारे कुछ सम्मानित ग्राहक 👇'],sv:['Here are the services we offer 🛠','हमारी सेवाएँ यहाँ हैं 🛠'],
+ ct:['Here is how you can reach us 📞','आप हमसे ऐसे संपर्क कर सकते हैं 📞'],eq:['Great! 👍 Please tell me your requirement below 👇','बढ़िया! 👍 कृपया अपनी ज़रूरत नीचे भरें 👇'],rq:['Sure! Please fill in your quote request 👇','ज़रूर! कृपया अपनी कोटेशन रिक्वेस्ट भरें 👇'],
+ vr:['Welcome! 🤝 Please fill in your vendor details 👇','स्वागत है! 🤝 कृपया वेंडर की जानकारी भरें 👇'],jb:['Happy to hear that! 🙌 Please fill in your details below 👇','यह जानकर खुशी हुई! 🙌 कृपया अपनी जानकारी नीचे भरें 👇']};
+const PG_ICO={home:'🏠',about:'ℹ️',prod:'📦',qa:'✅',gl:'🖼',dl:'🏭',cl:'👥',sv:'🛠',ct:'📞',eq:'📋',rq:'💬',vr:'🤝',jb:'💼'};
+const PG_T={};                                    // when each page was last opened (a page is never opened twice by one reply)
+function revealRow(r,smooth){if(!r||!r.isConnected)return;const b=sc.getBoundingClientRect(),t=r.getBoundingClientRect();sc.scrollTo({top:sc.scrollTop+(t.top-b.top)-8,behavior:smooth?'smooth':'auto'})}
+function inlineMount(el,cls){const r=document.createElement('div');r.className='r rl '+(cls||'mrow');r.appendChild(el);msgs.appendChild(r);last='card';window.__HOLD=r;revealRow(r,true);return r}
+function pgHost(key){const el=document.getElementById(PG_BOX[key]);if(!el)return null;
+ const old=el.closest('.pgrow'),row=document.createElement('div'),card=document.createElement('div');
+ row.className='pgrow'+(PG_FORM[key]?' frm':'');row.dataset.pg=key;card.className='pgcard';
+ card.innerHTML='<div class="pgb"></div>';card.firstChild.appendChild(el);      // the page simply appears in the chat as a message
+ row.appendChild(card);
+ if(old){old.className='r rl';old.innerHTML='';const m=document.createElement('div');m.className='m bot';m.textContent=(PG_TTL[key]||'')+(LANG==='hi'?' \u2013 \u0928\u0940\u091A\u0947 \u0926\u094B\u092C\u093E\u0930\u093E \u0916\u0941\u0932\u093E \u0939\u0948 \u2B07':' \u2013 opened again below \u2B07');old.appendChild(m)}
+ el.scrollTo=function(){revealRow(row,false)};                       // a page's own "scroll to top" now brings the top of its card into view
+ msgs.appendChild(row);if(SHROW&&SHROW.parentNode===msgs&&!sh.hidden)msgs.appendChild(SHROW);last='card';return row}
+function pgShow(row){if(!row)return;window.__HOLD=row;revealRow(row,true);
+ [450,1300].forEach(d=>setTimeout(()=>{if(window.__HOLD===row&&row.isConnected){const b=sc.getBoundingClientRect(),t=row.getBoundingClientRect();if(Math.abs(t.top-b.top-8)>24)revealRow(row)}},d))}
+function backToChat(){const k=String(window.CURT||''),el=document.getElementById(PG_BOX[k.startsWith('prod:')?'prod':k]||''),card=el&&el.closest&&el.closest('.pgcard');   // a card's own Back / cross: fold the page away and carry on chatting
+ if(card)card.closest('.pgrow').remove();
+ window.__HOLD=null;NEEDH=true;down();setTimeout(homeHint,250)}
+function pageBack(){backToChat()}
+function pageClose(){backToChat()}
+window.addEventListener('popstate',e=>{if(window.RVopen&&window.RVopen()&&!(e.state&&e.state.rv))window.RVclose()});   // browser Back only closes the document viewer
+msgs.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a.v[data-url]');if(a){e.preventDefault();openViewer(a.dataset.url,a.dataset.t||'')}});
+function tab(n){n=String(n);
+ if(n==='chat'||n==='')return;                                      // the chat is always on screen
+ const key=n.startsWith('prod:')?'prod':n;if(!PG_BOX[key])return;
+ PG_T[key]=Date.now();window.CURT=n;
+ const tp=typing();window.__PGBUSY=1;      // like a real chatbot: "typing..." -> a short sentence -> then the content
+ setTimeout(()=>{untype(tp);const q=PG_SAY[key];if(q)add('bot',fmt(LANG==='hi'?q[1]:q[0]));window.__PGBUSY=0;tabNow(n,key)},650)}
+function tabNow(n,key){
+ const a=document.getElementById('app'),FL={jb:'tj',eq:'tf',vr:'tw',ct:'tk',sv:'tv',cl:'tc',rq:'tr',dl:'td',gl:'tg',home:'th',about:'ta',prod:'tp',qa:'tq'};
+ Object.keys(FL).forEach(k=>a.classList.toggle(FL[k],k===key));      // "live page" flags that the pages' own timers look at
+ const row=pgHost(key);
+ if(key==='prod'){homeStop&&homeStop();buildProd(n.slice(5))}
+ else if(key==='home'){homeShow(0);counters()}
+ else if(key==='about'){homeStop&&homeStop();counters()}
+ else if(key==='qa'){homeStop&&homeStop();buildQA()}
+ else if(key==='gl'){homeStop&&homeStop();buildGL()}
+ else if(key==='dl'){homeStop&&homeStop();buildDL()}
+ else if(key==='vr'){homeStop&&homeStop();buildVR()}
+ else if(key==='jb'){homeStop&&homeStop();buildJB()}
+ else if(key==='eq'){homeStop&&homeStop();buildEQ()}
+ else if(key==='ct'){homeStop&&homeStop();buildCT()}
+ else if(key==='sv'){homeStop&&homeStop();buildSV()}
+ else if(key==='cl'){homeStop&&homeStop();buildCL()}
+ else if(key==='rq'){homeStop&&homeStop();buildRQ()}
+ pgShow(row);setTimeout(homeHint,450)}
 
 /* ---------- ABOUT US PAGE (data from https://www.shreejisteeltubes.com/about-us/) ---------- */
 const SITE='https://www.shreejisteeltubes.com/',IMG=SITE+'wp-content/uploads/';
@@ -2070,36 +2140,20 @@ let _RL=false;
  _RL=rl;if(!rl)return;try{['srjlog','srjenqs','srjeqd'].forEach(k=>sessionStorage.removeItem(k));localStorage.removeItem('srjmirror')}catch(e){}
  try{fetch('/chat/reset',{method:'POST',credentials:'same-origin',keepalive:true}).catch(()=>{})}catch(e){}})();
 let _rs=false;try{_rs=restore()}catch(e){started=false;LOG=[];try{sessionStorage.removeItem('srjlog')}catch(_){}}   // same tab, chat already running -> continue exactly where it was (no splash)
-{% if open_page %}try{sessionStorage.setItem('srjtab','{{ open_page }}')}catch(e){}
-{% else %}/* refresh keeps the screen you are on (chat / about / products / ...): the page is rebuilt and ALL its data is fetched again from the server */
-{% endif %}let _T=null;try{_T=sessionStorage.getItem('srjtab')}catch(e){}
-const _pg=(_T&&_T!=='chat')?_T:(!_T&&BOOT&&BOOT.pg?BOOT.pg:null);   // screen to reopen after refresh (null = chat)
-if(!_rs){if(_pg||_RL){const sp=document.getElementById('splash');if(sp)sp.style.transition='none';endSplash()}   // refreshed (inner screen OR chat screen) -> no splash, straight to fresh chat
+const _pg={{ open_page|tojson }}||null;     // direct link (e.g. /vendor-registration): that page opens INSIDE the chat, right after the welcome message
+if(!_rs){if(_pg||_RL){const sp=document.getElementById('splash');if(sp)sp.style.transition='none';endSplash()}   // refreshed -> no splash, straight to a fresh chat
  else setTimeout(endSplash,2200)}                        // splash + welcome logo only on a genuine first-time open (never on refresh)
 window.addEventListener('pageshow',e=>{if(e.persisted)down()});
-
-/* ---- real-app behaviour: refresh keeps the same screen + scroll position ---- */
-const SCRK=()=>{const a=document.getElementById('app').classList,c=a.contains('th')?'home':a.contains('ta')?'about':a.contains('tp')?'prod':a.contains('tq')?'qa':a.contains('tg')?'gl':a.contains('td')?'dl':a.contains('tr')?'rq':a.contains('tc')?'cl':a.contains('tv')?'sv':a.contains('tk')?'ct':a.contains('tf')?'eq':a.contains('tw')?'vr':a.contains('tj')?'jb':'box';
- if(c==='prod'){let t='';try{t=sessionStorage.getItem('srjtab')||''}catch(e){}return t.startsWith('prod:')?t:'prod:'}return c};
-const SCRE=k=>document.getElementById(k.startsWith('prod')?'prod':k);
-let _st=null;
-document.addEventListener('scroll',e=>{const el=e.target;if(!el||!el.id||el===document)return;clearTimeout(_st);_st=setTimeout(()=>{try{const k=SCRK(),w=SCRE(k);if(w&&w===el){const m=JSON.parse(sessionStorage.getItem('srjscr')||'{}');m[k]=el.scrollTop;sessionStorage.setItem('srjscr',JSON.stringify(m))}}catch(_){}},120)},true);
-function scrRestore(k){let y=0;try{y=(JSON.parse(sessionStorage.getItem('srjscr')||'{}'))[k]||0}catch(_){}if(!y)return;const e=SCRE(k);if(!e)return;[0,150,500,1200].forEach(d=>setTimeout(()=>{if(SCRK()===k)e.scrollTop=y},d))}
 (function(){
- if(_pg){                                                // refreshed on an inner screen -> reopen exactly that screen
-  try{if(BOOT&&BOOT.pg)history.replaceState({pg:_pg},'');else history.pushState({pg:_pg},'')}catch(e){}   // so one Back still returns to chat
-  POPPING=true;try{tab(_pg)}finally{POPPING=false}scrRestore(SCRK())}
- else{                                                   // refreshed on the chat screen -> stay on chat, drop any stale page/viewer history state
-  if(BOOT&&(BOOT.pg||BOOT.rv)){try{history.replaceState(null,'')}catch(e){}}
-  try{sessionStorage.setItem('srjtab','chat')}catch(e){}
-  if(_rs)down()}      // refreshed on the chat -> same conversation, scrolled to the latest message
-})();
+ try{if(BOOT&&(BOOT.pg||BOOT.rv))history.replaceState(null,'')}catch(e){}      // drop any old page / viewer history entry
+ if(_pg)setTimeout(()=>{try{tab(_pg)}catch(e){}},950);
+ else if(_rs)down()})();
 
 /* ---- pull-to-refresh on EVERY screen (phones / tablets): drag any page or the chat down from the top -> the same screen reloads with fresh data.
    The browser's own pull-to-refresh can't work here because each screen scrolls inside its own box (overscroll-behavior:contain), so we do it ourselves. ---- */
 (function(){
  const app=document.getElementById('app');if(!app||!('ontouchstart' in window))return;
- const SC=['box','home','about','prod','qa','gl','dl','cl','sv','ct','eq','jb','vr','rq'].map(i=>document.getElementById(i)).filter(Boolean);
+ const SC=['box'].map(i=>document.getElementById(i)).filter(Boolean);
  const st=document.createElement('style');st.textContent='#ptr{position:absolute;left:50%;top:0;width:38px;height:38px;margin-left:-19px;border-radius:50%;background:#fff;box-shadow:0 2px 8px #0004;display:flex;align-items:center;justify-content:center;z-index:45;opacity:0;pointer-events:none;transform:translateY(-50px)}#ptr svg{width:22px;height:22px;stroke:var(--blue,#26399e);fill:none;stroke-width:2.6;stroke-linecap:round;transition:transform .1s}#ptr.go{transition:transform .2s,opacity .2s}#ptr.spin svg{animation:ptrspin .7s linear infinite}@keyframes ptrspin{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){ #ptr.spin svg{animation:none}}';
  document.head.appendChild(st);
  const ind=document.createElement('div');ind.id='ptr';ind.setAttribute('aria-hidden','true');ind.innerHTML='<svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg>';app.appendChild(ind);
