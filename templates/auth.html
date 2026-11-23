@@ -191,7 +191,7 @@ f.addEventListener('submit',function(ev){
  fetch('/auth/enter',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),credentials:'same-origin'})
  .then(function(r){return r.json().catch(function(){return{ok:false,errors:{_:'Server error. Please try again.'}}})})
  .then(function(d){
-  if(d.ok){btn.textContent='✓ Success';location.href=d.redirect||'/';return}
+  if(d.ok){btn.textContent='✓ Success';try{sessionStorage.setItem('srjFreshLogin','1')}catch(e){}location.href=d.redirect||'/';return}
   var er=d.errors||{};
   Object.keys(er).forEach(function(k){var el=f.querySelector('[data-e="'+k+'"]');
    if(el){el.textContent=er[k];var inp=f.querySelector('[name="'+k+'"]');if(inp)inp.classList.add('bad')}

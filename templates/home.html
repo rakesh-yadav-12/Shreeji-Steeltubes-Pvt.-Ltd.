@@ -2162,9 +2162,16 @@ function restore(){seedResume();let L=[];try{L=JSON.parse(sessionStorage.getItem
   else{render(e.b);if(e.b.form){const fs=msgs.querySelectorAll('form.fm');lf=fs[fs.length-1]}}});
  RST=false;msgs.querySelectorAll('.opts').forEach((o,i,a)=>{if(i<a.length-1)o.classList.add('old')});
  const lb=[...L].reverse().find(e=>e.b);if(lb)ui([lb.b]);const le=L[L.length-1];if(le&&le.me!==undefined&&le.k){NEEDH=true;setTimeout(homeHint,400)}down();return true}
-function endSplash(){const s=document.getElementById('splash');if(started){if(s)s.remove();return}started=true;if(!s)return;s.style.opacity=0;setTimeout(()=>{s.remove();
- const d=document.createElement('div');d.className='day';d.textContent='Today';msgs.appendChild(d);
- const m={type:'text',text:'👋 Welcome to *Shreeji SteelTubes Pvt. Ltd.*\nType *Hi* to get started.',chips:[['Hi','hi']],ph:'Type a message…'};render(m);LOG.push({b:m});saveLog();ui([m])},450)}
+function endSplash(instant){const s=document.getElementById('splash');if(started){if(s)s.remove();return}started=true;if(!s)return;s.style.opacity=0;
+ // When there is no fade to wait for (instant===true: page refresh, a direct link, or right after
+ // logging in on /auth) remove the overlay and unlock the message box immediately. Otherwise, even
+ // with its fade disabled, the splash div was still left sitting on top of the screen (opacity 0 but
+ // still there, still catching taps) for this same fixed pause - which is exactly what made the chat
+ // input feel like it "isn't there yet" right after a fresh login on a phone.
+ const done=()=>{s.remove();
+  const d=document.createElement('div');d.className='day';d.textContent='Today';msgs.appendChild(d);
+  const m={type:'text',text:'👋 Welcome to *Shreeji SteelTubes Pvt. Ltd.*\nType *Hi* to get started.',chips:[['Hi','hi']],ph:'Type a message…'};render(m);LOG.push({b:m});saveLog();ui([m])};
+ if(instant){s.style.pointerEvents='none';done()}else setTimeout(done,450)}
 /* page REFRESH (F5 / reload / pull-down) = fresh conversation: the old chat is wiped here and on the server, while the screen you are on stays open.
    Back / forward / reopening a closed tab still keep the chat. */
 let _RL=false;
@@ -2173,8 +2180,12 @@ let _RL=false;
  try{fetch('/chat/reset',{method:'POST',credentials:'same-origin',keepalive:true}).catch(()=>{})}catch(e){}})();
 let _rs=false;try{_rs=restore()}catch(e){started=false;LOG=[];try{sessionStorage.removeItem('srjlog')}catch(_){}}   // same tab, chat already running -> continue exactly where it was (no splash)
 const _pg={{ open_page|tojson }}||null;     // direct link (e.g. /vendor-registration): that page opens INSIDE the chat, right after the welcome message
-if(!_rs){if(_pg||_RL){const sp=document.getElementById('splash');if(sp)sp.style.transition='none';endSplash()}   // refreshed -> no splash, straight to a fresh chat
- else setTimeout(endSplash,2200)}                        // splash + welcome logo only on a genuine first-time open (never on refresh)
+let _freshLogin=false;try{if(sessionStorage.getItem('srjFreshLogin')){_freshLogin=true;sessionStorage.removeItem('srjFreshLogin')}}catch(e){}
+ // ^ visitor just typed their name/number on the /auth "Welcome" page and tapped "Start Chat" - they are
+ //   actively waiting to type a message right now, so this page (the very first thing they see after
+ //   logging in) should not sit behind the splash/welcome-logo overlay for even the usual brief pause.
+if(!_rs){if(_pg||_RL||_freshLogin){const sp=document.getElementById('splash');if(sp)sp.style.transition='none';endSplash(true)}   // refreshed / fresh login -> no splash, straight to a fresh chat
+ else setTimeout(endSplash,300)}                        // splash + welcome logo only on a genuine first-time open via QR/link (never on refresh or right after login) - kept brief so the chat/type-a-message box is usable almost immediately instead of making the visitor wait
 window.addEventListener('pageshow',e=>{if(e.persisted)down()});
 (function(){
  try{if(BOOT&&(BOOT.pg||BOOT.rv))history.replaceState(null,'')}catch(e){}      // drop any old page / viewer history entry
