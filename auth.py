@@ -7,8 +7,10 @@ Stored in MongoDB collection `users` (kept so the existing Admin > Website Users
 its CSV export and delete action keep working unchanged): name, phone, company, created, last_login.
 """
 import re
+import logging
 from flask import Blueprint, request, session, redirect, render_template, jsonify, make_response
 from bson import ObjectId
+from pymongo.errors import DuplicateKeyError, PyMongoError
 from db import database, now_ist, norm
 
 bp = Blueprint("auth", __name__)
@@ -84,16 +86,35 @@ def enter():
     if not name: errors["name"] = "Please enter your name"
     if not phone: errors["phone"] = "Enter a valid 10-digit mobile number"
     if errors: return _fail(errors)
-    U = database().users
-    u = U.find_one({"phone": norm(phone)})
-    if u:       # same mobile number visiting again -> keep one record, just refresh their details
-        U.update_one({"_id": u["_id"]}, {"$set": {"name": name, "company": company or u.get("company", ""), "last_login": now_ist()}})
-        u = U.find_one({"_id": u["_id"]})
-    else:
-        doc = {"name": name, "phone": norm(phone), "company": company, "email": "",
-               "provider": "chat", "created": now_ist(), "last_login": now_ist()}
-        doc["_id"] = U.insert_one(doc).inserted_id
-        u = doc
+    try:
+        U = database().users
+        u = U.find_one({"phone": norm(phone)})
+        if u:       # same mobile number visiting again -> keep one record, just refresh their details
+            U.update_one({"_id": u["_id"]}, {"$set": {"name": name, "company": company or u.get("company", ""), "last_login": now_ist()}})
+            u = U.find_one({"_id": u["_id"]})
+        else:
+            doc = {"name": name, "phone": norm(phone), "company": company, "email": "",
+                   "provider": "chat", "created": now_ist(), "last_login": now_ist()}
+            try:
+                doc["_id"] = U.insert_one(doc).inserted_id
+                u = doc
+            except DuplicateKeyError:
+                # Same mobile number was saved a split-second earlier by another request
+                # (e.g. a double-tap on "Start Chat", or two tabs/devices with the same
+                # number at the same instant). That is not a real failure - just use the
+                # record that already exists instead of showing an error.
+                u = U.find_one({"phone": norm(phone)})
+                if u:
+                    U.update_one({"_id": u["_id"]}, {"$set": {"name": name, "company": company or u.get("company", ""), "last_login": now_ist()}})
+                    u = U.find_one({"_id": u["_id"]})
+                else:
+                    raise
+    except PyMongoError:
+        logging.exception("auth/enter: database error")
+        return _fail({"_": "We couldn't save your details right now. Please try again in a moment."}, 503)
+    except Exception:
+        logging.exception("auth/enter: unexpected error")
+        return _fail({"_": "Something went wrong. Please try again."}, 500)
     _login_session(u)
     return jsonify(ok=True, redirect="/")
 

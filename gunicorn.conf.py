@@ -18,3 +18,16 @@ max_requests_jitter = 2000
 preload_app = True                                        # load code once, share memory between workers
 accesslog = None                                          # logging every hit costs speed
 errorlog = "-"
+
+def post_fork(server, worker):
+    """preload_app=True means app.py (and its MongoClient, created in db.init() at import
+    time) is loaded ONCE in the master process and then each worker is forked from it.
+    A MongoClient's background connection-monitoring threads do not survive fork(), so every
+    worker would otherwise start life sharing a Mongo connection object created by a
+    different process - this is a well-known source of random, hard-to-explain "server
+    error" responses on whichever request happens to be the first real database call a
+    worker makes (very often the /auth "enter your details" page, since that is the first
+    page a brand-new visitor's session touches). Dropping the cached handle here forces each
+    worker to open its own fresh MongoClient the first time it actually needs the database."""
+    import db
+    db._db = None

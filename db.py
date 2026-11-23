@@ -29,18 +29,31 @@ def fmt_phone(phone):
     return ("+" + d) if d else ""
 
 def database():
+    """Return the shared PyMongo database handle, creating it on first use.
+
+    IMPORTANT: this used to raise SystemExit when MONGO_URI was missing or the
+    first ping failed. SystemExit is not a normal Exception, so Flask/Gunicorn
+    do NOT turn it into a clean 500 response - it can crash the worker thread
+    outright, which is exactly what produced the unexplained "Server error"
+    visitors saw on the /auth "enter your details" page (that POST is almost
+    always the very first database call a freshly-started/forked worker makes,
+    e.g. right after the Render free-plan instance wakes up from sleep, when a
+    slow DNS/connect can make the very first ping time out even though Mongo
+    itself is fine a second later). We now raise a normal RuntimeError instead
+    (so it is caught like any other error and reported as a clean JSON/HTML
+    error instead of crashing the worker), and a failed attempt is never
+    cached, so the very next request simply tries to connect again instead of
+    staying broken until the process restarts.
+    """
     global _db
     if _db is None:
         uri = os.getenv("MONGO_URI")
         name = os.getenv("MONGO_DB", "srj_bot")
 
         if not uri:
-            raise SystemExit(
-                f"\n❌ MONGO_URI is not set.\n"
-                f"   Expected a .env file at: {_ENV_PATH}\n"
-                f"   Make sure the file is named exactly '.env' (not '.env.txt')\n"
-                f"   and contains a line like:\n"
-                f"   MONGO_URI=mongodb+srv://user:pass@cluster0.xxxxx.mongodb.net/srj_whatsapp_bot\n"
+            raise RuntimeError(
+                f"MONGO_URI is not set. Expected a .env file at: {_ENV_PATH} "
+                "with a line like MONGO_URI=mongodb+srv://user:pass@cluster0.xxxxx.mongodb.net/srj_whatsapp_bot"
             )
 
         if uri.startswith("mongomock"):            # only used for automated tests
@@ -48,14 +61,20 @@ def database():
             client = mongomock.MongoClient()
         else:
             from pymongo import MongoClient
-            client = MongoClient(uri, serverSelectionTimeoutMS=10000)
+            # Slightly longer timeouts than before + retryWrites/retryReads so a brief
+            # cold-start network blip (common right after a free-plan instance wakes up)
+            # gets retried by the driver instead of failing the very first request.
+            client = MongoClient(uri, serverSelectionTimeoutMS=20000, connectTimeoutMS=20000,
+                                 socketTimeoutMS=20000, retryWrites=True, retryReads=True)
             try:
                 client.admin.command("ping")
             except Exception as e:
-                raise SystemExit(
-                    f"\n❌ Cannot connect to MongoDB at {uri}\n   {e}\n"
-                    "   Check: Atlas Network Access (add 0.0.0.0/0), DB user credentials,\n"
-                    "   and that the cluster is running.\n"
+                # Do NOT cache this client / do NOT crash the process - just fail this one
+                # request cleanly; the next request (or the next retry below) gets a fresh attempt.
+                raise RuntimeError(
+                    f"Cannot connect to MongoDB at the moment ({e.__class__.__name__}: {e}). "
+                    "Check Atlas Network Access (add 0.0.0.0/0), DB user credentials, "
+                    "and that the cluster is running."
                 )
         _db = client[name]
     return _db

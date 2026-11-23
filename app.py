@@ -1054,6 +1054,20 @@ def _safe_upload_name(orig):
     if os.path.exists(os.path.join(UPLOADS, name)): name = f"{base}_{int(time.time())}{ext}"
     return name
 
+@app.errorhandler(500)
+def server_error(e):
+    """Catch-all so an unexpected bug anywhere (DB hiccup, bad data, etc.) never shows a
+    blank/raw crash page or - on JSON endpoints like /auth/enter - a non-JSON body that the
+    page's JS was reading as 'Server error. Please try again.'. It is logged here with the
+    full traceback so the real cause is visible in the server logs, and the visitor gets a
+    friendly message instead."""
+    logging.exception("Unhandled server error on %s %s", request.method, request.path)
+    wants_json = request.path.startswith(("/auth/", "/chat/", "/admin/api/")) or \
+                 "application/json" in (request.headers.get("Accept") or "") or request.is_json
+    if wants_json:
+        return jsonify(ok=False, errors={"_": "Something went wrong on our end. Please try again."}), 500
+    return ("Something went wrong on our end. Please refresh and try again.", 500)
+
 @app.errorhandler(413)
 def too_big(e):
     if request.path.startswith("/admin/documents") and "admin_id" in session:
