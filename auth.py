@@ -131,3 +131,16 @@ def register(app, too_many, client_ip):
         U.create_index("phone", unique=True, partialFilterExpression={"phone": {"$type": "string"}})
     except Exception as ex:
         print("users index:", ex)
+    try:
+        # Leftover from the old email-based login system: a plain UNIQUE index on "email".
+        # This new /auth form does not collect an email any more, so every visitor is saved
+        # with email:"" - the first one saves fine, then that same plain unique index makes
+        # EVERY following visitor's save fail with "E11000 duplicate key error ... email_1
+        # dup key: { email: "" }". Replace it with a partial index that only enforces
+        # uniqueness when an email actually has a real, non-empty value.
+        U = database().users
+        info = U.index_information().get("email_1")
+        if info and "partialFilterExpression" not in info: U.drop_index("email_1")
+        U.create_index("email", unique=True, partialFilterExpression={"email": {"$type": "string", "$gt": ""}})
+    except Exception as ex:
+        print("users email index:", ex)
