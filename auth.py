@@ -119,28 +119,39 @@ def enter():
     return jsonify(ok=True, redirect="/")
 
 
+def _ensure_partial_unique_index(U, field, desired_filter):
+    """Create/repair a unique index on `field` that only applies when `partialFilterExpression`
+    matches - and, crucially, actually compares the EXISTING index's filter to the one we want
+    instead of just checking "does it have any filter at all". A same-named index that already
+    has *some* partialFilterExpression (just not the right one, e.g. one that still lets every
+    empty-string value collide) would otherwise be silently left in place: Mongo refuses to
+    create a second index with the same auto-generated name but a different definition
+    (error 86 'IndexKeySpecsConflict'), so the old, too-loose index kept rejecting every save."""
+    name = field + "_1"
+    info = U.index_information().get(name)
+    if info and info.get("partialFilterExpression") != desired_filter:
+        U.drop_index(name)
+        info = None
+    if not info:
+        U.create_index(field, unique=True, partialFilterExpression=desired_filter)
+
+
 # ---------------------------------------------------------------- wiring
 def register(app, too_many, client_ip):
     global _too_many, _client_ip
     _too_many, _client_ip = too_many, client_ip
     app.register_blueprint(bp)
+    U = database().users
     try:
-        U = database().users
-        info = U.index_information().get("phone_1")
-        if info and "partialFilterExpression" not in info: U.drop_index("phone_1")
-        U.create_index("phone", unique=True, partialFilterExpression={"phone": {"$type": "string"}})
+        _ensure_partial_unique_index(U, "phone", {"phone": {"$type": "string"}})
     except Exception as ex:
-        print("users index:", ex)
+        print("users phone index:", ex)
     try:
-        # Leftover from the old email-based login system: a plain UNIQUE index on "email".
-        # This new /auth form does not collect an email any more, so every visitor is saved
-        # with email:"" - the first one saves fine, then that same plain unique index makes
-        # EVERY following visitor's save fail with "E11000 duplicate key error ... email_1
-        # dup key: { email: "" }". Replace it with a partial index that only enforces
-        # uniqueness when an email actually has a real, non-empty value.
-        U = database().users
-        info = U.index_information().get("email_1")
-        if info and "partialFilterExpression" not in info: U.drop_index("email_1")
-        U.create_index("email", unique=True, partialFilterExpression={"email": {"$type": "string", "$gt": ""}})
+        # Leftover from the old email-based login system. This /auth form does not collect an
+        # email any more, so every visitor is saved with email:"" - a unique index that treats
+        # "" as a real value makes every visitor after the first one fail with "E11000
+        # duplicate key error ... email_1 dup key: { email: "" }". Only enforce uniqueness when
+        # an email actually has a real, non-empty value ($gt: "" excludes the empty string).
+        _ensure_partial_unique_index(U, "email", {"email": {"$type": "string", "$gt": ""}})
     except Exception as ex:
         print("users email index:", ex)
