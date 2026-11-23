@@ -14,11 +14,13 @@
 body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 background:var(--bg);color:#1a1e35;
 overflow:hidden}
-#app{height:100vh;
-  height:100dvh;
+/* #app is pinned to the REAL visible screen (position:fixed + top/bottom:0), not to 100vh/100dvh.
+   In Android WebViews / installed PWAs 100vh is taller than what is actually visible, which pushed
+   the footer (message box) off-screen right after the first phone login. */
+#app{position:fixed;top:0;left:0;right:0;bottom:0;
+  height:auto;
   display:flex;
-  flex-direction:column;
-  position:relative}
+  flex-direction:column}
 header{display:flex;
   align-items:center;
   gap:12px;background:#fff;
@@ -874,6 +876,12 @@ input.imm-on{background:#edeffb!important;color:#26399e;font-weight:600;border-c
 <script>
 (function(){const f=window.fetch;window.fetch=function(u,o){try{if(typeof u==='string'&&u.charAt(0)==='/'&&u.charAt(1)!=='/'){o=o||{};if(!o.cache&&(o.method||'GET').toUpperCase()==='GET')o=Object.assign({cache:'no-store'},o)}}catch(e){}return f.call(this,u,o)}})();   // refresh = fresh data, never a stale cached copy
 
+/* keep #app exactly the height of the visible window (fixes missing message box after first login in WebViews / PWAs) */
+(function(){const app=document.getElementById('app');if(!app)return;
+ const fit=()=>{try{const vv=window.visualViewport,h=Math.min(window.innerHeight||9e9,vv?vv.height+0.5:9e9);if(h>100&&h<9e9)app.style.height=Math.round(h)+'px'}catch(e){}};
+ fit();window.addEventListener('resize',fit);window.addEventListener('orientationchange',()=>setTimeout(fit,200));window.addEventListener('pageshow',fit);
+ if(window.visualViewport)window.visualViewport.addEventListener('resize',fit);
+ [100,400,1000,2500].forEach(d=>setTimeout(fit,d))})();
 let LOG=[];
 /* chat is kept per browser tab (sessionStorage): survives reload / Back from a link / tab restore,
    and is cleared automatically when the tab is closed -> splash + fresh chat only when the chatbot is opened anew */
