@@ -110,7 +110,35 @@ input.bad{border-color:var(--bad);box-shadow:0 0 0 4px #d6454522}
 
 @media(max-width:900px){.wrap{grid-template-columns:1fr;gap:18px;padding:18px 14px}.hero{display:none}.card{padding:22px 18px 16px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* ================= opening loader - shown the first instant this page renders, so the visitor
+   always sees "we're getting you in" instead of a blank/half-drawn page, with a ticking countdown
+   so they know roughly how long the wait is. Fades itself out once the count reaches 0. ================= */
+.loader{position:fixed;inset:0;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+ background:radial-gradient(circle at 50% 38%,#1b2a80,#0d1650 72%);transition:opacity .5s ease,visibility .5s ease}
+.loader.hide{opacity:0;visibility:hidden;pointer-events:none}
+.loader img{height:52px;animation:lpulse 1.3s ease-in-out infinite}
+@keyframes lpulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.85}}
+.loader .ring{position:relative;width:78px;height:78px;display:flex;align-items:center;justify-content:center}
+.loader .ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.loader .ring circle{fill:none;stroke-width:5}
+.loader .ring .track{stroke:#ffffff22}
+.loader .ring .bar{stroke:var(--orange);stroke-linecap:round;transition:stroke-dashoffset .9s linear}
+.loader .ring b{position:absolute;font-size:21px;font-weight:800;color:#fff;letter-spacing:-.02em}
+.loader p{color:#cfd4f5;font-size:13.5px;letter-spacing:.02em;margin:0;display:flex;align-items:center;gap:7px}
+.loader .tick{display:inline-block;animation:ltick 1s steps(2,end) infinite;font-size:15px}
+@keyframes ltick{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(12deg)}}
+.loader .dots3 i{display:inline-block;width:5px;height:5px;margin-left:2px;border-radius:50%;background:#cfd4f5;opacity:.3;animation:ldot 1.2s ease-in-out infinite}
+.loader .dots3 i:nth-child(2){animation-delay:.2s}.loader .dots3 i:nth-child(3){animation-delay:.4s}
+@keyframes ldot{0%,80%,100%{opacity:.25}40%{opacity:1}}
+@media(prefers-reduced-motion:reduce){.loader img,.loader .tick,.loader .dots3 i{animation:none}}
 </style></head><body>
+
+<div class="loader" id="loader" role="status" aria-live="polite">
+ <img src="/static/logo.png" alt="Shreeji SteelTubes Pvt. Ltd.">
+ <div class="ring"><svg viewBox="0 0 80 80"><circle class="track" cx="40" cy="40" r="34"></circle><circle class="bar" id="loaderBar" cx="40" cy="40" r="34"></circle></svg><b id="loaderSec">3</b></div>
+ <p><span class="tick">🕒</span> Opening your chat in <span id="loaderWord">3</span>s<span class="dots3"><i></i><i></i><i></i></span></p>
+</div>
 
 <div class="bg" aria-hidden="true">
  <div class="grid"></div>
@@ -165,6 +193,20 @@ input.bad{border-color:var(--bad);box-shadow:0 0 0 4px #d6454522}
 </main>
 </div>
 <script>
+/* opening loader - ticking countdown, then fades out on its own */
+(function(){
+var TOTAL=3, loader=document.getElementById('loader'), bar=document.getElementById('loaderBar'),
+    secEl=document.getElementById('loaderSec'), wordEl=document.getElementById('loaderWord'),
+    CIRC=2*Math.PI*34, n=TOTAL;
+bar.style.strokeDasharray=CIRC; bar.style.strokeDashoffset=0;
+function step(){
+ secEl.textContent=n; wordEl.textContent=n;
+ bar.style.strokeDashoffset=CIRC*(1-n/TOTAL);
+ if(n<=0){loader.classList.add('hide');setTimeout(function(){loader.remove()},550);return}
+ n--; setTimeout(step,1000);
+}
+step();
+})();
 (function(){
 var card=document.getElementById('card'),f=document.getElementById('details-form');
 function bad(){card.classList.remove('shake');void card.offsetWidth;card.classList.add('shake')}

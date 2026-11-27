@@ -93,7 +93,7 @@ def healthz():             # for hosting uptime checks
 
 @app.route("/")
 def home():
-    if not auth.current_user(True): return render_template("landing.html")      # public landing page (Google/visitors see company info); chat itself still needs Login via /auth
+    if not auth.current_user(True): return redirect("/auth")      # no visitor details yet this session -> straight to the details form (no landing page in between)
     return render_template("home.html", open_page="")
 
 @app.get("/privacy")
